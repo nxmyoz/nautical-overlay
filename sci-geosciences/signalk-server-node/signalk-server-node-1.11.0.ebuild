@@ -21,9 +21,15 @@ KEYWORDS="~arm64"
 IUSE="+production"
 
 DEPEND="net-libs/nodejs
-	dev-db/sqlite"
+	dev-db/sqlite
+	net-dns/avahi[mdnsresponder-compat]"
 RDEPEND="${DEPEND}"
 BDEPEND=""
+
+pkg_setup() {
+	enewgroup signalk
+	enewuser signalk -1 -1 /opt/signalk signalk
+}
 
 src_compile() {
 	NPM_INSTALL_OPTS=""
@@ -32,5 +38,11 @@ src_compile() {
 		NPM_INSTALL_OPTS="--only=production"
 	fi
 
+	print "${PORTAGE_SOCKS5_PROXY}"
+
+	npm config set proxy "${PORTAGE_SOCKS5_PROXY}"
+	npm config set https-proxy "${PORTAGE_SOCKS5_PROXY}"
 	npm install "${NPM_INSTALL_OPTS}"
 }
+
+
