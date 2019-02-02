@@ -41,7 +41,7 @@ src_install() {
 
 	dodir "${dest}"
 
-	cp -pPR * "${D}"/opt/"${PN}" || die
+	cp -a * "${D}"/opt/"${PN}"/. || die
 }
 
 pkg_preinst() {
