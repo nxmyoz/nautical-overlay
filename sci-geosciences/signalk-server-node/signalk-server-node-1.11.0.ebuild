@@ -36,6 +36,13 @@ src_compile() {
 	npm install ${NPM_INSTALL_OPTS}
 }
 
+src_install() {
+	local dest="/opt/${PN}"
+
+	dodir "${dest}"
+
+	cp -pPR * "${dest}" || die
+}
 
 pkg_preinst() {
 	enewgroup signalk
