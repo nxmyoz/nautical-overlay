@@ -38,10 +38,11 @@ src_compile() {
 
 src_install() {
 	local dest="/opt/${PN}"
+	local ddest="${ED}${dest#/}"
 
 	dodir "${dest}"
 
-	cp -pPR * "${dest}" || die
+	cp -pPR * "${ddest}" || die
 }
 
 pkg_preinst() {
