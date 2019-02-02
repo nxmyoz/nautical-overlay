@@ -38,11 +38,11 @@ src_compile() {
 		NPM_INSTALL_OPTS="--only=production"
 	fi
 
-	print "${PORTAGE_SOCKS5_PROXY}"
+	echo ${DISTCC_SOCKS_PROXY}
 
-	npm config set proxy "${PORTAGE_SOCKS5_PROXY}"
-	npm config set https-proxy "${PORTAGE_SOCKS5_PROXY}"
-	npm install "${NPM_INSTALL_OPTS}"
+	npm config set proxy ${PORTAGE_SOCKS5_PROXY}
+	npm config set https-proxy ${PORTAGE_SOCKS5_PROXY}
+	npm install ${NPM_INSTALL_OPTS}
 }
 
 
