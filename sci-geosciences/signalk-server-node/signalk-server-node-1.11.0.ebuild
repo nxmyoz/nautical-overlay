@@ -26,11 +26,6 @@ DEPEND="net-libs/nodejs
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
-pkg_setup() {
-	enewgroup signalk
-	enewuser signalk -1 -1 /opt/signalk signalk
-}
-
 src_compile() {
 	NPM_INSTALL_OPTS=""
 
@@ -41,4 +36,9 @@ src_compile() {
 	npm install ${NPM_INSTALL_OPTS}
 }
 
+
+pkg_preinst() {
+	enewgroup signalk
+	enewuser signalk -1 -1 /opt/signalk signalk
+}
 
