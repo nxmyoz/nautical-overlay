@@ -4,8 +4,11 @@
 
 name="rtl_ais"
 description="A simple AIS tuner and generic dual-frequency FM demodulator"
-command=/bin/rtl_ais
+supervisor=supervise-daemon
+healthcheck_timer=5
+command=/usr/bin/rtl_ais
 command_args="${RTL_AIS_ARGS}"
+command_backgroud=true
 pidfile=/var/run/rtl_ais.pid
 logfile=/var/log/rtl_ais.log
 
@@ -19,15 +22,15 @@ depend() {
 #    ${logfile}
 #}
 
-start() {
-  ebegin "Strating rtl_ais"
-  start-stop-daemon -S -b -x ${command} \
-  	-m -p ${pidfile} \
-	-1 ${logfile} -2 ${logfile} \
-	-- ${command_args}
-}
+#start() {
+#  ebegin "Strating rtl_ais"
+#  start-stop-daemon -S -b -x ${command} \
+#  	-m -p ${pidfile} \
+#	-1 ${logfile} -2 ${logfile} \
+#	-- ${command_args}
+#}
 
-stop() {
-  ebegin "Stopping rtl_ais"
-  start-stop-daemon -K -R 3 -p ${pidfile}
-}
+#stop() {
+#  ebegin "Stopping rtl_ais"
+#  start-stop-daemon -K -R 3 -p ${pidfile}
+#}
