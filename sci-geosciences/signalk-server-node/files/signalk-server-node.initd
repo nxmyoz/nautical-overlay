@@ -6,7 +6,9 @@ name="signalk-server-node daemon"
 description="SignalK Node Server"
 command=/opt/signalk-server-node/bin/signalk-server-node
 command_args="${SIGNALK_SERVER_ARGS}"
+pidfile=/var/run/signalk-server-node.pid
 
 depend() {
-
+	need net
+	use logger
 }
