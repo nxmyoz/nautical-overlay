@@ -6,6 +6,7 @@ name="signalk-server-node"
 description="SignalK Node Server"
 command=/opt/signalk-server-node/bin/signalk-server
 command_args="${SIGNALK_SERVER_ARGS}"
+command_user="signalk:signalk"
 command_background=true
 pidfile=/var/run/signalk-server-node.pid
 
@@ -14,7 +15,3 @@ depend() {
   use logger
 }
 
-start_pre() {
-  checkpath -f -o signalk:signalk -m 0775 \
-    ${logfile}
-}
