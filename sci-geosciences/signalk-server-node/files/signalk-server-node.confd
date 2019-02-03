@@ -1,1 +1,9 @@
-SIGNALK_SERVER_ARGS=""
+# These are starting options for signalk-server
+#
+# to use sample NMEA0183 data set
+#  --sample-nmea0183-data
+#
+# to use sample NMEA2000 data set
+#  --sample-n2k-data
+
+SIGNALK_SERVER_ARGS="-c /etc/signalk"
