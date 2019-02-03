@@ -5,7 +5,16 @@ This is an overlay for Gentoo of open source software useful to have on a (saili
 At this moment these are:
 * rtl_ais
 * signalk-server-node
+* kplex
 
+### Set up this overlay
+
+Be an advanced Gentoo user.
+
+```
+wget "https://raw.githubusercontent.com/nxmyoz/nautical-overlay/master/overlays.xml" -O /etc/layman/overlays/nautical.xml
+layman -f -a NAUTICAL
+```
 
 ## signalk-server-node
 
