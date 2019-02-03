@@ -16,4 +16,15 @@ DEPEND=""
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
+src_install() {
+	dobin kplex
+	doman kplex.1
+	dodoc README
 
+	dodir /etc/kplex
+	insinto /etc/kplex
+	newins kplex.conf.ex kplex.conf
+
+	newconfd "${FILESDIR}/kplex.confd" kplex
+	newinitd "${FILESDIR}/kplex.initd" kplex
+}

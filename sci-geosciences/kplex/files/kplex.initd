@@ -1,0 +1,14 @@
+#!/sbin/openrc-run
+# Copyright 2019 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+name="kplex daemon"
+description="An NMEA-0183 Multiplexer"
+command=/usr/bin/kplex
+command_args="-p ${pidfile} -o mode=background ${kplex_args}"
+pidfile=/var/run/kplex.pid
+
+depend() {
+	need net
+	use logger
+}
