@@ -1,0 +1,12 @@
+#!/sbin/openrc-run
+# Copyright 2019 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+name="signalk-server-node daemon"
+description="SignalK Node Server"
+command=/opt/signalk-server-node/bin/signalk-server-node
+command_args="${SIGNALK_SERVER_ARGS}"
+
+depend() {
+
+}

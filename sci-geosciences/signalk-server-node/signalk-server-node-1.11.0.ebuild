@@ -48,4 +48,7 @@ src_install() {
 	dodir "${dest}"
 
 	cp -a * "${D}"/opt/"${PN}"/. || die
+
+	newinitd "${FILESDIR}/signalk-server-node.initd" signalk-server-node
+	newconfd "${FILESDIR}/signalk-server-node.confd" signalk-server-node
 }
