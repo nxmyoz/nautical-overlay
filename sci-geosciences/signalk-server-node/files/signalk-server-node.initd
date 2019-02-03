@@ -9,6 +9,6 @@ command_args="${SIGNALK_SERVER_ARGS}"
 pidfile=/var/run/signalk-server-node.pid
 
 depend() {
-	need net
-	use logger
+  need net
+  use logger
 }
