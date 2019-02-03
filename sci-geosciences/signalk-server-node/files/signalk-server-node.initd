@@ -8,7 +8,6 @@ command=/opt/signalk-server-node/bin/signalk-server
 command_args="${SIGNALK_SERVER_ARGS}"
 command_background=true
 pidfile=/var/run/signalk-server-node.pid
-#logfile=/var/log/signalk-server-node.log
 
 depend() {
   need net
@@ -19,16 +18,3 @@ start_pre() {
   checkpath -f -o signalk:signalk -m 0775 \
     ${logfile}
 }
-
-#start() {
-#  ebegin "Strating SignalK Node Server"
-#  start-stop-daemon -S -b -x ${command} \
-#  	-m -p ${pidfile} -u signalk -g signalk \
-#	-1 ${logfile} -2 ${logfile} \
-#	-- ${command_args}
-#}
-
-#stop() {
-#  ebegin "Stopping SignalK Node Server"
-#  start-stop-daemon -K -R 3 -p ${pidfile}
-#}
