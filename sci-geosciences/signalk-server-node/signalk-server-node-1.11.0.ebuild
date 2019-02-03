@@ -9,7 +9,7 @@ if [[ ${PV} = 9999 ]] ; then
 	GIT_ECLASS="git-r3"
 fi
 
-inherit ${GIT_ECLASS}
+inherit ${GIT_ECLASS} user
 
 DESCRIPTION="An implementation of a Signal K server for boats"
 HOMEPAGE="http://signalk.org"
@@ -26,6 +26,11 @@ DEPEND="net-libs/nodejs
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
+pkg_setup() {
+	enewgroup signalk
+	enewuser signalk -1 -1 /opt/signalk-server-node signalk
+}
+
 src_compile() {
 	NPM_INSTALL_OPTS=""
 
@@ -39,13 +44,8 @@ src_compile() {
 src_install() {
 	local dest="/opt/${PN}"
 
+	diropts -o signalk -g signalk
 	dodir "${dest}"
 
 	cp -a * "${D}"/opt/"${PN}"/. || die
 }
-
-pkg_preinst() {
-	enewgroup signalk
-	enewuser signalk -1 -1 /opt/signalk signalk
-}
-
