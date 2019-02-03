@@ -28,7 +28,7 @@ BDEPEND=""
 
 pkg_setup() {
 	enewgroup signalk
-	enewuser signalk -1 -1 /opt/signalk-server-node signalk
+	enewuser signalk -1 -1 /opt/signalk-server-node "signalk,uucp"
 }
 
 src_compile() {
@@ -44,11 +44,19 @@ src_compile() {
 src_install() {
 	local dest="/opt/${PN}"
 
-	diropts -o signalk -g signalk
 	dodir "${dest}"
+	dodir /etc/signalk
 
 	cp -a * "${D}"/opt/"${PN}"/. || die
 
 	newinitd "${FILESDIR}/signalk-server-node.initd" signalk-server-node
 	newconfd "${FILESDIR}/signalk-server-node.confd" signalk-server-node
+}
+
+pkg_postinst() {
+	chown -R signalk: /opt/signalk-server-node
+	chmod -R 0775 /opt/signalk-server-node
+
+	chown -R signalk: /etc/signalk
+	chmod -R 0775 /etc/signalk
 }

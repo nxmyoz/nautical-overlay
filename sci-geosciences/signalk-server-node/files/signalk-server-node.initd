@@ -2,13 +2,32 @@
 # Copyright 2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-name="signalk-server-node daemon"
+name="signalk-server-node"
 description="SignalK Node Server"
-command=/opt/signalk-server-node/bin/signalk-server-node
+command=/opt/signalk-server-node/bin/signalk-server
 command_args="${SIGNALK_SERVER_ARGS}"
 pidfile=/var/run/signalk-server-node.pid
+logfile=/var/log/signalk-server-node.log
 
 depend() {
   need net
   use logger
+}
+
+start_pre() {
+  checkpath -f -o signalk:signalk -m 0775 \
+    ${logfile}
+}
+
+start() {
+  ebegin "Strating SignalK Node Server"
+  start-stop-daemon -S -b -x ${command} \
+  	-m -p ${pidfile} -u signalk -g signalk \
+	-1 ${logfile} -2 ${logfile} \
+	-- ${command_args}
+}
+
+stop() {
+  ebegin "Stopping SignalK Node Server"
+  start-stop-daemon -K -R 3 -p ${pidfile}
 }
