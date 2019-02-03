@@ -8,7 +8,7 @@ command=/opt/signalk-server-node/bin/signalk-server
 command_args="${SIGNALK_SERVER_ARGS}"
 command_user="signalk:signalk"
 command_background=true
-pidfile=/var/run/signalk-server-node.pid
+pidfile="/run/${RC_SVCNAME}.pid"
 
 depend() {
   need net

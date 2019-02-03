@@ -4,9 +4,10 @@
 
 name="kplex daemon"
 description="An NMEA-0183 Multiplexer"
+pidfile="/run/${RC_SVCNAME}.pid"
 command=/usr/bin/kplex
-command_args="-p ${pidfile} -o mode=background ${kplex_args}"
-pidfile=/var/run/kplex.pid
+command_args="-p ${pidfile} ${kplex_args}"
+command_args_background="-o mode=background"
 
 depend() {
 	need net
