@@ -1,0 +1,7 @@
+# Command options for rtl-ais
+#
+# refer to
+#   rtl-ais --help
+# to get all available options
+
+RTL_AIS_ARGS=""

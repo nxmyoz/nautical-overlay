@@ -1,0 +1,33 @@
+#!/sbin/openrc-run
+# Copyright 2019 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+name="rtl_ais"
+description="A simple AIS tuner and generic dual-frequency FM demodulator"
+command=/bin/rtl_ais
+command_args="${RTL_AIS_ARGS}"
+pidfile=/var/run/rtl_ais.pid
+logfile=/var/log/rtl_ais.log
+
+depend() {
+  need net
+  use logger
+}
+
+#start_pre() {
+#  checkpath -f -o rtlais:rtlais -m 0775 \
+#    ${logfile}
+#}
+
+start() {
+  ebegin "Strating rtl_ais"
+  start-stop-daemon -S -b -x ${command} \
+  	-m -p ${pidfile} \
+	-1 ${logfile} -2 ${logfile} \
+	-- ${command_args}
+}
+
+stop() {
+  ebegin "Stopping rtl_ais"
+  start-stop-daemon -K -R 3 -p ${pidfile}
+}

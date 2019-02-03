@@ -1,9 +1,9 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit toolchain-funcs
+inherit toolchain-funcs user
 
 DESCRIPTION="A simple AIS tuner and generic dual-frequency FM demodulator"
 HOMEPAGE="https://github.com/dgiardini/rtl-ais"
@@ -20,10 +20,12 @@ fi
 LICENSE="GPL-2"
 SLOT="0"
 IUSE=""
+KEYWORDS="~arm64"
 
 RDEPEND="net-wireless/rtl-sdr
 		virtual/libusb:1"
 DEPEND="${RDEPEND}"
+BDEPEND=""
 
 src_compile() {
 	emake CC="$(tc-getCC)" \
@@ -31,6 +33,11 @@ src_compile() {
 		CFLAGS="$($(tc-getPKG_CONFIG) --cflags librtlsdr) ${CFLAGS}" \
 		LIBS="${LDFLAGS} $($(tc-getPKG_CONFIG) --libs librtlsdr) -lm -lpthread"
 }
+
 src_install() {
+	newinitd "${FILESDIR}/rtl_ais.initd" rtl_ais
+	newconfd "${FILESDIR}/rtl_ais.confd" rtl_ais
+
+	dodoc README
 	dobin rtl_ais
 }
