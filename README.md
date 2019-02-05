@@ -18,12 +18,12 @@ layman -f -a NAUTICAL
 
 ## signalk-server-node
 
-signalk-server-node is a NodeJS project and such, it is a beast when it comes to dependencies.
+signalk-server-node is a NodeJS project and as such, it is a beast when it comes to dependencies.
 When `npm install` is done, it says around 600 packages have been installed.
 
-Also, Gentoo doesn't provide any means of installing a nodejs package via npm at the moment, so to install signalk-server-node via portage requires some sort of trickery - the network-sandbox has to be disabled, in order to allow `npm` to get nodejs packages whil in compile phase.
+Also, Gentoo doesn't provide any means of installing a nodejs package via npm at the moment, so to install signalk-server-node via portage requires some sort of trickery - the network-sandbox has to be disabled, in order to allow `npm` to get nodejs packages whil in compile phase. This also means, it won't get into portage tree any time soon.
 
-To do so do:
+To do so, do:
 
 ```
 mkdir -p /etc/portage/env
@@ -34,7 +34,7 @@ Now it should be possible to merge signalk-server-node.
 
 ### Configuration
 
-The configuration folder for signalk-server-node is located in `/etc/signalk`.
+The configuration folder for signalk-server-node is (preferably) located in `/etc/signalk`.
 
 Run `/opt/signalk-server-node/bin/signalk-server-setup` to create your initial configuration files. Use the configuration folder mentioned above.
 
