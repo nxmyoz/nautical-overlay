@@ -16,7 +16,7 @@ HOMEPAGE="https://www.denx.de/wiki/U-Boot"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~arm64"
+KEYWORDS=""
 IUSE=""
 
 DEPEND="
