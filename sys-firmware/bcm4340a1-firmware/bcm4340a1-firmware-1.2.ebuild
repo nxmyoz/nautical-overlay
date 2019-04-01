@@ -23,6 +23,13 @@ EGIT_BRANCH="master"
 DEPEND=""
 RDEPEND="${DEPEND}"
 
+src_prepare() {
+	rm -rf configure*
+	rm -rf Makefile*
+	rm -rf aclocal.m4
+	rm -rf install-sh
+}
+
 src_install() {
 	insinto "/lib/firmware"
 	doins broadcom/BCM43430A1.hcd
