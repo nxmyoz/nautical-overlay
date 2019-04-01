@@ -6,10 +6,15 @@ name="rtl_ais"
 description="A simple AIS tuner and generic dual-frequency FM demodulator"
 supervisor=supervise-daemon
 healthcheck_timer=5
+respawn_delay=5
 command=/usr/bin/rtl_ais
 command_args="${RTL_AIS_ARGS}"
 command_backgroud=true
 pidfile="/run/${RC_SVCNAME}.pid"
+
+healthcheck() {
+  ps -p $(cat $pidfile) > /dev/null 2>&1
+}
 
 depend() {
   need net
