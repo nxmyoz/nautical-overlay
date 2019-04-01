@@ -36,7 +36,7 @@ src_install() {
 	insinto "/lib/firmware"
 	doins broadcom/BCM43430A1.hcd
 	doins broadcom/BCM4345C0.hcd
-	dodoc broadcom/BCM_LEGAL.txt
+	dodoc broadcom/BCM-LEGAL.txt
 }
 
 
