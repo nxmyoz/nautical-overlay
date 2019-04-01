@@ -24,6 +24,8 @@ DEPEND=""
 RDEPEND="${DEPEND}"
 
 src_prepare() {
+	default
+
 	rm -rf configure*
 	rm -rf Makefile*
 	rm -rf aclocal.m4
