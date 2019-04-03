@@ -4,7 +4,7 @@
 EAPI=5
 
 DISTUTILS_OPTIONAL=1
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python3_{4,5,6,7} )
 SCONS_MIN_VERSION="1.2.1"
 
 inherit eutils udev user multilib distutils-r1 scons-utils toolchain-funcs python-r1
