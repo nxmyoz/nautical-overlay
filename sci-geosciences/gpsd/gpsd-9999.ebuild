@@ -24,7 +24,7 @@ LICENSE="BSD"
 SLOT="0/23"
 
 GPSD_PROTOCOLS=(
-	aivdm ashtech earthmate evermore fury fv18 garmin garmintxt geostar
+	aivdm ashtech earthmate evermore fury fv18 garmin garmintxt geostar greis
 	gpsclock isync itrax mtk3301 navcom nmea0183 nmea2000 ntrip oceanserver
 	oncore passthrough rtcm104v2 rtcm104v3 sirf skytraq superstar2 tnt
 	tripmate tsip ublox
