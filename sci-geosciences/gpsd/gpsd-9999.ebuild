@@ -10,7 +10,7 @@ SCONS_MIN_VERSION="1.2.1"
 inherit eutils udev user multilib distutils-r1 scons-utils toolchain-funcs python-r1
 
 if [[ ${PV} == "9999" ]] ; then
-	EGIT_REPO_URI="https://git.savannah.gnu.org/gpsd.git"
+	EGIT_REPO_URI="https://git.savannah.gnu.org/git/gpsd.git"
 	EGIT_CLONE_TYPE="shallow"
 	inherit git-r3
 else
