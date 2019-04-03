@@ -7,7 +7,7 @@ DISTUTILS_OPTIONAL=1
 PYTHON_COMPAT=( python2_7 )
 SCONS_MIN_VERSION="1.2.1"
 
-inherit eutils udev user multilib distutils-r1 scons-utils toolchain-funcs
+inherit eutils udev user multilib distutils-r1 scons-utils toolchain-funcs python-r1
 
 if [[ ${PV} == "9999" ]] ; then
 	EGIT_REPO_URI="git://git.savannah.nongnu.org/gpsd.git"
@@ -78,7 +78,7 @@ src_prepare() {
 		die "please sync ebuild & source"
 	fi
 
-	epatch "${FILESDIR}"/${P}-do_not_rm_library.patch
+	#epatch "${FILESDIR}"/${P}-do_not_rm_library.patch
 
 	# Avoid useless -L paths to the install dir
 	sed -i \
@@ -89,7 +89,9 @@ src_prepare() {
 }
 
 python_prepare_all() {
-	python_export_best
+	python_setup
+	python_export
+	#python_export_best
 	# Extract python info out of SConstruct so we can use saner distribute
 	pyvar() { sed -n "/^ *$1 *=/s:.*= *::p" SConstruct ; }
 	local pybins=$(pyvar python_progs | tail -1)
