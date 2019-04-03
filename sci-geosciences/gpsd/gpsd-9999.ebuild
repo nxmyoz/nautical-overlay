@@ -119,6 +119,7 @@ src_configure() {
 	myesconsargs=(
 		prefix="${EPREFIX}/usr"
 		libdir="\$prefix/$(get_libdir)"
+		python_libdir="\$prefix/$(python_get_library_path)"
 		udevdir="$(get_udevdir)"
 		chrpath=False
 		gpsd_user=gpsd
