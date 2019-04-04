@@ -4,14 +4,15 @@
 EAPI=5
 
 DISTUTILS_OPTIONAL=1
-PYTHON_COMPAT=( python3_6 )
+PYTHON_COMPAT=( python3_{4,5,6,7} )
 SCONS_MIN_VERSION="1.2.1"
 
 inherit eutils udev user multilib distutils-r1 scons-utils toolchain-funcs python-r1
 
 if [[ ${PV} == "9999" ]] ; then
-	EGIT_REPO_URI="git://git.savannah.nongnu.org/gpsd.git"
-	inherit git-2
+	EGIT_REPO_URI="https://git.savannah.gnu.org/git/gpsd.git"
+	EGIT_CLONE_TYPE="shallow"
+	inherit git-r3
 else
 	SRC_URI="mirror://nongnu/${PN}/${P}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~ppc ~ppc64 ~x86"
@@ -55,7 +56,11 @@ RDEPEND="
 	)
 	python? ( ${PYTHON_DEPS} )
 	usb? ( virtual/libusb:1 )
-	X? ( dev-python/pygtk:2[${PYTHON_USEDEP}] )"
+	X? ( dev-python/pygtk:2[${PYTHON_USEDEP}] )
+	dev-python/pyserial
+	net-misc/pps-tools
+	virtual/libusb
+	sys-libs/libcap"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	test? ( sys-devel/bc )"
@@ -64,7 +69,7 @@ DEPEND="${RDEPEND}
 if [[ ${PV} == *9999* ]] ; then
 	DEPEND+="
 		app-text/xmlto
-		=app-text/docbook-xml-dtd-4.1*"
+		app-text/asciidoc"
 fi
 
 src_prepare() {
@@ -78,7 +83,7 @@ src_prepare() {
 		die "please sync ebuild & source"
 	fi
 
-	epatch "${FILESDIR}"/${P}-do_not_rm_library.patch
+	#epatch "${FILESDIR}"/${P}-do_not_rm_library.patch
 
 	# Avoid useless -L paths to the install dir
 	sed -i \
@@ -91,6 +96,7 @@ src_prepare() {
 python_prepare_all() {
 	python_setup
 	python_export
+	#python_export_best
 	# Extract python info out of SConstruct so we can use saner distribute
 	pyvar() { sed -n "/^ *$1 *=/s:.*= *::p" SConstruct ; }
 	local pybins=$(pyvar python_progs | tail -1)
@@ -113,13 +119,14 @@ src_configure() {
 	myesconsargs=(
 		prefix="${EPREFIX}/usr"
 		libdir="\$prefix/$(get_libdir)"
+		python_libdir="$(python_get_sitedir)"
 		udevdir="$(get_udevdir)"
 		chrpath=False
 		gpsd_user=gpsd
 		gpsd_group=uucp
 		nostrip=True
-		python=False
-		manbuild=False
+		python=True
+		manbuild=True
 		shared=$(usex !static True False)
 		$(use_scons bluetooth bluez)
 		$(use_scons cxx libgpsmm)
@@ -168,6 +175,7 @@ src_install() {
 			rm "${ED%/}"/usr/bin/xgps* || die
 		fi
 	fi
+
 }
 
 pkg_preinst() {
