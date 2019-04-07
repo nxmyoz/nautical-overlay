@@ -29,6 +29,7 @@ RDEPEND="
 	x11-libs/wxGTK:${WX_GTK_VER}
 	>=sci-geosciences/opencpn-4.2.0
 	sys-devel/gettext
+	dev-libs/libusb-compat
 "
 DEPEND="${RDEPEND}"
 

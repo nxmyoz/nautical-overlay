@@ -4,4 +4,4 @@
 #   rtl-ais --help
 # to get all available options
 
-RTL_AIS_ARGS=""
+RTL_AIS_ARGS="-R -h 127.0.0.1 -P 10109"

@@ -23,7 +23,8 @@ src_install() {
 
 	dodir /etc/kplex
 	insinto /etc/kplex
-	newins kplex.conf.ex kplex.conf
+	newins kplex.conf.ex kplex.conf.ex
+	newins "${FILESDIR}/kplex.conf" kplex.conf
 
 	newconfd "${FILESDIR}/kplex.confd" kplex
 	newinitd "${FILESDIR}/kplex.initd" kplex
