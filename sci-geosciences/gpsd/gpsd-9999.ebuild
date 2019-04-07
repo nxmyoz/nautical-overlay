@@ -73,6 +73,8 @@ if [[ ${PV} == *9999* ]] ; then
 fi
 
 src_prepare() {
+	default
+
 	# Make sure our list matches the source.
 	local src_protocols=$(echo $(
 		sed -n '/# GPS protocols/,/# Time service/{s:#.*::;s:[(",]::g;p}' "${S}"/SConstruct | awk '{print $1}' | LC_ALL=C sort
