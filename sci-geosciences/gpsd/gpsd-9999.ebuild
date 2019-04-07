@@ -151,7 +151,7 @@ src_configure() {
 	# enable specified protocols
 	local protocol
 	for protocol in ${GPSD_PROTOCOLS[@]} ; do
-		myesconsargs+=( $(use_scons gpsd_protocols_${protocol} ${protocol}) )
+		myesconsargs+=( $(usex gpsd_protocols_${protocol} ${protocol}) )
 	done
 }
 
