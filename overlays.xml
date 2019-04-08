@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <repositories version="1.0">
   <repo quality="experimental" status="unofficial">
-    <name>NAUTICAL</name>
+    <name>nautical</name>
     <description>Nautical Overlay</description>
     <homepage>https://github.com/nxmyoz/nautical-overlay</homepage>
     <owner>
