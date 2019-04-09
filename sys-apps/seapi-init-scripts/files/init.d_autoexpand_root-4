@@ -7,8 +7,7 @@
 # Operates on a live root filesystem: first pass will simply expand the
 # partition, then reboot (as it is not possible to change the kernel partition
 # table entry for / on a running system); on the second pass, we resize the
-# root filesystem (this can be done 'live'), then add xdm to the default
-# runlevel, and start it (to bring up the Xfce4 demouser session).
+# root filesystem (this can be done 'live').
 #
 # Checks for a sentinel file "autoexpand_root_partition" on /boot (the
 # microSD card's first partition), and will proceed only if found. On first
@@ -16,16 +15,15 @@
 # second run, this latter sentinel file is deleted).
 #
 # On first run, the root and demouser password will also be set, to
-# "raspberrypi64"; if you _only_ want to do this (and not extend the root
+# "seapi64"; if you _only_ want to do this (and not extend the root
 # partition) then create an "autoexpand_root_none" sentinel file on /boot (in
-# place of "autoexpand_root_partition"). For avoidance of doubt, doing so
-# will still enable Xfce4, and start the demouser session.
+# place of "autoexpand_root_partition").
 #
 # Copyright (c) 2017 sakaki <sakaki@deciban.com>
 # License: GPL 3.0+
 # NO WARRANTY
 
-description="Auto-expands root partition and sets passwords (for gentoo-on-rpi3-64bit)"
+description="Auto-expands root partition and sets passwords"
 
 depend() {
 	need localmount
