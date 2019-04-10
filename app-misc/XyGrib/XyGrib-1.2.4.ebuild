@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit cmake-utils
+inherit cmake-utils eutils
 
 DESCRIPTION="XyGrib is a Grib file reader and visualizes meteorological data."
 HOMEPAGE="https://opengribs.org"
@@ -35,7 +35,7 @@ src_configure() {
 	#	unpack "${DISTDIR}/${PN}-High_Resolution_Maps-1.1.1.tar.gz"
 	#fi
 	sed -i 's,set(PREFIX_BIN ${PROJECT_NAME}),set(PREFIX_BIN ""),' CMakeLists.txt
-	sed -i 'set(PREFIX_PKGDATA ${PROJECT_NAME}),set(PREFIX_PKGDATA share/${PROJECT_NAME}),' CMakeLists.txt
+	sed -i 's,set(PREFIX_PKGDATA ${PROJECT_NAME}),set(PREFIX_PKGDATA "share/${PROJECT_NAME}"),' CMakeLists.txt
 	cmake-utils_src_configure
 }
 
