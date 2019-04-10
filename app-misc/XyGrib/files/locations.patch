@@ -22,7 +22,7 @@ index 57b04b9..72bf1cc 100644
 -	static QString pathImg (const char *fname) {return pathData()+"data/img/"+fname;}
 -    static QString pathTr  (QString lang)   {return pathData()+"data/tr/xyGrib_"+lang;}
 +	static QString pathImg (const char *fname) {return ((QString) "/usr/share/XyGrib/data/img/") +fname;}
-+    static QString pathTr  (QString lang)   {return /usr/share/XyGrib/data/tr/XyGrib_"+lang;}
++    static QString pathTr  (QString lang)   {return "/usr/share/XyGrib/data/tr/XyGrib_"+lang;}
  	static QString getServerName ();
  
      static void     setSettings (const QHash <QString, QVariant> &h);
