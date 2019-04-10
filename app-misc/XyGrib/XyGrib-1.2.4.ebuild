@@ -3,12 +3,12 @@
 
 EAPI=7
 
-inherit cmake-utils eutils
+inherit cmake-utils desktop eutils
 
 DESCRIPTION="XyGrib is a Grib file reader and visualizes meteorological data."
 HOMEPAGE="https://opengribs.org"
 SRC_URI="https://github.com/opengribs/XyGrib/archive/v${PV}.tar.gz -> ${P}.tar.gz
-	https://github.com/opengribs/XyGrib/raw/master/linux_online_installer/packages/org.opengribs.xygrib.core.linux/data/icons/xyGrib_32.png -> ${PN}-icon.png
+	https://github.com/opengribs/XyGrib/raw/master/debian/xygrib.png -> ${PN}-icon.png
 	maps?   (
 		https://github.com/opengribs/XyGrib/releases/download/v1.1.1/XyGrib___High_Resolution_Maps.tar.gz -> ${PN}-High_Resolution_Maps-1.1.1.tar.gz
 		https://github.com/opengribs/XyGrib/releases/download/v1.1.1/XyGrib___cities_files.tar.gz -> ${PN}-cities-1.1.1.tar.gz
@@ -29,6 +29,10 @@ DEPEND="app-arch/bzip2
 	x11-libs/qwt:6[qt5(+)]"
 RDEPEND="${DEPEND}"
 BDPEND=""
+
+PATCHES=(
+	"${FILESDIR}/locations.patch"
+)
 
 src_configure() {
 	#if use maps; then

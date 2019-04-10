@@ -1,0 +1,28 @@
+diff --git a/Util.h b/Util.h.gentoo
+index 57b04b9..72bf1cc 100644
+--- a/src/util/Util.h
++++ b/src/util/Util.h
+@@ -79,15 +79,15 @@ class Util : public QObject
+ 		
+ //    static QString pathData ()   {return "./";}
+     static QString pathData ()   ;
+-    static QString pathColors () {return pathData()+"data/colors/";}
+-	static QString pathConfig () {return pathData()+"data/config/";}
+-	static QString pathFonts ()  {return pathData()+"data/fonts/";}
+-	static QString pathGis ()    {return pathData()+"data/gis/";}
+-	static QString pathGshhs ()  {return pathData()+"data/maps/gshhs/";}
+-	static QString pathStuff ()  {return pathData()+"data/stuff/";}
++    static QString pathColors () {return "/usr/share/XyGrib/data/colors/";}
++	static QString pathConfig () {return "/usr/share/XyGrib/data/config/";}
++	static QString pathFonts ()  {return "/usr/share/XyGrib/data/fonts/";}
++	static QString pathGis ()    {return "/usr/share/XyGrib/data/gis/";}
++	static QString pathGshhs ()  {return "/usr/share/XyGrib/data/maps/gshhs/";}
++	static QString pathStuff ()  {return "/usr/share/XyGrib/data/stuff/";}
+ 	
+-	static QString pathImg (const char *fname) {return pathData()+"data/img/"+fname;}
+-    static QString pathTr  (QString lang)   {return pathData()+"data/tr/xyGrib_"+lang;}
++	static QString pathImg (const char *fname) {return ((QString) "/usr/share/XyGrib/data/img/") +fname;}
++    static QString pathTr  (QString lang)   {return /usr/share/XyGrib/data/tr/XyGrib_"+lang;}
+ 	static QString getServerName ();
+ 
+     static void     setSettings (const QHash <QString, QVariant> &h);
