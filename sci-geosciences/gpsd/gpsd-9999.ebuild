@@ -31,8 +31,8 @@ GPSD_PROTOCOLS=(
 	tripmate tsip ublox
 )
 IUSE_GPSD_PROTOCOLS=${GPSD_PROTOCOLS[@]/#/gpsd_protocols_}
-IUSE="${IUSE_GPSD_PROTOCOLS} bluetooth +cxx dbus debug ipv6 latency_timing ncurses ntp python qt5 +shm +sockets static systemd test udev usb X"
-REQUIRED_USE="X? ( python )
+IUSE="${IUSE_GPSD_PROTOCOLS} bluetooth +cxx dbus debug ipv6 latency_timing ncurses ntp python qt5 +shm +sockets static systemd test udev usb"
+REQUIRED_USE="
 	gpsd_protocols_nmea2000? ( gpsd_protocols_aivdm )
 	python? ( ${PYTHON_REQUIRED_USE} )
 	qt5? ( cxx )"
@@ -56,7 +56,6 @@ RDEPEND="
 	)
 	python? ( ${PYTHON_DEPS} )
 	usb? ( virtual/libusb:1 )
-	X? ( dev-python/pygtk:2[${PYTHON_USEDEP}] )
 	dev-python/pyserial
 	net-misc/pps-tools
 	virtual/libusb
@@ -176,9 +175,9 @@ src_install() {
 	if use python ; then
 		distutils-r1_src_install
 		# Delete all X related packages if user doesn't want them
-		if ! use X && [[ -f "${ED%/}"/usr/bin/xgps ]]; then
-			rm "${ED%/}"/usr/bin/xgps* || die
-		fi
+		#if ! use X && [[ -f "${ED%/}"/usr/bin/xgps ]]; then
+		#	rm "${ED%/}"/usr/bin/xgps* || die
+		#fi
 	fi
 
 }
