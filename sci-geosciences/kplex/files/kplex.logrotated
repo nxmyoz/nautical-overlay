@@ -1,4 +1,6 @@
 /var/log/kplex/*.log {
+	rotate -1
+	daily
 	copytruncate
         compress
         delaycompress
