@@ -120,7 +120,7 @@ python_prepare_all() {
 src_configure() {
 	MYSCONS=(
 		prefix="${EPREFIX}/usr"
-		libdir="${EPREFIX}/$(get_libdir)"
+		libdir="${prefix}/$(get_libdir)"
 		python_libdir="$(python_get_sitedir)"
 		udevdir="$(get_udevdir)"
 		chrpath=False
