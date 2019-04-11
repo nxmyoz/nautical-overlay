@@ -118,9 +118,12 @@ python_prepare_all() {
 }
 
 src_configure() {
+	prefix_var="${EPREFIX}/usr"
+	libdir_var="${prefix_var}/$(get_libdir)"
 	MYSCONS=(
 		prefix="${EPREFIX}/usr"
-		libdir="${prefix}/$(get_libdir)"
+		#libdir="${prefix}/$(get_libdir)"
+		libdir="${libdir_var}"
 		python_libdir="$(python_get_sitedir)"
 		udevdir="$(get_udevdir)"
 		chrpath=False
