@@ -142,7 +142,7 @@ src_configure() {
 		qt=$(usex qt5 True False)
 		shm_export=$(usex shm True False)
 		socket_export=$(usex sockets True False)
-		usb=$(usex usb True False))
+		usb=$(usex usb True False)
 		systemd=$(usex systemd)
 	)
 
