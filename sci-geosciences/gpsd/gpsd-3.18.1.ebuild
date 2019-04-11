@@ -1,7 +1,7 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=7
 
 DISTUTILS_OPTIONAL=1
 PYTHON_COMPAT=( python3_{4,5,6,7} )
@@ -73,6 +73,8 @@ if [[ ${PV} == *9999* ]] ; then
 fi
 
 src_prepare() {
+	default
+
 	# Make sure our list matches the source.
 	local src_protocols=$(echo $(
 		sed -n '/# GPS protocols/,/# Time service/{s:#.*::;s:[(",]::g;p}' "${S}"/SConstruct | awk '{print $1}' | LC_ALL=C sort
@@ -128,20 +130,20 @@ src_configure() {
 		python=True
 		manbuild=True
 		shared=$(usex !static True False)
-		$(use_scons bluetooth bluez)
-		$(use_scons cxx libgpsmm)
-		$(use_scons debug clientdebug)
-		$(use_scons dbus dbus_export)
-		$(use_scons ipv6)
-		$(use_scons latency_timing timing)
-		$(use_scons ncurses)
-		$(use_scons ntp ntpshm)
-		$(use_scons ntp pps)
-		$(use_scons qt5 qt)
-		$(use_scons shm shm_export)
-		$(use_scons sockets socket_export)
-		$(use_scons usb)
-		$(use_scons systemd)
+		$(usex bluetooth bluez)
+		$(usex cxx libgpsmm)
+		$(usex debug clientdebug)
+		$(usex dbus dbus_export)
+		$(usex ipv6)
+		$(usex latency_timing timing)
+		$(usex ncurses)
+		$(usex ntp ntpshm)
+		$(usex ntp pps)
+		$(usex qt5 qt)
+		$(usex shm shm_export)
+		$(usex sockets socket_export)
+		$(usex usb)
+		$(usex systemd)
 	)
 
 	use qt5 && myesconsargs+=( qt_versioned=5 )
@@ -149,7 +151,7 @@ src_configure() {
 	# enable specified protocols
 	local protocol
 	for protocol in ${GPSD_PROTOCOLS[@]} ; do
-		myesconsargs+=( $(use_scons gpsd_protocols_${protocol} ${protocol}) )
+		myesconsargs+=( $(usex gpsd_protocols_${protocol} ${protocol}) )
 	done
 }
 
