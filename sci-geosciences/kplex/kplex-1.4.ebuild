@@ -12,7 +12,7 @@ SLOT="0"
 KEYWORDS="~arm64"
 IUSE=""
 
-DEPEND=""
+DEPEND="app-admin/logrotate"
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
@@ -28,4 +28,8 @@ src_install() {
 
 	newconfd "${FILESDIR}/kplex.confd" kplex
 	newinitd "${FILESDIR}/kplex.initd" kplex
+
+	dodir /var/log/kplex
+	insinto /etc/logrotate.d
+	newins "${FILESDIR}/kplex.logrotated" kplex
 }

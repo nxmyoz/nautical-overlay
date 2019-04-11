@@ -1,0 +1,7 @@
+/var/log/kplex/*.log {
+	copytruncate
+        compress
+        delaycompress
+        notifempty
+        missingok
+}
