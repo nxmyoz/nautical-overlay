@@ -1,7 +1,7 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=7
 
 DISTUTILS_OPTIONAL=1
 PYTHON_COMPAT=( python3_{4,5,6,7} )
@@ -118,7 +118,7 @@ python_prepare_all() {
 }
 
 src_configure() {
-	myesconsargs=(
+	MYSCONS=(
 		prefix="${EPREFIX}/usr"
 		libdir="\$prefix/$(get_libdir)"
 		python_libdir="$(python_get_sitedir)"
@@ -159,7 +159,7 @@ src_compile() {
 	export CHRPATH=
 	tc-export CC CXX PKG_CONFIG
 	export SHLINKFLAGS=${LDFLAGS} LINKFLAGS=${LDFLAGS}
-	escons
+	escons "${MYSCONS[@]}"
 
 	use python && distutils-r1_src_compile
 }
