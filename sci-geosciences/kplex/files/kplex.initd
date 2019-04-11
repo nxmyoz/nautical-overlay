@@ -4,10 +4,18 @@
 
 name="kplex daemon"
 description="An NMEA-0183 Multiplexer"
+supervisor=supervise-daemon
+healthcheck_timer=10
+respawn_delay=10
+respawn_max=0
 pidfile="/run/${RC_SVCNAME}.pid"
 command=/usr/bin/kplex
 command_args="-p ${pidfile} ${kplex_args}"
 command_args_background="-o mode=background"
+
+healthcheck() {
+  ps -p $(cat $pidfile) > /dev/null 2>&1
+}
 
 depend() {
 	need net
