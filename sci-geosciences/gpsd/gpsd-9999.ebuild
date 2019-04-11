@@ -146,7 +146,7 @@ src_configure() {
 		shm_export=$(usex shm True False)
 		socket_export=$(usex sockets True False)
 		usb=$(usex usb True False)
-		systemd=$(usex systemd)
+		systemd=$(usex systemd True False)
 	)
 
 	use qt5 && MYSCONS+=( qt_versioned=5 )
