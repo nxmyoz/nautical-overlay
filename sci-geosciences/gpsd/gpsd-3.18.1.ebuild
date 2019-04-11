@@ -1,7 +1,7 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=7
 
 DISTUTILS_OPTIONAL=1
 PYTHON_COMPAT=( python3_{4,5,6,7} )
@@ -85,7 +85,7 @@ src_prepare() {
 		die "please sync ebuild & source"
 	fi
 
-	#epatch "${FILESDIR}"/${P}-do_not_rm_library.patch
+	epatch "${FILESDIR}"/${P}-do_not_rm_library.patch
 
 	# Avoid useless -L paths to the install dir
 	sed -i \
@@ -118,9 +118,12 @@ python_prepare_all() {
 }
 
 src_configure() {
-	myesconsargs=(
+	prefix_var="${EPREFIX}/usr"
+	libdir_var="${prefix_var}/$(get_libdir)"
+	MYSCONS=(
 		prefix="${EPREFIX}/usr"
-		libdir="\$prefix/$(get_libdir)"
+		#libdir="${prefix}/$(get_libdir)"
+		libdir="${libdir_var}"
 		python_libdir="$(python_get_sitedir)"
 		udevdir="$(get_udevdir)"
 		chrpath=False
@@ -130,28 +133,28 @@ src_configure() {
 		python=True
 		manbuild=True
 		shared=$(usex !static True False)
-		$(usex bluetooth bluez)
-		$(usex cxx libgpsmm)
-		$(usex debug clientdebug)
-		$(usex dbus dbus_export)
-		$(usex ipv6)
-		$(usex latency_timing timing)
-		$(usex ncurses)
-		$(usex ntp ntpshm)
-		$(usex ntp pps)
-		$(usex qt5 qt)
-		$(usex shm shm_export)
-		$(usex sockets socket_export)
-		$(usex usb)
-		$(usex systemd)
+		bluez=$(usex bluetooth True False)
+		libgpsmm=$(usex cxx True False)
+		clientdebug=$(usex debug True False)
+		dbus_export=$(usex dbus True False)
+		ipv6=$(usex ipv6 True Flase)
+		timing=$(usex latency_timing True False)
+		ncurses=$(usex ncurses True False)
+		ntpshm=$(usex ntp True False)
+		pps=$(usex ntp True False)
+		qt=$(usex qt5 True False)
+		shm_export=$(usex shm True False)
+		socket_export=$(usex sockets True False)
+		usb=$(usex usb True False)
+		systemd=$(usex systemd)
 	)
 
-	use qt5 && myesconsargs+=( qt_versioned=5 )
+	use qt5 && MYSCONS+=( qt_versioned=5 )
 
 	# enable specified protocols
 	local protocol
 	for protocol in ${GPSD_PROTOCOLS[@]} ; do
-		myesconsargs+=( $(usex gpsd_protocols_${protocol} ${protocol}) )
+		MYSCONS+=( ${protocol}=$(usex gpsd_protocols_${protocol} True False) )
 	done
 }
 
@@ -159,7 +162,7 @@ src_compile() {
 	export CHRPATH=
 	tc-export CC CXX PKG_CONFIG
 	export SHLINKFLAGS=${LDFLAGS} LINKFLAGS=${LDFLAGS}
-	escons
+	escons "${MYSCONS[@]}"
 
 	use python && distutils-r1_src_compile
 }
