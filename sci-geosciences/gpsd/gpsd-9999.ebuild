@@ -130,28 +130,28 @@ src_configure() {
 		python=True
 		manbuild=True
 		shared=$(usex !static True False)
-		$(usex bluetooth bluez)
-		$(usex cxx libgpsmm)
-		$(usex debug clientdebug)
-		$(usex dbus dbus_export)
-		$(usex ipv6)
-		$(usex latency_timing timing)
-		$(usex ncurses)
-		$(usex ntp ntpshm)
-		$(usex ntp pps)
-		$(usex qt5 qt)
-		$(usex shm shm_export)
-		$(usex sockets socket_export)
-		$(usex usb)
-		$(usex systemd)
+		bluez=$(usex bluetooth True False)
+		libgpsmm=$(usex cxx True False)
+		clientdebug=$(usex debug True False)
+		dbus_export=$(usex dbus True False)
+		ipv6=$(usex ipv6 True Flase)
+		timing=$(usex latency_timing True False)
+		ncurses=$(usex ncurses True False)
+		ntpshm=$(usex ntp True False)
+		pps=$(usex ntp True False)
+		qt=$(usex qt5 True False)
+		shm_export=$(usex shm True False)
+		socket_export=$(usex sockets True False)
+		usb=$(usex usb True False))
+		systemd=$(usex systemd)
 	)
 
-	use qt5 && myesconsargs+=( qt_versioned=5 )
+	use qt5 && MYSCONS+=( qt_versioned=5 )
 
 	# enable specified protocols
 	local protocol
 	for protocol in ${GPSD_PROTOCOLS[@]} ; do
-		myesconsargs+=( $(usex gpsd_protocols_${protocol} ${protocol}) )
+		MYSCONS+=( ${protocol}=$(usex gpsd_protocols_${protocol} True False) )
 	done
 }
 
