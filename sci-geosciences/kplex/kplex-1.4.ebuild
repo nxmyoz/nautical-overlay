@@ -9,7 +9,7 @@ SRC_URI="https://github.com/stripydog/kplex/archive/v${PV}.tar.gz -> ${P}.tar.gz
 
 LICENSE=""
 SLOT="0"
-KEYWORDS="~arm64"
+KEYWORDS="~amd64 ~arm64"
 IUSE=""
 
 DEPEND="app-admin/logrotate"
