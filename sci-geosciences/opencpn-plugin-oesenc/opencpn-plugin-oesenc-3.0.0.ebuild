@@ -34,7 +34,8 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 
 PATCHES=(
-	"${FILESDIR}/lib-3.0.0.patch"
+	"${FILESDIR}/wxWidgets.patch
+	${FILESDIR}/lib-3.0.0.patch"
 )
 
 src_prepare() {
