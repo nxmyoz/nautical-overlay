@@ -1,27 +1,27 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 
 WX_GTK_VER="3.0"
-MY_PN="gxradar_pi"
+MY_PN="weatherfax_pi"
 if [[ ${PV} == "9999" ]] ; then
-	EGIT_REPO_URI="https://github.com/trudK45/${MY_PN}.git"
+	EGIT_REPO_URI="https://github.com/rgleason/${MY_PN}.git"
 	inherit git-r3 cmake-utils wxwidgets
 	KEYWORDS=""
 else
 	SRC_URI="
-		https://github.com/trudK45/${MY_PN}/archive/v.${PV}.tar.gz -> ${P}.tar.gz
+		https://github.com/rgleason/${MY_PN}/archive/v${PV}-ov50-2.tar.gz -> ${P}.tar.gz
 	"
 	inherit cmake-utils wxwidgets
 	KEYWORDS="~amd64 ~x86"
 	S="${WORKDIR}/${MY_PN}-${PV}"
 fi
 
-DESCRIPTION="Garmin xHD Radar Plugin for OpenCPN"
-HOMEPAGE="https://github.com/trudK45/gxradar_pi"
+DESCRIPTION="Weatherfax Plugin for OpenCPN"
+HOMEPAGE="https://github.com/rgleason/weatherfax_pi"
 
-LICENSE="GPL-2+"
+LICENSE="GPL-3+"
 SLOT="0"
 IUSE=""
 

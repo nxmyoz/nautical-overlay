@@ -19,7 +19,7 @@ else
 fi
 
 DESCRIPTION="Polar Diagram Plugin for OpenCPN"
-HOMEPAGE="https://github.com/ptulp/polar_pi"
+HOMEPAGE="https://github.com/rgleason/polar_pi"
 
 LICENSE="GPL-2+"
 SLOT="0"

@@ -19,7 +19,7 @@ else
 fi
 
 DESCRIPTION="FindIt Plugin for OpenCPN"
-HOMEPAGE="https://github.com/ptulp/FindIt_pi"
+HOMEPAGE="https://github.com/rgleason/FindIt_pi"
 
 LICENSE="GPL-2+"
 SLOT="0"

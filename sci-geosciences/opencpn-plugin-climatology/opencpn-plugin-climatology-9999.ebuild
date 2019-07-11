@@ -17,13 +17,9 @@ else
 	KEYWORDS="~amd64 ~x86"
 	S="${WORKDIR}/${MY_PN}-${PV}"
 fi
-SRC_URI="
-	$SRC_URI
-	mirror://sourceforge/opencpnplugins/climatology_pi/CL-DATA-1.0.tar.xz -> ${PN}-1.0-CL-DATA.tar.xz
-"
 
 DESCRIPTION="Climatology Plugin for OpenCPN (includes CL-DATA)"
-HOMEPAGE="https://github.com/seandepagnier/climatology_pi"
+HOMEPAGE="https://github.com/rgleason/climatology_pi"
 
 LICENSE="GPL-3+"
 SLOT="0"
