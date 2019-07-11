@@ -37,6 +37,15 @@ DEPEND="${RDEPEND}
 
 S="${WORKDIR}/OpenCPN-${PV}"
 
+PATCHES=(
+	"${FILESDIR}/wxWidgets.patch"
+)
+
+src_prepare() {
+	default
+}
+
+
 src_configure() {
 	setup-wxwidgets
 	local mycmakeargs=(
