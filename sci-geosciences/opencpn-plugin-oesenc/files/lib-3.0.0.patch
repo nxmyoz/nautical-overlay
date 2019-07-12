@@ -1,13 +1,13 @@
---- a/CMakeLists.txt	2019-07-10 21:17:04.799011941 +0200
-+++ b/CMakeLists.txt	2019-07-10 21:47:22.453355158 +0200
-@@ -110,6 +110,14 @@
+--- a/CMakeLists.txt	2019-07-12 17:20:29.956212745 +0200
++++ b/CMakeLists.txt	2019-07-12 17:24:02.394578915 +0200
+@@ -110,6 +110,14 @@ IF (NOT WIN32)
          SET (LIB_INSTALL_DIR "lib")
        ENDIF (CMAKE_SIZEOF_VOID_P MATCHES "8")
      ENDIF (EXISTS /etc/redhat-release)
 +
 +    IF (EXISTS /etc/gentoo-release)
 +      IF (CMAKE_SIZEOF_VOID_P MATCHES "8")
-+	SET (ARCH "x86_64")
++        SET (ARCH "x86_64")
 +	SET (LIB_INSTALL_DIR "lib64")
 +      ENDIF (CMAKE_SIZEOF_VOID_P MATCHES "8")
 +    ENDIF (EXISTS /etc/gentoo-release)
@@ -15,7 +15,7 @@
    ENDIF (UNIX AND NOT APPLE)
  endif(NOT WIN32)
  
-@@ -377,7 +385,7 @@
+@@ -377,7 +385,7 @@ IF (ARCH MATCHES "amd64" OR ARCH MATCHES
         DESTINATION ${PREFIX_PARENTBIN})
      INSTALL(FILES "buildlinux64/oeserverd/libsgllnx64-2.29.02.so"
         PERMISSIONS OWNER_READ OWNER_EXECUTE OWNER_WRITE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
