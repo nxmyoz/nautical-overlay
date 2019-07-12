@@ -8,6 +8,7 @@ MY_PN="oesenc_pi"
 if [[ ${PV} == "9999" ]] ; then
 	EGIT_REPO_URI="https://github.com/bdbcat/s63_pi.git"
 	inherit git-r3 cmake-utils wxwidgets
+	KEYWORDS=""
 else
 	SRC_URI="
 		https://github.com/mschiff/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
