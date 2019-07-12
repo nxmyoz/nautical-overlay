@@ -10,10 +10,10 @@ if [[ ${PV} == "9999" ]] ; then
 	inherit git-r3 cmake-utils wxwidgets udev
 	KEYWORDS=""
 else
-	inherit git-r3 cmake-utils wxwidgets udev
-	EGIT_REPO_URI="https://github.com/bdbcat/${MY_PN}.git"
-	EGIT_COMMIT="ae53bd40ae3bde9fcabe1c66b89d142785c4b6e0"
+SRC_URI="https://github.com/mschiff/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+	inherit cmake-utils wxwidgets udev
 	KEYWORDS="~amd64 ~x86"
+	S="${WORKDIR}/${MY_PN}-${PV}"
 fi
 
 DESCRIPTION="oeSENC Charts Plugin for OpenCPN"
