@@ -12,6 +12,7 @@ if [[ ${PV} == "9999" ]] ; then
 else
 	SRC_URI="
 		https://github.com/rgleason/${MY_PN}/archive/v${PV}-ov50.tar.gz -> ${P}.tar.gz
+		https://github.com/seandepagnier/climatology_pi_data/archive/006120320bde2c1ad8da10a911cdf2b0f3bffe0d.zip -> ${PN}-data.zip
 	"
 	inherit cmake-utils wxwidgets
 	KEYWORDS="~amd64 ~x86"
