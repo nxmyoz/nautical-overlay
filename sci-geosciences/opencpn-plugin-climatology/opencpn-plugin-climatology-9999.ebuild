@@ -15,7 +15,7 @@ else
 	"
 	inherit cmake-utils wxwidgets
 	KEYWORDS="~amd64 ~x86"
-	S="${WORKDIR}/${MY_PN}-${PV}"
+	S="${WORKDIR}/${MY_PN}-${PV}-ov50"
 fi
 
 DESCRIPTION="Climatology Plugin for OpenCPN (includes CL-DATA)"
