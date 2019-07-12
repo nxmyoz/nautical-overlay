@@ -29,6 +29,7 @@ RDEPEND="
 	x11-libs/wxGTK:${WX_GTK_VER}
 	>=sci-geosciences/opencpn-5.0.0
 	sys-devel/gettext
+	sci-libs/libgeotiff
 "
 DEPEND="${RDEPEND}"
 src_prepare() {
