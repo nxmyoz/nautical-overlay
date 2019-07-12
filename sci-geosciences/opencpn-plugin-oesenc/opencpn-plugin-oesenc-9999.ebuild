@@ -43,6 +43,6 @@ src_prepare() {
 }
 
 src_install() {
-	default
+	cmake-utils_src_install
 	udev_dorules buildlinux/oeserverd/98-sglock.rules
 }
