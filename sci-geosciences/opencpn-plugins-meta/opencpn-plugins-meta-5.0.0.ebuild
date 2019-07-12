@@ -15,7 +15,7 @@ RDEPEND="
 	>=sci-geosciences/opencpn-${PV}
 	sci-geosciences/opencpn-plugin-aisradar
 	sci-geosciences/opencpn-plugin-calculator
-	sci-geosciences/opencpn-plugin-celestial_navigation
+	# sci-geosciences/opencpn-plugin-celestial_navigation
 	sci-geosciences/opencpn-plugin-climatology
 	sci-geosciences/opencpn-plugin-deviation
 	sci-geosciences/opencpn-plugin-dr
@@ -29,7 +29,7 @@ RDEPEND="
 	sci-geosciences/opencpn-plugin-ocpn_draw
 	sci-geosciences/opencpn-plugin-oesenc
 	sci-geosciences/opencpn-plugin-otcurrent
-	sci-geosciences/opencpn-plugin-photolayer
+	# sci-geosciences/opencpn-plugin-photolayer
 	sci-geosciences/opencpn-plugin-plots
 	sci-geosciences/opencpn-plugin-polar
 	sci-geosciences/opencpn-plugin-projections
@@ -42,7 +42,7 @@ RDEPEND="
 	sci-geosciences/opencpn-plugin-shipdriver
 	sci-geosciences/opencpn-plugin-squiddio
 	sci-geosciences/opencpn-plugin-statusbar
-	sci-geosciences/opencpn-plugin-tactics
+	# sci-geosciences/opencpn-plugin-tactics
 	sci-geosciences/opencpn-plugin-vfkaps
 	sci-geosciences/opencpn-plugin-watchdog
 	sci-geosciences/opencpn-plugin-weatherfax
