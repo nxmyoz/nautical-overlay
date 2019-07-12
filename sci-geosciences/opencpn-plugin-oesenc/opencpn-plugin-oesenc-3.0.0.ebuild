@@ -34,7 +34,6 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 
 PATCHES=(
-	"${FILESDIR}/lib.patch"
 	"${FILESDIR}/lib-3.0.0.patch"
 )
 
