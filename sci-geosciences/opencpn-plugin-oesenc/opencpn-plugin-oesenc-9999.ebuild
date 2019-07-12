@@ -38,6 +38,7 @@ PATCHES=(
 )
 
 src_prepare() {
+	default
 	need-wxwidgets unicode
 	cmake-utils_src_prepare
 }

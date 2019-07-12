@@ -35,9 +35,11 @@ DEPEND="${RDEPEND}"
 
 PATCHES=(
 	"${FILESDIR}/lib.patch"
+	"${FILESDIR}/lib-3.0.0.patch"
 )
 
 src_prepare() {
+	default
 	need-wxwidgets unicode
 	cmake-utils_src_prepare
 }
