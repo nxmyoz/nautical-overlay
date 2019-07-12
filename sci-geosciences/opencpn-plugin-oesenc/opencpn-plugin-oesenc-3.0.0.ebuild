@@ -27,7 +27,7 @@ IUSE=""
 
 RDEPEND="
 	x11-libs/wxGTK:${WX_GTK_VER}
-	>=sci-geosciences/opencpn-4.2.0
+	>=sci-geosciences/opencpn-5.0.0
 	sys-devel/gettext
 	dev-libs/libusb-compat
 "
@@ -40,4 +40,9 @@ PATCHES=(
 src_prepare() {
 	need-wxwidgets unicode
 	cmake-utils_src_prepare
+}
+
+src_install() {
+	default
+	udev_dorules buildlinux/oeserverd/98-sglock.rules
 }

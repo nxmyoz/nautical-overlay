@@ -15,7 +15,7 @@ else
 	"
 	inherit cmake-utils wxwidgets
 	KEYWORDS="~amd64 ~x86"
-	S="${WORKDIR}/${MY_PN}-${PV}-ov50"
+	S="${WORKDIR}/${MY_PN}-${PV}"
 fi
 
 DESCRIPTION="Tactics Plugin for OpenCPN"
@@ -27,7 +27,7 @@ IUSE=""
 
 RDEPEND="
 	x11-libs/wxGTK:${WX_GTK_VER}
-	>=sci-geosciences/opencpn-4.2.0
+	>=sci-geosciences/opencpn-5.0.0
 	sys-devel/gettext
 "
 DEPEND="${RDEPEND}"

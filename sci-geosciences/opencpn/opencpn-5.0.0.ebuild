@@ -63,6 +63,8 @@ src_install() {
 		dohtml -r "${S}"/../${PN}/doc/*
 	fi
 	cmake-utils_src_install
+
+	doenvd "${FILESDIR}/99opencpn" || die "doenvd failed"
 }
 
 pkg_postinst() {
