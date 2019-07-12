@@ -5,6 +5,7 @@ EAPI=6
 
 WX_GTK_VER="3.0"
 MY_PN="climatology_pi"
+DATA_VER="006120320bde2c1ad8da10a911cdf2b0f3bffe0d"
 if [[ ${PV} == "9999" ]] ; then
 	EGIT_REPO_URI="https://github.com/rgleason/${MY_PN}.git"
 	inherit git-r3 cmake-utils wxwidgets
@@ -12,7 +13,7 @@ if [[ ${PV} == "9999" ]] ; then
 else
 	SRC_URI="
 		https://github.com/rgleason/${MY_PN}/archive/v${PV}-ov50.tar.gz -> ${P}.tar.gz
-		https://github.com/seandepagnier/climatology_pi_data/archive/006120320bde2c1ad8da10a911cdf2b0f3bffe0d.zip -> ${PN}-data.zip
+		https://github.com/seandepagnier/climatology_pi_data/archive/${DATA_VER}.zip -> ${PN}-data.zip
 	"
 	inherit cmake-utils wxwidgets
 	KEYWORDS="~amd64 ~x86"
@@ -40,5 +41,5 @@ src_prepare() {
 src_install() {
 	cmake-utils_src_install
 	insinto "/usr/share/opencpn/plugins/${MY_PN}/data/"
-	doins "${S}"/{,../}data/*
+	doins "${S}"/climatology_pi_data-${DATA_VER}/*
 }
