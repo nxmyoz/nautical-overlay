@@ -10,7 +10,7 @@ if [[ ${PV} == "9999" ]] ; then
 	inherit git-r3 cmake-utils wxwidgets udev
 	KEYWORDS=""
 else
-SRC_URI="https://github.com/mschiff/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/bdbcat/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 	inherit cmake-utils wxwidgets udev
 	KEYWORDS="~amd64 ~x86"
 	S="${WORKDIR}/${MY_PN}-${PV}"

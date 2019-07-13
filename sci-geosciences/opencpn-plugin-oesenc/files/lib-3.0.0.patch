@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 2ed77dd..0429ecb 100644
+index 2ed77dd..259b0c6 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -110,6 +110,17 @@ IF (NOT WIN32)
@@ -10,16 +10,16 @@ index 2ed77dd..0429ecb 100644
 +    IF (EXISTS /etc/gentoo-release)
 +      IF (CMAKE_SIZEOF_VOID_P MATCHES "8")
 +        SET (ARCH "x86_64")
-+	SET (LIB_INSTALL_DIR "lib64")
++        SET (LIB_INSTALL_DIR "lib64")
 +      ELSE (CMAKE_SIZEOF_VOID_P MATCHES "8")
-+	SET (ARCH "i386")
-+	SET (LIB_INSTALL_DIR "lib")
-+      ENDIF (CMAKE_SIZEOF_VOID_P "8")
++        SET (ARCH "i386")
++        SET (LIB_INSTALL_DIR "lib")
++      ENDIF (CMAKE_SIZEOF_VOID_P MATCHES "8")
 +    ENDIF (EXISTS /etc/gentoo-release)
 +
    ENDIF (UNIX AND NOT APPLE)
  endif(NOT WIN32)
-
+ 
 @@ -377,7 +388,7 @@ IF (ARCH MATCHES "amd64" OR ARCH MATCHES "x86_64")
         DESTINATION ${PREFIX_PARENTBIN})
      INSTALL(FILES "buildlinux64/oeserverd/libsgllnx64-2.29.02.so"
