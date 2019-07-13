@@ -31,12 +31,9 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}"
 
-PATCHES=(
-	"${FILESDIR}/lib-3.0.0.patch"
-)
-
 src_prepare() {
 	default
+	eapply -p1 -l ${FILESDIR}/lib-3.0.0.patch
 	need-wxwidgets unicode
 	cmake-utils_src_prepare
 }
