@@ -38,7 +38,7 @@ REQUIRED_USE="
 	qt5? ( cxx )"
 
 BDEPEND="
-	dev-utils/scons"
+	dev-util/scons"
 
 RDEPEND="
 	>=net-misc/pps-tools-0.0.20120407
