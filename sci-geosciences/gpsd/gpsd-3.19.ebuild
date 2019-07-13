@@ -37,6 +37,9 @@ REQUIRED_USE="
 	python? ( ${PYTHON_REQUIRED_USE} )
 	qt5? ( cxx )"
 
+BDEPEND="
+	dev-utils/scons"
+
 RDEPEND="
 	>=net-misc/pps-tools-0.0.20120407
 	bluetooth? ( net-wireless/bluez )
