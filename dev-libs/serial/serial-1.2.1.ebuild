@@ -21,10 +21,13 @@ DEPEND="dev-util/catkin
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
-src_configure() {
-	cmake-utils_src_configure
-}
+ROS_DISTRO="kinetic"
+ROS_PREFIX="opt/ros/${ROS_DISTRO}"
 
-src_install() {
-	cmake-utils_src_install
-}
+#src_configure() {
+#	cmake-utils_src_configure
+#}
+#
+#src_install() {
+#	cmake-utils_src_install
+#}
