@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND=""
+DEPEND="dev-util/catkin"
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
