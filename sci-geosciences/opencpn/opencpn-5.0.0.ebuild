@@ -1,7 +1,7 @@
 # Copyright 2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=6
 
 WX_GTK_VER="3.0"
 inherit cmake-utils wxwidgets
@@ -43,8 +43,8 @@ PATCHES=(
 )
 
 src_prepare() {
-	#default
-	cmake-utils_src_prepare
+	default
+	#cmake-utils_src_prepare
 }
 
 src_configure() {
