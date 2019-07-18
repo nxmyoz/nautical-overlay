@@ -1,7 +1,7 @@
 # Copyright 2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 WX_GTK_VER="3.0"
 inherit cmake-utils wxwidgets
@@ -31,7 +31,7 @@ RDEPEND="
 	opengl? ( virtual/opengl )
 	x11-libs/gtk+:2
 	x11-libs/wxGTK:${WX_GTK_VER}[X]
-	!sci-geosciences/opencpn-plugin-wmm
+	dev-libs/serial
 "
 DEPEND="${RDEPEND}
 	sys-devel/gettext"
@@ -43,8 +43,8 @@ PATCHES=(
 )
 
 src_prepare() {
-	default
-	#cmake-utils_src_prepare
+	#default
+	cmake-utils_src_prepare
 }
 
 src_configure() {
