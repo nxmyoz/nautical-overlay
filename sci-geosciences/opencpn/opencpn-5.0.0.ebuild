@@ -43,7 +43,8 @@ PATCHES=(
 )
 
 src_prepare() {
-	default
+	#default
+	cmake-utils_src_prepare
 }
 
 src_configure() {
