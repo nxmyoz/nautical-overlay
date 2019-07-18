@@ -31,7 +31,6 @@ RDEPEND="
 	opengl? ( virtual/opengl )
 	x11-libs/gtk+:2
 	x11-libs/wxGTK:${WX_GTK_VER}[X]
-	dev-libs/serial
 "
 DEPEND="${RDEPEND}
 	sys-devel/gettext"
