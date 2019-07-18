@@ -1,7 +1,7 @@
 # Copyright 2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=6
 
 WX_GTK_VER="3.0"
 inherit cmake-utils wxwidgets
@@ -12,7 +12,7 @@ DESCRIPTION="a free, open source software for marine navigation"
 HOMEPAGE="https://opencpn.org/"
 SRC_URI="https://github.com/OpenCPN/OpenCPN/archive/v${PV}.tar.gz -> ${P}.tar.gz
 doc? ( https://launchpad.net/~opencpn/+archive/ubuntu/${PN}/+files/${PN}-doc_${DOC_VERSION}.orig.tar.xz )
-shom? ( https://github.com/nxmyoz/distfiles/archive/f496f52b3e02fa11cea9a8ac9966be05e1f426cb.zip -> ${PN}-shom-color-palette.zip )
+shom? ( https://github.com/nxmyoz/distfiles/raw/master/shom-color-palette.tar.gz )
 "
 
 LICENSE="GPL-2+"
@@ -65,7 +65,7 @@ src_install() {
 	fi
 
 	if use shom; then
-		cp -rf "${WORKDIR}/distfiles-f496f52b3e02fa11cea9a8ac9966be05e1f426cb/sci-geosciences/opencpn/chartsymbols_O4.2.xml" \
+		cp -rf "${WORKDIR}/shom-color-palette/chartsymbols_O4.2.xml" \
 			"${S}/data/s57data/chartsymbols.xml"
 	fi
 
