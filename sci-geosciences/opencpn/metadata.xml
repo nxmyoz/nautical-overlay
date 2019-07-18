@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <upstream>
+    <changelog>https://github.com/OpenCPN/OpenCPN/releases</changelog>
+  </upstream>
+  <maintainer type="person">
+    <email>no-email@no.email</email>
+    <name>nxmyoz</name>
+  </maintainer>
+  <use>
+    <flag name="shom">Use the SHOM Color Palette for vector charts.</flag>
+  </use>
+</pkgmetadata>
+

@@ -1,7 +1,7 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 WX_GTK_VER="3.0"
 inherit cmake-utils wxwidgets
@@ -12,12 +12,13 @@ DESCRIPTION="a free, open source software for marine navigation"
 HOMEPAGE="https://opencpn.org/"
 SRC_URI="https://github.com/OpenCPN/OpenCPN/archive/v${PV}.tar.gz -> ${P}.tar.gz
 doc? ( https://launchpad.net/~opencpn/+archive/ubuntu/${PN}/+files/${PN}-doc_${DOC_VERSION}.orig.tar.xz )
+shom? ( https://github.com/nxmyoz/distfiles/archive/f496f52b3e02fa11cea9a8ac9966be05e1f426cb.zip -> ${PN}-shom-color-palette.zip )
 "
 
 LICENSE="GPL-2+"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="doc lzma opengl"
+IUSE="doc lzma opengl shom"
 
 RDEPEND="
 	app-arch/bzip2
@@ -45,7 +46,6 @@ src_prepare() {
 	default
 }
 
-
 src_configure() {
 	setup-wxwidgets
 	local mycmakeargs=(
@@ -62,6 +62,12 @@ src_install() {
 	if use doc; then
 		dohtml -r "${S}"/../${PN}/doc/*
 	fi
+
+	if use shom; then
+		cp -rf "${WORKDIR}/distfiles-f496f52b3e02fa11cea9a8ac9966be05e1f426cb/sci-geosciences/opencpn/chartsymbols_O4.2.xml" \
+			"${S}/data/s57data/chartsymbols.xml"
+	fi
+
 	cmake-utils_src_install
 
 	doenvd "${FILESDIR}/99opencpn" || die "doenvd failed"
