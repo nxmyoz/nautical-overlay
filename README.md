@@ -6,6 +6,9 @@ At this moment these are:
 * rtl_ais
 * signalk-server-node
 * kplex
+* gpsd (more recent version as in the mainline portage tree - includint the ubxtool)
+* opencpn
+* various opencpn plugins
 
 ### Set up this overlay
 
