@@ -58,9 +58,9 @@ src_install() {
 
 	if use maps; then
 		insinto "/usr/share/${PN}/data/maps/gshhs"
-		doins -r "${WORKDIR}/gshhs"
+		doins -r "${WORKDIR}/gshhs/{*}"
 
 		insinto "/usr/share/$PN}/data/gis"
-		doins -r "/${WORKDIR}/gis"
+		doins -r "/${WORKDIR}/gis/{*}"
 	fi
 }
