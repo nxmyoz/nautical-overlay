@@ -17,7 +17,7 @@ SRC_URI="https://github.com/opengribs/XyGrib/archive/v${PV}.tar.gz -> ${P}.tar.g
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="maps"
+IUSE="+maps"
 
 DEPEND="app-arch/bzip2
 	dev-qt/qtnetwork:5
@@ -34,10 +34,18 @@ PATCHES=(
 	"${FILESDIR}/locations.patch"
 )
 
+src_unpack() {
+	unpack ${A}
+
+	if use maps; then
+		cd "${WORKDIR}"
+		mv data/data/maps/gshhs gshhs
+		mkdir gis
+		mv cities*.gz gis
+	fi
+}
+
 src_configure() {
-	#if use maps; then
-	#	unpack "${DISTDIR}/${PN}-High_Resolution_Maps-1.1.1.tar.gz"
-	#fi
 	sed -i 's,set(PREFIX_BIN ${PROJECT_NAME}),set(PREFIX_BIN ""),' CMakeLists.txt
 	sed -i 's,set(PREFIX_PKGDATA ${PROJECT_NAME}),set(PREFIX_PKGDATA "share/${PROJECT_NAME}"),' CMakeLists.txt
 	cmake-utils_src_configure
@@ -50,9 +58,9 @@ src_install() {
 
 	if use maps; then
 		insinto "/usr/share/${PN}/data/maps/gshhs"
-		doins -r "${WORKDIR}/data/data/maps/gshhs/"
+		doins -r "${WORKDIR}/gshhs"
 
 		insinto "/usr/share/$PN}/data/gis"
-		doins -r "/${WORKDIR}/cities-*"
-    fi
+		doins -r "/${WORKDIR}/gis"
+	fi
 }
