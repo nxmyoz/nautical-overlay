@@ -48,7 +48,11 @@ src_install() {
 	doicon -s 32 "${DISTDIR}/${PN}-icon.png"
 	domenu "${FILESDIR}/xygrib.desktop"
 
-	#if use maps; then
-	#	insinto "/usr/share/${PN}"
+	if use maps; then
+		insinto "/usr/share/${PN}/data/maps/gshhs"
+		doins -r "${WORKDIR}/data/data/maps/gshhs/"
 
+		insinto "/usr/share/$PN}/data/gis"
+		doins -r "/${WORKDIR}/cities-*"
+    fi
 }
