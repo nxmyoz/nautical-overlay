@@ -57,10 +57,10 @@ src_install() {
 	domenu "${FILESDIR}/xygrib.desktop"
 
 	if use maps; then
-		insinto "/usr/share/${PN}/data/maps/gshhs"
-		doins -r "${WORKDIR}/gshhs/{*}"
+		insinto "/usr/share/${PN}/data/maps"
+		doins -r "${WORKDIR}/gshhs"
 
-		insinto "/usr/share/$PN}/data/gis"
-		doins -r "/${WORKDIR}/gis/{*}"
+		insinto "/usr/share/$PN}/data"
+		doins -r "/${WORKDIR}/gis"
 	fi
 }
