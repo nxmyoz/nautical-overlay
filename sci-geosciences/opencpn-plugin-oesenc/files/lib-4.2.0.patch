@@ -1,10 +1,9 @@
 --- a/CMakeLists.txt	2020-04-19 16:01:26.364208112 +0200
-+++ b/CMakeLists.txt	2020-04-19 16:27:08.499610113 +0200
-@@ -161,6 +161,19 @@
-      ENDIF (EXISTS /etc/os-release OR EXISTS /etc/sysconfig/SuSEfirewall2.d OR EXISTS /etc/suse-release OR EXISTS /etc/SuSE-release)
++++ b/CMakeLists.txt	2020-04-19 16:34:55.372329310 +0200
+@@ -147,6 +147,19 @@
      ENDIF(NOT DEFINED PACKAGE_FORMAT)
- 
-+    IF(NOT DEFINED PACKAGE_FORMAT)
+  
+     IF(NOT DEFINED PACKAGE_FORMAT)
 +     IF (EXISTS /etc/gentoo-release)
 +      MESSAGE (STATUS "*** Gentoo detected ***")
 +      IF (CMAKE_SIZEOF_VOID_P MATCHES "8")
@@ -17,9 +16,10 @@
 +     ENDIF (EXISTS /etc/gentoo-release)
 +    ENDIF(NOT DEFINED PACKAGE_FORMAT)
 +
-   ENDIF (UNIX AND NOT APPLE)
- endif(NOT WIN32)
- 
++    IF(NOT DEFINED PACKAGE_FORMAT)
+      IF (EXISTS /etc/os-release OR EXISTS /etc/sysconfig/SuSEfirewall2.d OR EXISTS /etc/suse-release OR EXISTS /etc/SuSE-release)
+       MESSAGE (STATUS "*** OpenSUSE detected  ***")
+       SET (PACKAGE_FORMAT "RPM")
 @@ -486,9 +499,9 @@
      #INSTALL(FILES "buildlinux64/oeserverd/libsgllnx64-2.29.02.so"
      #   PERMISSIONS OWNER_READ OWNER_EXECUTE OWNER_WRITE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
