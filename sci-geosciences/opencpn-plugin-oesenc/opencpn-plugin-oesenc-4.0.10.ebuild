@@ -1,7 +1,7 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 WX_GTK_VER="3.0"
 MY_PN="oesenc_pi"
@@ -33,7 +33,7 @@ DEPEND="${RDEPEND}"
 
 src_prepare() {
 	default
-	eapply -p1 -l "${FILESDIR}"/lib-3.0.0.patch
+	#eapply -p1 -l "${FILESDIR}"/lib-3.0.0.patch
 	need-wxwidgets unicode
 	cmake-utils_src_prepare
 }
