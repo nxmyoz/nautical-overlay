@@ -44,9 +44,9 @@ DEPEND="
 
 S="${WORKDIR}/OpenCPN-${PV/_beta/_Beta}"
 
-#PATCHES=(
-#	"${FILESDIR}/wxWidgets.patch"
-#)
+PATCHES=(
+	"${FILESDIR}/gentoo-wx-gtk3.patch"
+)
 
 src_prepare() {
 	default
