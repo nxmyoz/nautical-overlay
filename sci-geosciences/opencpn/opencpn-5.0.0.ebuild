@@ -1,24 +1,21 @@
 # Copyright 2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 WX_GTK_VER="3.0"
 inherit cmake-utils wxwidgets
 
-DOC_VERSION="4.8.2.0"
-
 DESCRIPTION="a free, open source software for marine navigation"
 HOMEPAGE="https://opencpn.org/"
 SRC_URI="https://github.com/OpenCPN/OpenCPN/archive/v${PV}.tar.gz -> ${P}.tar.gz
-doc? ( https://launchpad.net/~opencpn/+archive/ubuntu/${PN}/+files/${PN}-doc_${DOC_VERSION}.orig.tar.xz )
 shom? ( https://github.com/nxmyoz/distfiles/raw/master/shom-color-palette.tar.gz )
 "
 
 LICENSE="GPL-2+"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="doc lzma opengl shom"
+IUSE="lzma opengl shom"
 
 RDEPEND="
 	app-arch/bzip2
@@ -39,30 +36,28 @@ S="${WORKDIR}/OpenCPN-${PV}"
 
 PATCHES=(
 	"${FILESDIR}/wxWidgets.patch"
+	"${FILESDIR}/opencpn-gcc10.patch"
 )
 
 src_prepare() {
-	default
-	#cmake-utils_src_prepare
+	#default
+	cmake-utils_src_prepare
 }
 
 src_configure() {
 	setup-wxwidgets
+
 	local mycmakeargs=(
-		-DUSE_S57=ON
-		-DUSE_GARMINHOST=ON
-		-DBUNDLE_GSHHS=CRUDE
-		-DBUNDLE_TCDATA=ON
+		-DOCPN_USE_GARMINHOST=ON
+		-DOCPN_BUNDLE_GSHHS=ON
+		-DOCPN_BUNDLE_TCDATA=ON
+		-DOCPN_BUNDLE_DOCS=ON
 	)
 
 	cmake-utils_src_configure
 }
 
 src_install() {
-	if use doc; then
-		dohtml -r "${S}"/../${PN}/doc/*
-	fi
-
 	if use shom; then
 		cp -rf "${WORKDIR}/shom-color-palette/chartsymbols_O4.2.xml" \
 			"${S}/data/s57data/chartsymbols.xml"
@@ -73,8 +68,8 @@ src_install() {
 	doenvd "${FILESDIR}/99opencpn" || die "doenvd failed"
 }
 
-pkg_postinst() {
-	if use doc; then
-		einfo "Documentation is available at file:///usr/share/doc/${PF}/html/help_en_US.html"
-	fi
-}
+#pkg_postinst() {
+#	if use doc; then
+#		einfo "Documentation is available at file:///usr/share/doc/${PF}/html/help_en_US.html"
+#	fi
+#}
