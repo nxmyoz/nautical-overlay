@@ -56,11 +56,10 @@ src_prepare() {
 src_configure() {
 	setup-wxwidgets
 	local mycmakeargs=(
-		-DOCPN_GARMINHOST=ON
-		-DOCPN_BUNDLE_GSHHS=CRUDE
+		-DOCPN_USE_GARMINHOST=ON
+		-DOCPN_BUNDLE_GSHHS=ON
 		-DOCPN_BUNDLE_TCDATA=ON
 		-DOCPN_BUNDLE_DOCS=ON
-		-DOCPN_FORCE_GTK3=ON
 	)
 
 	cmake-utils_src_configure
