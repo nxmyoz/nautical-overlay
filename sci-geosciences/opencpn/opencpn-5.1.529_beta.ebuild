@@ -45,7 +45,7 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	sys-devel/gettext"
 
-S="${WORKDIR}/OpenCPN-${PV}"
+S="${WORKDIR}/OpenCPN-${MY_PV}"
 
 PATCHES=(
 	#"${FILESDIR}/wxWidgets.patch"
