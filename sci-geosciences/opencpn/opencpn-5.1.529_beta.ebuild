@@ -6,29 +6,24 @@ EAPI=7
 WX_GTK_VER="3.0"
 inherit cmake-utils wxwidgets
 
-MAIN_PV="$(ver_cut 1-3)"
 if [[ ${PV} = *_beta* ]] || [[ ${PV} = *_rc* ]] ; then
 	MY_PV="V${PV/_beta/_Beta}"
 	#MY_PV="${MY_PV/_rc/RC}"
 else
-	MY_PV="v${MAIN_PV}"
-
+	MY_PV="v${PV}"
 fi
 
-
-DOC_VERSION="4.8.2.0"
 
 DESCRIPTION="a free, open source software for marine navigation"
 HOMEPAGE="https://opencpn.org/"
 SRC_URI="https://github.com/OpenCPN/OpenCPN/archive/${MY_PV}.tar.gz -> ${P}.tar.gz
-doc? ( https://launchpad.net/~opencpn/+archive/ubuntu/${PN}/+files/${PN}-doc_${DOC_VERSION}.orig.tar.xz )
 shom? ( https://github.com/nxmyoz/distfiles/raw/master/shom-color-palette.tar.gz )
 "
 
 LICENSE="GPL-2+"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="doc lzma opengl shom"
+IUSE="lzma opengl shom"
 
 RDEPEND="
 	app-arch/bzip2
@@ -47,9 +42,9 @@ DEPEND="${RDEPEND}
 
 S="${WORKDIR}/OpenCPN-${MY_PV}"
 
-PATCHES=(
-	#"${FILESDIR}/wxWidgets.patch"
-)
+#PATCHES=(
+#	"${FILESDIR}/wxWidgets.patch"
+#)
 
 src_prepare() {
 	default
@@ -69,10 +64,6 @@ src_configure() {
 }
 
 src_install() {
-	if use doc; then
-		dohtml -r "${S}"/../${PN}/doc/*
-	fi
-
 	if use shom; then
 		cp -rf "${WORKDIR}/shom-color-palette/chartsymbols_O4.2.xml" \
 			"${S}/data/s57data/chartsymbols.xml"
