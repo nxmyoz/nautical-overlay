@@ -78,8 +78,8 @@ src_install() {
 	doenvd "${FILESDIR}/99opencpn" || die "doenvd failed"
 }
 
-pkg_postinst() {
-	if use doc; then
-		einfo "Documentation is available at file:///usr/share/doc/${PF}/html/help_en_US.html"
-	fi
-}
+#pkg_postinst() {
+#	if use doc; then
+#		einfo "Documentation is available at file:///usr/share/doc/${PF}/html/help_en_US.html"
+#	fi
+#}
