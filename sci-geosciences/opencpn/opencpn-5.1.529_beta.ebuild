@@ -37,10 +37,14 @@ RDEPEND="
 	x11-libs/gtk+:2
 	x11-libs/wxGTK:${WX_GTK_VER}[X]
 "
-DEPEND="${RDEPEND}
-	sys-devel/gettext"
 
-S="${WORKDIR}/OpenCPN-${MY_PV}"
+DEPEND="
+	${RDEPEND}
+	sys-devel/gettext
+"
+
+#S="${WORKDIR}/OpenCPN-${MY_PV}"
+S="${WORKDIR}"
 
 #PATCHES=(
 #	"${FILESDIR}/wxWidgets.patch"
