@@ -50,7 +50,7 @@ S="${WORKDIR}/OpenCPN-${PV/_beta/_Beta}"
 
 src_prepare() {
 	default
-	#cmake-utils_src_prepare
+	cmake-utils_src_prepare
 }
 
 src_configure() {
