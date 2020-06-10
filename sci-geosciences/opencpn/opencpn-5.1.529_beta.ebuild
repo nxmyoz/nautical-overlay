@@ -8,7 +8,6 @@ inherit cmake-utils wxwidgets
 
 if [[ ${PV} = *_beta* ]] || [[ ${PV} = *_rc* ]] ; then
 	MY_PV="V${PV/_beta/_Beta}"
-	#MY_PV="${MY_PV/_rc/RC}"
 else
 	MY_PV="v${PV}"
 fi
@@ -43,8 +42,7 @@ DEPEND="
 	sys-devel/gettext
 "
 
-#S="${WORKDIR}/OpenCPN-${MY_PV}"
-S="${WORKDIR}"
+S="${WORKDIR}/OpenCPN-${PV/_beta/_Beta}"
 
 #PATCHES=(
 #	"${FILESDIR}/wxWidgets.patch"
@@ -52,7 +50,7 @@ S="${WORKDIR}"
 
 src_prepare() {
 	default
-	cmake-utils_src_prepare
+	#cmake-utils_src_prepare
 }
 
 src_configure() {
