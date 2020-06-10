@@ -1,6 +1,6 @@
-diff --git a/CMakeLists.txt b/CMakeLists.txt
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
+diff -Naur a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt    2020-06-10 23:48:18.533479416 +0200
++++ b/CMakeLists.txt    2020-06-10 23:45:43.353537654 +0200
 @@ -750,9 +750,9 @@
    # looked for them. This is a nasty fix which might fail miserably. Assumption:
    # All builds using GTK uses unicode and wxWidgets 3.0
@@ -12,4 +12,3 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 +      list(APPEND wxWidgets_LIBRARIES "-lwx_gtk3u_gl-3.0-gtk3")
      endif ()
    endif ()
- 
