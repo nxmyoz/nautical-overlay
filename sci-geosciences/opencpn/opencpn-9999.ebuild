@@ -59,6 +59,10 @@ else
 	S="${WORKDIR}/${PV}"
 fi
 
+pkg_setup() {
+	setup-wxwidgets
+}
+
 src_prepare() {
 	cmake-utils_src_prepare
 
@@ -71,8 +75,6 @@ src_prepare() {
 }
 
 src_configure() {
-	setup-wxwidgets
-
 	local mycmakeargs=(
 		-DOCPN_USE_GARMINHOST="$(usex garminhost)"
 		-DOCPN_BUNDLE_GSHHS="$(usex gshhs)"
