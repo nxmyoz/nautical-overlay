@@ -1,4 +1,4 @@
-# Copyright 2020 Gentoo Authors
+# Copyriglwx_gtk3u_auiht 2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -62,12 +62,12 @@ fi
 src_prepare() {
 	cmake-utils_src_prepare
 
-	#local sedcmds=(
-	#	-e 's/-lwx_gtk3u_aui-3.0/-lwx_gtk3u_aui-3.0-gtk3/g'
-	#	-e 's/-lwx_gtk3u_gl-3.0/-lwx_gtk3u_gl-3.0-gtk3/g'
-	#)
-	#
-	#sed -i "${sedcmds[@]}" CMakeLists.txt || die
+	local sedcmds=(
+		-e 's/-lwx_gtk3u_aui-3.0/-lwx_gtk3u_aui-3.0-gtk3/g'
+		-e 's/-lwx_gtk3u_gl-3.0/-lwx_gtk3u_gl-3.0-gtk3/g'
+	)
+
+	sed -i "${sedcmds[@]}" CMakeLists.txt || die
 }
 
 src_configure() {
