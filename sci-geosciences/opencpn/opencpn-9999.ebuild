@@ -55,6 +55,8 @@ DEPEND="
 
 if [[ "${PV}" == 9999 ]] || [[ ${PV} = *_beta* ]] || [[ ${PV} = *_rc* ]]; then
 	S="${WORKDIR}/OpenCPN-${PV}"
+else
+	S="${WORKDIR}/${P}"
 fi
 
 src_prepare() {
