@@ -1,22 +1,23 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 WX_GTK_VER="3.0-gtk3"
 MY_PN="oesenc_pi"
 if [[ ${PV} == "9999" ]] ; then
 	EGIT_REPO_URI="https://github.com/bdbcat/${MY_PN}.git"
 	inherit git-r3 cmake-utils wxwidgets udev
+	KEYWORDS=""
 else
-	SRC_URI="https://github.com/bdbcat/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-	inherit cmake-utils wxwidgets udev
-	S="${WORKDIR}/${MY_PN}-${PV}"
+	inherit git-r3 cmake-utils wxwidgets udev
+	EGIT_REPO_URI="https://github.com/bdbcat/${MY_PN}.git"
+	EGIT_COMMIT="71dbf2749cbcdca8213b066015b462bb9dc67068"
+	KEYWORDS="~amd64 ~x86"
 fi
 
 DESCRIPTION="oeSENC Charts Plugin for OpenCPN"
 HOMEPAGE="https://github.com/bdbcat/oesenc_pi"
-KEYWORDS="~amd64 ~x86"
 
 LICENSE="GPL-2+"
 SLOT="0"
@@ -30,12 +31,9 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}"
 
-#PATCHES=(
-#	"${FILESDIR}/lib.patch"
-#)
-
 src_prepare() {
 	default
+	eapply -p1 -l "${FILESDIR}"/lib-4.2.0.patch
 	need-wxwidgets unicode
 	cmake-utils_src_prepare
 }

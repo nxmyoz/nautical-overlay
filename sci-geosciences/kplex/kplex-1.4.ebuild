@@ -1,10 +1,10 @@
-# Copyright 2019 Gentoo Authors
+# Copyright 2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
 DESCRIPTION="An NMEA-1083 Multiplexer"
-HOMEPAGE=""
+HOMEPAGE="http://www.stripydog.com/kplex/"
 SRC_URI="https://github.com/stripydog/kplex/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE=""

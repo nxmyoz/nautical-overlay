@@ -4,24 +4,22 @@
 EAPI=7
 
 WX_GTK_VER="3.0-gtk3"
-MY_PN="vfkaps_pi"
+MY_PN="oesenc_pi"
 if [[ ${PV} == "9999" ]] ; then
-	EGIT_REPO_URI="https://github.com/Rasbats/${MY_PN}.git"
+	EGIT_REPO_URI="https://github.com/bdbcat/s63_pi.git"
 	inherit git-r3 cmake-utils wxwidgets
 	KEYWORDS=""
 else
-	SRC_URI="
-		https://github.com/Rasbats/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
-	"
-	inherit cmake-utils wxwidgets
+	inherit git-r3 cmake-utils wxwidgets
+	EGIT_REPO_URI="https://github.com/bdbcat/s63_pi.git"
+	EGIT_COMMIT="7827d78cb02ab85e9a9020e733b9f93d99334bd3"
 	KEYWORDS="~amd64 ~x86"
-	S="${WORKDIR}/${MY_PN}-${PV}"
 fi
 
-DESCRIPTION="VentureFarther Plugin for OpenCPN"
-HOMEPAGE="https://github.com/Rasbats/vfkaps_pi"
+DESCRIPTION="S63 Plugin for OpenCPN"
+HOMEPAGE="https://github.com/bdbcat/s63_pi"
 
-LICENSE="GPL-2+"
+LICENSE=""
 SLOT="0"
 IUSE=""
 
@@ -31,6 +29,11 @@ RDEPEND="
 	sys-devel/gettext
 "
 DEPEND="${RDEPEND}"
+
+PATCHES=(
+	"${FILESDIR}/lib.patch"
+)
+
 src_prepare() {
 	need-wxwidgets unicode
 	cmake-utils_src_prepare

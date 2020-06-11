@@ -4,22 +4,22 @@
 EAPI=7
 
 WX_GTK_VER="3.0-gtk3"
-MY_PN="vfkaps_pi"
+MY_PN="ocpn_draw_pi"
 if [[ ${PV} == "9999" ]] ; then
-	EGIT_REPO_URI="https://github.com/Rasbats/${MY_PN}.git"
+	EGIT_REPO_URI="https://github.com/jongough/${MY_PN}.git"
 	inherit git-r3 cmake-utils wxwidgets
 	KEYWORDS=""
 else
 	SRC_URI="
-		https://github.com/Rasbats/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
+		https://github.com/jongough/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	"
 	inherit cmake-utils wxwidgets
 	KEYWORDS="~amd64 ~x86"
 	S="${WORKDIR}/${MY_PN}-${PV}"
 fi
 
-DESCRIPTION="VentureFarther Plugin for OpenCPN"
-HOMEPAGE="https://github.com/Rasbats/vfkaps_pi"
+DESCRIPTION="Draw Plugin for OpenCPN"
+HOMEPAGE="https://github.com/jongough/ocpn_draw_pi"
 
 LICENSE="GPL-2+"
 SLOT="0"

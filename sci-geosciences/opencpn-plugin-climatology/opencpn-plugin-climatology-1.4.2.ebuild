@@ -1,9 +1,9 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-WX_GTK_VER="3.0"
+WX_GTK_VER="3.0-gtk3"
 MY_PN="climatology_pi"
 DATA_VER="006120320bde2c1ad8da10a911cdf2b0f3bffe0d"
 if [[ ${PV} == "9999" ]] ; then
