@@ -8,15 +8,16 @@ MY_PN="oesenc_pi"
 if [[ ${PV} == "9999" ]] ; then
 	EGIT_REPO_URI="https://github.com/bdbcat/s63_pi.git"
 	inherit git-r3 cmake-utils wxwidgets
+	KEYWORDS=""
 else
 	SRC_URI="https://github.com/mschiff/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 	inherit cmake-utils wxwidgets
 	S="${WORKDIR}/${MY_PN}-${PV}"
+	KEYWORDS="~amd64 ~x86"
 fi
 
 DESCRIPTION="S63 Plugin for OpenCPN"
 HOMEPAGE="https://github.com/bdbcat/s63_pi"
-KEYWORDS="~amd64 ~x86"
 
 LICENSE=""
 SLOT="0"
@@ -28,10 +29,6 @@ RDEPEND="
 	sys-devel/gettext
 "
 DEPEND="${RDEPEND}"
-
-PATCHES=(
-	"${FILESDIR}/lib.patch"
-)
 
 src_prepare() {
 	setup-wxwidgets
