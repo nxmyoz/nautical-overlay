@@ -43,6 +43,7 @@ PATCHES=(
 )
 
 src_unpack() {
+	git-r3_fetch
 	unpack ${A}
 
 	if use maps; then
