@@ -8,18 +8,15 @@ MY_PN="oesenc_pi"
 if [[ ${PV} == "9999" ]] ; then
 	EGIT_REPO_URI="https://github.com/bdbcat/${MY_PN}.git"
 	inherit git-r3 cmake-utils wxwidgets udev
-	KEYWORDS="~amd64"
 else
-	SRC_URI="
-		https://github.com/bdbcat/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
-	"
+	SRC_URI="https://github.com/bdbcat/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 	inherit cmake-utils wxwidgets udev
-	KEYWORDS="~amd64 ~x86"
 	S="${WORKDIR}/${MY_PN}-${PV}"
 fi
 
 DESCRIPTION="oeSENC Charts Plugin for OpenCPN"
 HOMEPAGE="https://github.com/bdbcat/oesenc_pi"
+KEYWORDS="~amd64 ~x86"
 
 LICENSE="GPL-2+"
 SLOT="0"
@@ -33,9 +30,9 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}"
 
-PATCHES=(
-	"${FILESDIR}/lib.patch"
-)
+#PATCHES=(
+#	"${FILESDIR}/lib.patch"
+#)
 
 src_prepare() {
 	default
