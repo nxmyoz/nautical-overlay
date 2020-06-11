@@ -3,12 +3,12 @@
 
 EAPI=6
 
-WX_GTK_VER="3.0"
+WX_GTK_VER="3.0-gtk3"
 MY_PN="oesenc_pi"
 if [[ ${PV} == "9999" ]] ; then
 	EGIT_REPO_URI="https://github.com/bdbcat/${MY_PN}.git"
 	inherit git-r3 cmake-utils wxwidgets udev
-	KEYWORDS=""
+	KEYWORDS="~amd64"
 else
 	SRC_URI="
 		https://github.com/bdbcat/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
