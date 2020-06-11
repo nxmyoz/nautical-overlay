@@ -8,7 +8,7 @@ inherit cmake-utils desktop eutils
 DESCRIPTION="XyGrib is a Grib file reader and visualizes meteorological data."
 HOMEPAGE="https://opengribs.org"
 
-if [[ "${PV}" == 9999 ]]; then
+if [[ "${PV}" == "9999" ]]; then
 	EGIT_REPO_URI="https://github.com/opengribs/XyGrib.git"
 	inherit git-r3 cmake-utils desktop eutils
 else
@@ -43,7 +43,10 @@ PATCHES=(
 )
 
 src_unpack() {
-	default
+	if [[ ${PV} == "9999" ]]; then
+		git-r3_fetch
+		git-r3_checkout
+	fi
 
 	unpack ${A}
 
