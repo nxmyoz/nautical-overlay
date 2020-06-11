@@ -10,7 +10,7 @@ HOMEPAGE="https://opengribs.org"
 
 if [[ "${PV}" == 9999 ]]; then
 	EGIT_REPO_URI="https://github.com/opengribs/XyGrib.git"
-        inherit git-r3 cmake-utils desktop eutils
+	inherit git-r3 cmake-utils desktop eutils
 else
 	SRC_URI="https://github.com/opengribs/XyGrib/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 fi
@@ -43,7 +43,8 @@ PATCHES=(
 )
 
 src_unpack() {
-	git-r3_fetch
+	default
+
 	unpack ${A}
 
 	if use maps; then
