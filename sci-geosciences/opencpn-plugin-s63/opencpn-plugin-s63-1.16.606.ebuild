@@ -30,9 +30,9 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}"
 
-PATCHES=(
-	"${FILESDIR}/lib.patch"
-)
+#PATCHES=(
+#	"${FILESDIR}/lib.patch"
+#)
 
 src_prepare() {
 	setup-wxwidgets
