@@ -61,7 +61,6 @@ fi
 
 src_prepare() {
 	setup-wxwidgets
-	need-wxwidgets unicode
 	cmake-utils_src_prepare
 
 	local sedcmds=(

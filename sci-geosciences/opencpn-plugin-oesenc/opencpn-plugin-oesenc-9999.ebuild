@@ -34,7 +34,7 @@ DEPEND="${RDEPEND}"
 src_prepare() {
 	default
 	eapply -p1 -l "${FILESDIR}"/lib-4.2.0.patch
-	need-wxwidgets unicode
+	setup-wxwidgets
 	cmake-utils_src_prepare
 }
 

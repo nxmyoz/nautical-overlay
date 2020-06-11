@@ -33,7 +33,7 @@ DEPEND="${RDEPEND}"
 
 src_prepare() {
 	default
-	need-wxwidgets unicode
+	setup-wxwidgets
 	cmake-utils_src_prepare
 }
 

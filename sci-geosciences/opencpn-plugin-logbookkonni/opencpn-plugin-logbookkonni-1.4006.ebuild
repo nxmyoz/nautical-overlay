@@ -36,7 +36,7 @@ DEPEND="
 "
 
 src_prepare() {
-	need-wxwidgets unicode
+	setup-wxwidgets
 	cmake-utils_src_prepare
 }
 
