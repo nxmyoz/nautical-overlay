@@ -40,7 +40,7 @@ BDPEND=""
 
 PATCHES=(
 	"${FILESDIR}/locations.patch"
-	"${FILESDIR}/${PN}-gcc.patch"
+	"${FILESDIR}/${PN}-gcc10.patch"
 )
 
 src_unpack() {
