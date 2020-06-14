@@ -16,58 +16,65 @@ Many charter bases keep the minimal required maintenance of these essential func
 
 Sometimes the crews on these yachts lack nessesary attitude towards the devices on board.
 
-Simply put: if the safety of yourself, your crew and guests is important to you - as it always should be as a skipper - you will seek to mitigate the often found desolate condition.
+Simply put: if the safety of yourself, your crew and guests is important to you - as it always should be for a skipper - you will seek to mitigate the often found desolate condition.
 
 Why not make a robust solution yourself?
 
-## 
-This is an overlay for Gentoo of open source software useful to have on a (sailing)yacht.
+## What's the point of this?
+Given the existance of OpenPlotter, why create something what seems to be already there?
+
+I had a robust solution in mind, that has these requirements:
+* Robustness: powerlos, restarts and reboots shouldn't be a problem.
+* Fire-and-forget: give that thing power and everything should run as desired.
+* Plug and Play: connect or disconnect your devices (sdr/gps) shouldn't cause any trouble.
+* Minimalism: only those things that really matter should be present.
+* Devices such a distribution would run on, should be as mainlined as possible.
+Give it power, connect your OpenCPN to the network - done. Smooth. That's the idea.
+
+First tests onboard showed very good results that were a little bit dampened by the bad kernel mainling process of a RaspberryPi 3.
+
+### Why not a RaspberryPi
+Because of Broadcom and the rather bad mainlining efforts (I am biased towards this.)
+
+There is a ton of better SBCs out there. Look into the Linux kernel source for clues.
+
+I think that even an Odroid-C2 has better mainline support in the kernel by now than all of the RaspberryPi boards together.
+
+## Why Gentoo?
+
+Gentoo has proven itself as a very robust, highly customizable and adjustable and easy (from a developer standtpoint) Linux distribution.
+
+As such, it can be specifically tailored to our needs.
+
+## What is included in this overlay?
 
 At this moment these are:
 * rtl_ais
-* signalk-server-node
+* signalk-server-node (not maintained atm.)
 * kplex
 * gpsd (more recent version as in the mainline portage tree - includint the ubxtool)
 * opencpn
 * various opencpn plugins
+* XyGrib
 
-### Set up this overlay
+Please note, that those desktop applications like OpenCPN and XyGrib are of course not intended for use on a SBC.
+
+## Set up this overlay
 
 Be an advanced Gentoo user.
 
 ```
-if [[ ! -d /etc/portage/repos.conf ]]; then mkdir /etc/portage/repos.conf fi; wget "https://raw.githubusercontent.com/nxmyoz/nautical-overlay/master/nautical.conf" -O /etc/portage/repos.conf/nautical.conf
+curl -s "https://raw.githubusercontent.com/nxmyoz/nautical-overlay/master/install.sh" | bash
 ```
 
-## signalk-server-node
+## Embeded Devices
+As a fire-and-forget solution,
 
-signalk-server-node is a NodeJS project and as such, it is a beast when it comes to dependencies.
-When `npm install` is done, it says around 600 packages have been installed.
+## Main Components
 
-Also, Gentoo doesn't provide any means of installing a nodejs package via npm at the moment, so to install signalk-server-node via portage requires some sort of trickery - the network-sandbox has to be disabled, in order to allow `npm` to get nodejs packages whil in compile phase. This also means, it won't get into portage tree any time soon.
+### kplex
 
-To do so, do:
-
-```
-mkdir -p /etc/portage/env
-echo 'FEATURES="-network-sandbox"' > /etc/portage/env/wo-network-sandbox
-echo "sci-geosciences/signalk-server-node wo-network-sandbox" >> /etc/portage/package.env
-```
-Now it should be possible to merge signalk-server-node.
-
-### Configuration
-
-The configuration folder for signalk-server-node is (preferably) located in `/etc/signalk`.
-
-Run `/opt/signalk-server-node/bin/signalk-server-setup` to create your initial configuration files. Use the configuration folder mentioned above.
-
-If you wish to add additional configuration options to `signalk-server` look into `/etc/conf.d/signalk-server-node`.
-
-For all options available, please refer to the SignalK Node Server [documentation](https://github.com/SignalK/signalk-server-node).
-
-## kplex
-
-### Configuration
+#### Configuration
 
 Additional command options to `kplex` can be placed in `/etc/conf.d/kplex`.
 
@@ -75,9 +82,9 @@ Also there is `/etc/kplex/kplex.conf` which might be of further interest.
 
 Please refer to the upstream kplex [documentation](http://www.stripydog.com/kplex/configuration.html).
 
-## rtl_ais
+### rtl_ais
 
-### Configuration
+#### Configuration
 
 There is a `/etc/conf.d/rtl_ais` configuration file available, where you can set command options to `rtl_ais`.
 
