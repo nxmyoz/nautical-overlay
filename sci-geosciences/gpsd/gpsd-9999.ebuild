@@ -67,6 +67,8 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	test? ( sys-devel/bc )"
 
+BDEPEND="dev-util/scons"
+
 # xml packages are for man page generation
 if [[ ${PV} == *9999* ]] ; then
 	DEPEND+="
