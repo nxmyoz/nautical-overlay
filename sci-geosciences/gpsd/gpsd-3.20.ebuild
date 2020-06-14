@@ -155,6 +155,7 @@ src_configure() {
 		shm_export=$(usex shm)
 		socket_export=$(usex sockets)
 		usb=$(usex usb)
+		systemd=$(usex systemd True False)
 	)
 
 	use X && scons_opts+=( xgps=yes xgpsspeed=yes )
