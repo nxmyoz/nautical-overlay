@@ -1,5 +1,24 @@
+<div align="center">
+	<img width="500" height="375" src="artwork/nautical-gentoo.svg" alt="Nautical Gentoo">
+	<br>
+</div>
+
+
 # nautical-overlay
 
+
+## Preface
+
+Although many charter yachts are considered seaworthy from a legal standpoint of view, navigating with onboard devices makes usually no fun.
+Many charter bases keep the minimal required maintenance of these essential functions, many devices are outdated or barely functional at all.
+
+Sometimes the crews on these yachts lack nessesary attitude towards the devices on board.
+
+Simply put: if the safety of yourself, your crew and guests is important to you - as it always should be as a skipper - you will seek to mitigate the often found desolate condition.
+
+Why not make a robust solution?
+
+##
 This is an overlay for Gentoo of open source software useful to have on a (sailing)yacht.
 
 At this moment these are:
@@ -15,8 +34,7 @@ At this moment these are:
 Be an advanced Gentoo user.
 
 ```
-wget "https://raw.githubusercontent.com/nxmyoz/nautical-overlay/master/overlays.xml" -O /etc/layman/overlays/nautical.xml
-layman -f -a NAUTICAL
+if [[ ! -d /etc/portage/repos.conf ]]; then mkdir /etc/portage/repos.conf fi; wget "https://raw.githubusercontent.com/nxmyoz/nautical-overlay/master/nautical.conf" -O /etc/portage/repos.conf/nautical.conf
 ```
 
 ## signalk-server-node
