@@ -21,7 +21,7 @@ DESCRIPTION="GPS daemon and library for USB/serial GPS devices and GPS/mapping c
 HOMEPAGE="https://gpsd.gitlab.io/gpsd/"
 
 LICENSE="BSD"
-SLOT="0/24https://704580.bugs.gentoo.org/attachment.cgi?id=633564"
+SLOT="0/24"
 
 GPSD_PROTOCOLS=(
 	aivdm ashtech earthmate evermore fury fv18 garmin garmintxt geostar
