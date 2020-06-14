@@ -1,10 +1,12 @@
-<div align="center">
-	<img width="500" height="375" src="artwork/nautical-gentoo.svg" alt="Nautical Gentoo">
+<div align="left">
+	<img width="300" height="225" src="artwork/nautical-gentoo.svg" alt="Nautical Gentoo">
+	<br>
+	<br>
 	<br>
 </div>
 
 
-# nautical-overlay
+# Nautical Gentoo
 
 
 ## Preface
@@ -16,9 +18,9 @@ Sometimes the crews on these yachts lack nessesary attitude towards the devices 
 
 Simply put: if the safety of yourself, your crew and guests is important to you - as it always should be as a skipper - you will seek to mitigate the often found desolate condition.
 
-Why not make a robust solution?
+Why not make a robust solution yourself?
 
-##
+## 
 This is an overlay for Gentoo of open source software useful to have on a (sailing)yacht.
 
 At this moment these are:
