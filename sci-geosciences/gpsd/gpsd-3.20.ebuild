@@ -1,13 +1,13 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
 DISTUTILS_OPTIONAL=1
-PYTHON_COMPAT=( python3_{6..8} )
+PYTHON_COMPAT=( python3_{6..9} )
 SCONS_MIN_VERSION="2.3.0"
 
-inherit eutils udev user multilib distutils-r1 scons-utils toolchain-funcs
+inherit eutils udev user multilib distutils-r1 scons-utils toolchain-funcs systemd
 
 if [[ ${PV} == "9999" ]] ; then
 	EGIT_REPO_URI="https://gitlab.com/gpsd/gpsd.git"
@@ -114,14 +114,14 @@ python_prepare_all() {
 	use gpsd_protocols_greis && pybins+="+ ['zerk']"
 	local pysrcs=$(sed -n '/^ *python_extensions = {/,/}/{s:^ *::;s:os[.]sep:"/":g;p}' SConstruct)
 	local packet=$("${PYTHON}" -c "${pysrcs}; print(python_extensions['gps/packet'])")
-	local client=$("${PYTHON}" -c "${pysrcs}; print(python_extensions['gps/clienthelpers'])")
+	# Post 3.19 the clienthelpers were merged into gps.packet
 	sed \
 		-e "s|@VERSION@|$(pyvar gpsd_version)|" \
 		-e "s|@URL@|$(pyvar website)|" \
 		-e "s|@EMAIL@|$(pyvar devmail)|" \
 		-e "s|@SCRIPTS@|${pybins}|" \
 		-e "s|@GPS_PACKET_SOURCES@|${packet}|" \
-		-e "s|@GPS_CLIENT_SOURCES@|${client}|" \
+		-e "/@GPS_CLIENT_SOURCES@/d" \
 		-e "s|@SCRIPTS@|${pybins}|" \
 		"${FILESDIR}"/${PN}-3.3-setup.py > setup.py || die
 	distutils-r1_python_prepare_all

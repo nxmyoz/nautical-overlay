@@ -2,6 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 
 # Config file for gpsd server
-GPSD_OPTIONS="-G"
+GPSD_OPTIONS=""
 DEVICES=""
 GPSD_SOCKET="/var/run/gpsd.sock"
