@@ -1,1 +1,1 @@
-wireguard -module
+virtual/wireguard -module
