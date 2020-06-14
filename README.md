@@ -31,9 +31,9 @@ I had a robust solution in mind, that has these requirements:
 * Devices such a distribution would run on, should be as mainlined as possible.
 Give it power, connect your OpenCPN to the network - done. Smooth. That's the idea.
 
-First tests onboard showed very good results that were a little bit dampened by the bad kernel mainling process of a RaspberryPi 3.
+First tests onboard showed very good results that were a little bit dampened by the bad kernel mainlining process of a RaspberryPi.
 
-### Why not a RaspberryPi
+## Why not a RaspberryPi
 Because of Broadcom and the rather bad mainlining efforts (I am biased towards this.)
 
 There is a ton of better SBCs out there. Look into the Linux kernel source for clues.
@@ -49,11 +49,11 @@ As such, it can be specifically tailored to our needs.
 ## What is included in this overlay?
 
 At this moment these are:
-* rtl_ais
+* rtl_ais (for AIS Signal proccessing)
 * signalk-server-node (not maintained atm.)
-* kplex
-* gpsd (more recent version as in the mainline portage tree - includint the ubxtool)
-* opencpn
+* kplex (NMEA Multiplexer)
+* gpsd (more recent version as in the mainline portage tree - including the ubxtool)
+* opencpn (more recent version as in the mainline portage tree)
 * various opencpn plugins
 * XyGrib
 
@@ -68,7 +68,7 @@ curl -s "https://raw.githubusercontent.com/nxmyoz/nautical-overlay/master/instal
 ```
 
 ## Embeded Devices
-As a fire-and-forget solution,
+As a fire-and-forget solution, a yet to be built Gentoo based distribution should run on a variety of embedded devices, especially commonly available single board computers.
 
 ## Main Components
 
