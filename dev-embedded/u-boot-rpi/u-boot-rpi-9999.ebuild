@@ -21,7 +21,7 @@ IUSE=""
 
 DEPEND="
 	sys-apps/dtc
-	dev-lang/python:2.7
+	dev-lang/python:3
 "
 
 RDEPEND="${DEPEND}"
