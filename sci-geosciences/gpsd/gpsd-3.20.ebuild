@@ -136,7 +136,7 @@ src_configure() {
 		udevdir="$(get_udevdir)"
 		chrpath=False
 		gpsd_user=gpsd
-		gpsd_group=dialout
+		gpsd_group=uucp
 		nostrip=True
 		manbuild=False
 		shared=$(usex !static True False)
