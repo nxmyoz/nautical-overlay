@@ -33,7 +33,7 @@ depend() {
 SENTINEL1="/boot/autoexpand_root_partition"
 SENTINEL2="/boot/autoexpand_root_filesystem"
 SENTINEL3="/boot/autoexpand_root_none"
-DEFAULTPW="seapi64"
+DEFAULTPW="seapi64nav"
 
 _resize_if_necessary() {
 	local PUUID="" KROOTPART="" ROOTDRIVE="" ROOTPART="" PNUM=""
