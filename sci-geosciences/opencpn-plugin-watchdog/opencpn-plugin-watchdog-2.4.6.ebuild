@@ -10,14 +10,12 @@ if [[ ${PV} == "9999" ]] ; then
 	inherit git-r3 cmake-utils wxwidgets
 	KEYWORDS=""
 else
-	#SRC_URI="
-	#	https://github.com/rgleason/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
-	#"
-	inherit git-r3 cmake-utils wxwidgets
-	EGIT_REPO_URI="https://github.com/rgleason/${MY_PN}.git"
-	EGIT_COMMIT="7245d4e235143f5b7b98cf50376636dedad74bd5"
-	KEYWORDS=""
-	#S="${WORKDIR}/${MY_PN}-${PV}"
+	SRC_URI="
+		https://github.com/rgleason/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
+	"
+	inherit cmake-utils wxwidgets
+	KEYWORDS="~amd64 ~x86"
+	#S="${WORKDIR}/${MY_PN}-${PV}-ov50"
 fi
 
 DESCRIPTION="Watchdog Plugin for OpenCPN"
@@ -35,6 +33,5 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 src_prepare() {
 	setup-wxwidgets
-	export GIT_REPOSITORY=${EGIT_REPO_URI}
 	cmake-utils_src_prepare
 }

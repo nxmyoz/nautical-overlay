@@ -14,7 +14,7 @@ else
 		https://github.com/rgleason/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	"
 	inherit cmake-utils wxwidgets
-	KEYWORDS="~amd64 ~x86"
+	KEYWORDS=""
 	S="${WORKDIR}/${MY_PN}-${PV}"
 fi
 
