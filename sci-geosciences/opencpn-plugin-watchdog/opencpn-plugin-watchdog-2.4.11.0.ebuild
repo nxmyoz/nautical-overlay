@@ -33,5 +33,7 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 src_prepare() {
 	setup-wxwidgets
+
+	export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
 	cmake-utils_src_prepare
 }
