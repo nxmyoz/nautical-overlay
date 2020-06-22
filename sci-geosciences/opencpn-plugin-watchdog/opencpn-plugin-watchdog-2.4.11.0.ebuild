@@ -15,7 +15,6 @@ else
 	#"
 	inherit git-r3 cmake-utils wxwidgets
 	EGIT_REPO_URI="https://github.com/rgleason/${MY_PN}.git"
-	EGIT_CLONE_TYPE="mirror"
 	EGIT_COMMIT="7245d4e235143f5b7b98cf50376636dedad74bd5"
 	KEYWORDS="~amd64 ~x86"
 	#S="${WORKDIR}/${MY_PN}-${PV}"
@@ -36,6 +35,6 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 src_prepare() {
 	setup-wxwidgets
-	export GIT_REPOSITORY_REMOTE=${EGIT_REPO_URI}
+	export GIT_REPOSITORY=${EGIT_REPO_URI}
 	cmake-utils_src_prepare
 }
