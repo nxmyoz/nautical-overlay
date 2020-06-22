@@ -35,5 +35,6 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 src_prepare() {
 	setup-wxwidgets
+	export GIT_REPOSITORY_REMOTE=${EGIT_REPO_URI}
 	cmake-utils_src_prepare
 }
