@@ -5,7 +5,7 @@ EAPI=7
 
 PYTHON_COMPAT=( python3_{7..9} )
 
-inherit distutils-r1
+#inherit distutils-r1
 
 DESCRIPTION=""
 HOMEPAGE=""
@@ -17,8 +17,8 @@ KEYWORDS="~amd64 ~arm ~arm64"
 IUSE=""
 
 DEPEND="
-	dev-python/bmp280-python[${PYTHON_USEDEP}]
-	dev-python/pynmea2[${PYTHON_USEDEP}]"
+	dev-python/bmp280-python
+	dev-python/pynmea2"
 
 RDEPEND="${DEPEND}"
 BDEPEND=""
