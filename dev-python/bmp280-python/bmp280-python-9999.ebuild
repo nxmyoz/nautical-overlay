@@ -26,7 +26,8 @@ RDEPEND="
 DEPEND="
 	${RDEPEND}
 	dev-python/setuptools[${PYTHON_USEDEP}]
-	dev-python/docutils[${PYTHON_USEDEP}]"
+	dev-python/docutils[${PYTHON_USEDEP}]
+	dev-python/i2cdevice-python[${PYTHON_USEDEP}]"
 
 S="${WORKDIR}/${P}/library"
 
