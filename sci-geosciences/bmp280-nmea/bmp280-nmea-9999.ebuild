@@ -18,7 +18,8 @@ IUSE=""
 
 DEPEND="
 	dev-python/bmp280-python
-	dev-python/pynmea2"
+	dev-python/pynmea2
+	dev-python/python-daemon"
 
 RDEPEND="${DEPEND}"
 BDEPEND=""
