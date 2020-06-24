@@ -24,4 +24,4 @@ DEPEND="
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	dev-python/docutils[${PYTHON_USEDEP}]"
 
-S="${WORKDIR}/${P}/library"
+S="${WORKDIR}/${MY_PN}-${PV}"
