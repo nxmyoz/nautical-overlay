@@ -3,6 +3,10 @@
 
 EAPI=7
 
+PYTHON_COMPAT=( python3_{7..9} )
+
+inherit distutils-r1 git-r3
+
 DESCRIPTION=""
 HOMEPAGE=""
 SRC_URI=""
