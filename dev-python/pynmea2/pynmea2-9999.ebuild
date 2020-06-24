@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6..9} )
+PYTHON_COMPAT=( python3_{7..9} )
 
 inherit distutils-r1 git-r3
 
@@ -13,18 +13,14 @@ HOMEPAGE="https://github.com/Knio/pynmea2"
 
 EGIT_REPO_URI="https://github.com/Knio/pynmea2.git"
 
-
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64"
-IUSE="test"
-RESTRICT="!test? ( test )"
 
-RDEPEND="
-	dev-python/lockfile[${PYTHON_USEDEP}]"
+IUSE=""
+
+RDEPEND=""
 
 DEPEND="
 	${RDEPEND}
-	dev-python/setuptools[${PYTHON_USEDEP}]
-	dev-python/docutils[${PYTHON_USEDEP}]"
-
+	dev-python/setuptools[${PYTHON_USEDEP}]"
