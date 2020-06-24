@@ -24,6 +24,7 @@ DEPEND="
 	${RDEPEND}
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	dev-python/docutils[${PYTHON_USEDEP}]
+	dev-python/twine[${PYTHON_USEDEP}]
 	test? (
 		dev-python/unittest2[${PYTHON_USEDEP}]
 		dev-python/mock[${PYTHON_USEDEP}]
