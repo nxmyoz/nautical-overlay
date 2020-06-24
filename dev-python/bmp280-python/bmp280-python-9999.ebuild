@@ -28,7 +28,7 @@ DEPEND="
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	dev-python/docutils[${PYTHON_USEDEP}]"
 
-S="${WORKDIR}/${PN}/library"
+S="${WORKDIR}/${P}/library"
 
 python_test() {
 	test.py
