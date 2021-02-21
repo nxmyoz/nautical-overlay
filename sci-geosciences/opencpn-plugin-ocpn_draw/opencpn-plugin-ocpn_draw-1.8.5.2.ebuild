@@ -10,8 +10,8 @@ if [[ ${PV} == "9999" ]] ; then
 	inherit git-r3 cmake-utils wxwidgets
 	KEYWORDS=""
 else
-	EGIT_COMMIT="416b2fe23c67a4f1e7f287b4a720c1c19b656e8d"
-	EGIT_REPO_URI="https://github.com/jongough/${MY_PN}.git"
+	#EGIT_COMMIT="416b2fe23c67a4f1e7f287b4a720c1c19b656e8d"
+	#EGIT_REPO_URI="https://github.com/jongough/${MY_PN}.git"
 	SRC_URI="
 		https://github.com/jongough/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	"
