@@ -5,11 +5,18 @@
     <changelog>https://github.com/OpenCPN/OpenCPN/releases</changelog>
   </upstream>
   <maintainer type="person">
-    <email>no-email@no.email</email>
+    <email>nomail@nodomain.notld</email>
     <name>nxmyoz</name>
   </maintainer>
   <use>
-    <flag name="shom">Use the SHOM Color Palette for vector charts.</flag>
+    <flag name="gles-shim">Enable GLESv1 Shim library.</flag>
+    <flag name="garminhost">Enable Garmin Host Mode support.</flag>
+    <flag name="gshhs">Bundle minimal GSHHS data files.</flag>
+    <flag name="tcdata">Include tide/current harmonics data in package.</flag>
+    <flag name="docs">Include documentation in package.</flag>
+    <flag name="force-gtk3">Force the build to use GTK3.</flag>
+    <flag name="crashreport">Enable crash reporting.</flag>
+    <!-- <flag name="shom">Use the SHOM Color Palette for vector charts.</flag> -->
   </use>
 </pkgmetadata>
 

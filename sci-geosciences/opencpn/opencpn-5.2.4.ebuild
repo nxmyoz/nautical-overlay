@@ -1,12 +1,9 @@
-# Copyriglwx_gtk3u_auiht 2020 Gentoo Authors
+# Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-
-WX_GTK_VER="3.0-gtk3"
-
-inherit cmake-utils wxwidgets
+inherit cmake wxwidgets
 
 if [[ "${PV}" == 9999 ]] || [[ ${PV} = *_beta* ]] || [[ ${PV} = *_rc* ]]; then
 	inherit git-r3
@@ -23,7 +20,6 @@ if [[ "${PV}" == 9999 ]] || [[ ${PV} = *_beta* ]] || [[ ${PV} = *_rc* ]]; then
 else
 	SRC_URI="https://github.com/OpenCPN/OpenCPN/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 fi
-
 
 DESCRIPTION="a free, open source software for marine navigation"
 HOMEPAGE="https://opencpn.org/"
@@ -45,7 +41,7 @@ RDEPEND="
 	sys-libs/zlib
 	opengl? ( virtual/opengl )
 	x11-libs/gtk+:3
-	x11-libs/wxGTK:${WX_GTK_VER}[X]
+	x11-libs/wxGTK:3.0-gtk3[X]
 "
 
 DEPEND="
@@ -63,7 +59,7 @@ fi
 
 src_prepare() {
 	setup-wxwidgets
-	cmake-utils_src_prepare
+	cmake_src_prepare
 
 	local sedcmds=(
 		-e 's/-lwx_gtk3u_aui-3.0/-lwx_gtk3u_aui-3.0-gtk3/g'
@@ -88,11 +84,11 @@ src_configure() {
 		-DOCPN_USE_CRASHREPORT="$(usex crashreport)"
 	)
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 
 	doenvd "${FILESDIR}/99opencpn" || die "doenvd failed"
 }
