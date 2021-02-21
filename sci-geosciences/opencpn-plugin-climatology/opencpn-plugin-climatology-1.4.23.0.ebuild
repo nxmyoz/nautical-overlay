@@ -45,5 +45,5 @@ src_configure() {
 src_install() {
 	cmake-utils_src_install
 	insinto "/usr/share/opencpn/plugins/${MY_PN}/data/"
-	doins "${WORKDIR}"/climatology_pi_data-${DATA_VER}/*
+	doins "${S}"/data/*
 }
