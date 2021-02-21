@@ -12,12 +12,9 @@ if [[ ${PV} == "9999" ]] ; then
 else
 	GIT_COMMIT="5bdce7d0b18b7629b0f4a1335c60da3f8897e168"
 	EGIT_REPO_URI="https://github.com/rgleason/${MY_PN}.git"
-	#SRC_URI="
-	#	https://github.com/rgleason/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
-	#"
 	inherit git-r3 cmake-utils wxwidgets
 	KEYWORDS="~amd64 ~x86"
-	S="${WORKDIR}/${MY_PN}-${PV}"
+	S="${WORKDIR}/${PN}-${PV}"
 fi
 
 DESCRIPTION="AIS Radar View Plugin for OpenCPN"
