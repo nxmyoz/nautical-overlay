@@ -10,10 +10,9 @@ if [[ ${PV} == "9999" ]] ; then
 	inherit git-r3 cmake-utils wxwidgets
 	KEYWORDS=""
 else
-	SRC_URI="
-		https://github.com/rgleason/${MY_PN}/archive/v${PV}-ov50.tar.gz -> ${P}.tar.gz
-	"
-	inherit cmake-utils wxwidgets
+	EGIT_COMMIT="51d438140299d371b349619cc057ad0a3a3c8363"
+	EGIT_REPO_URI="https://github.com/rgleason/${MY_PN}.git"
+	inherit git-r3 cmake-utils wxwidgets
 	KEYWORDS="~amd64 ~x86"
 	S="${WORKDIR}/${MY_PN}-${PV}"
 fi
@@ -31,7 +30,13 @@ RDEPEND="
 	sys-devel/gettext
 "
 DEPEND="${RDEPEND}"
+
 src_prepare() {
 	setup-wxwidgets
 	cmake-utils_src_prepare
+}
+
+src_configure() {
+	CMAKE_BUILD_TYPE="Release"
+	cmake-utils_src_configure
 }
