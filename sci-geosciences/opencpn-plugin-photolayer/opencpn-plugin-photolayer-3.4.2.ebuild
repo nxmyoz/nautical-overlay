@@ -39,6 +39,8 @@ src_prepare() {
 }
 
 src_configure() {
+	sed -i 's,-DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/app/files,-DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/image,' cmake/Targets.cmake
+
 	local mycmakeargs=(
 		-DUSE_SYSTEM_GEOTIFF:BOOL="ON"
 	)
