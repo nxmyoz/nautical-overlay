@@ -39,6 +39,10 @@ src_prepare() {
 }
 
 src_configure() {
+	local mycmakeargs=(
+		-DUSE_SYSTEM_GEOTIFF:BOOL="ON"
+	)
+
 	CMAKE_BUILD_TYPE="Release"
 	cmake_src_configure
 }
