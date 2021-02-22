@@ -41,7 +41,6 @@ src_prepare() {
 src_configure() {
 	local mycmakeargs=(
 		-DUSE_SYSTEM_GEOTIFF:BOOL="ON"
-		-DCMAKE_INSTALL_PREFIX="/usr"
 	)
 
 	CMAKE_BUILD_TYPE="Release"
@@ -50,4 +49,8 @@ src_configure() {
 
 src_compile() {
 	cmake_src_compile tarball
+}
+
+src_install() {
+	
 }
