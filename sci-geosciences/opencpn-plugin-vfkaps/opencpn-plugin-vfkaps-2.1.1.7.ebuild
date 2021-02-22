@@ -32,6 +32,8 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 
 src_prepare() {
+	sed -i 's,git remote get-url ${GIT_REPOSITORY_REMOTE},echo "NO_REMOTE,' cmake/PluginConfigure.cmake
+
 	setup-wxwidgets
 	cmake_src_prepare
 }
