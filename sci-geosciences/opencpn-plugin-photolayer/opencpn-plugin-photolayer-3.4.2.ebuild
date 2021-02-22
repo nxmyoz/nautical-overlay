@@ -50,7 +50,3 @@ src_configure() {
 src_compile() {
 	cmake_src_compile tarball
 }
-
-src_install() {
-	
-}
