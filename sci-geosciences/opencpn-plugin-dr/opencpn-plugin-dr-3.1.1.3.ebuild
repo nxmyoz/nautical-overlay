@@ -6,14 +6,13 @@ EAPI=7
 WX_GTK_VER="3.0-gtk3"
 MY_PN="DR_pi"
 if [[ ${PV} == "9999" ]] ; then
-	EGIT_REPO_URI="https://github.com/Rasbats/${MY_PN}.git"
+	
 	inherit git-r3 cmake wxwidgets
 	KEYWORDS=""
 else
-	SRC_URI="
-		https://github.com/Rasbats/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
-	"
-	inherit cmake wxwidgets
+	EGIT_COMMIT="0c3394d948ac0f9d70d90c30d4a956ee1c26267f"
+	EGIT_REPO_URI="https://github.com/Rasbats/${MY_PN}.git"
+	inherit git-r3 cmake wxwidgets
 	KEYWORDS="~amd64 ~x86"
 	S="${WORKDIR}/${MY_PN}-${PV}"
 fi
@@ -35,4 +34,9 @@ DEPEND="${RDEPEND}"
 src_prepare() {
 	setup-wxwidgets
 	cmake_src_prepare
+}
+
+src_configure() {
+	CMAKE_BUILD_TYPE="Release"
+	cmake_src_configure
 }
