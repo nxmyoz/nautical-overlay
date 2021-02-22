@@ -10,12 +10,11 @@ if [[ ${PV} == "9999" ]] ; then
 	inherit git-r3 cmake wxwidgets
 	KEYWORDS=""
 else
-	SRC_URI="
-		https://github.com/mauroc/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
-	"
-	inherit cmake wxwidgets
+	EGIT_COMMIT="139bcff7774da6873d55b260f583e8b3254ac2d9"
+	EGIT_REPO_URI="https://github.com/mauroc/${MY_PN}.git"
+	inherit git-r3 cmake wxwidgets
 	KEYWORDS="~amd64 ~x86"
-	S="${WORKDIR}/${MY_PN}-${PV}"
+	S="${WORKDIR}/${PN}-${PV}"
 fi
 
 DESCRIPTION="Squiddio Plugin for OpenCPN"
