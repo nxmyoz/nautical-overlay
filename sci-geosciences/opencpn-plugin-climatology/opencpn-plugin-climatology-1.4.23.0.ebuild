@@ -1,4 +1,4 @@
-# Copyright 2020 Gentoo Authors
+# Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -8,12 +8,12 @@ MY_PN="climatology_pi"
 DATA_VER="006120320bde2c1ad8da10a911cdf2b0f3bffe0d"
 if [[ ${PV} == "9999" ]] ; then
 	EGIT_REPO_URI="https://github.com/rgleason/${MY_PN}.git"
-	inherit git-r3 cmake-utils wxwidgets
+	inherit git-r3 cmake wxwidgets
 	KEYWORDS=""
 else
 	EGIT_COMMIT="b42c0d43eeb3dd29b1397bc6f9bebaa12e549229"
 	EGIT_REPO_URI="https://github.com/rgleason/${MY_PN}.git"
-	inherit git-r3 cmake-utils wxwidgets
+	inherit git-r3 cmake wxwidgets
 	KEYWORDS="~amd64 ~x86"
 	S="${WORKDIR}/${PN}-${PV}"
 fi
@@ -34,16 +34,16 @@ DEPEND="${RDEPEND}"
 
 src_prepare() {
 	setup-wxwidgets
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure() {
 	CMAKE_BUILD_TYPE="Release"
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 	insinto "/usr/share/opencpn/plugins/${MY_PN}/data/"
 	doins "${S}"/data/*
 }
