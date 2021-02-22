@@ -34,6 +34,14 @@ DEPEND="
 	${RDEPEND}
 "
 src_prepare() {
+	sed -i 's,git remote get-url ${GIT_REPOSITORY_REMOTE},echo "NO_REMOTE",' cmake/PluginConfigure.cmake
+	sed -i 's,string(SUBSTRING ${GIT_REPOSITORY_URL} ${START_URL} ${STRING_LENGTH} GIT_REPOSITORY),set(GIT_REPOSITORY ""),' cmake/PluginConfigure.cmake
+
 	setup-wxwidgets
 	cmake_src_prepare
+}
+
+src_configure() {
+	CMAKE_BUILD_TYPE="Release"
+	cmake_src_configure
 }
