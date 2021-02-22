@@ -14,7 +14,7 @@ else
 	EGIT_REPO_URI="https://github.com/rgleason/${MY_PN}.git"
 	inherit git-r3 cmake wxwidgets
 	KEYWORDS="~amd64 ~x86"
-	S="${WORKDIR}/${MY_PN}-${PV}"
+	S="${WORKDIR}/${PN}-${PV}"
 fi
 
 DESCRIPTION="Plots Plugin for OpenCPN"
@@ -36,7 +36,7 @@ src_prepare() {
 	cmake_src_prepare
 }
 
-#src_configure() {
-#	CMAKE_BUILD_TYPE="Release"
-#	cmake_src_configure
-#}
+src_configure() {
+	CMAKE_BUILD_TYPE="Release"
+	cmake_src_configure
+}
