@@ -41,6 +41,8 @@ src_prepare() {
 src_configure() {
 	local mycmakeargs=(
 		-DUSE_SYSTEM_GEOTIFF:BOOL="ON"
+		-DCMAKE_INSTALL_PREFIX=""
+		-DGEOTIFF_INSTALL_PREFIX="$HOME/.local"
 	)
 
 	CMAKE_BUILD_TYPE="Release"
