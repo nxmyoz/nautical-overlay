@@ -31,7 +31,13 @@ RDEPEND="
 	sys-devel/gettext
 "
 DEPEND="${RDEPEND}"
+
 src_prepare() {
 	setup-wxwidgets
 	cmake_src_prepare
+}
+
+src_configure() {
+	CMAKE_BUILD_TYPE="Release"
+	cmake_src_configure
 }
