@@ -1,4 +1,4 @@
-# Copyright 2020 Gentoo Authors
+# Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -6,14 +6,14 @@ EAPI=7
 WX_GTK_VER="3.0-gtk3"
 MY_PN="LogbookKonni-1.2"
 if [[ ${PV} == "9999" ]] ; then
-	EGIT_REPO_URI="https://github.com/Rasbats/${MY_PN}.git"
-	inherit git-r3 cmake-utils wxwidgets
+	EGIT_REPO_URI="https://github.com/delatbabel/${MY_PN}.git"
+	inherit git-r3 cmake wxwidgets
 	KEYWORDS=""
 else
 	SRC_URI="
-		https://github.com/Rasbats/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
+		https://github.com/delatbabel/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	"
-	inherit cmake-utils wxwidgets
+	inherit cmake wxwidgets
 	KEYWORDS="~amd64 ~x86"
 	S="${WORKDIR}/${MY_PN}-${PV}"
 fi
@@ -37,11 +37,10 @@ DEPEND="
 
 src_prepare() {
 	setup-wxwidgets
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 	cd "$WORKDIR"
 }
-
