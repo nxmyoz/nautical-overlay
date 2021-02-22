@@ -1,16 +1,16 @@
-# Copyright 2020 Gentoo Authors
+# Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-inherit cmake-utils desktop eutils
+inherit cmake desktop eutils
 
 DESCRIPTION="XyGrib is a Grib file reader and visualizes meteorological data."
 HOMEPAGE="https://opengribs.org"
 
 if [[ "${PV}" == "9999" ]]; then
 	EGIT_REPO_URI="https://github.com/opengribs/XyGrib.git"
-	inherit git-r3 cmake-utils desktop eutils
+	inherit git-r3 cmake desktop eutils
 else
 	SRC_URI="https://github.com/opengribs/XyGrib/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 fi
@@ -40,7 +40,7 @@ BDPEND=""
 
 PATCHES=(
 	"${FILESDIR}/locations.patch"
-	"${FILESDIR}/${PN}-gcc10.patch"
+	#"${FILESDIR}/${PN}-gcc10.patch"
 )
 
 src_unpack() {
@@ -62,11 +62,11 @@ src_unpack() {
 src_configure() {
 	sed -i 's,set(PREFIX_BIN ${PROJECT_NAME}),set(PREFIX_BIN ""),' CMakeLists.txt
 	sed -i 's,set(PREFIX_PKGDATA ${PROJECT_NAME}),set(PREFIX_PKGDATA "share/${PROJECT_NAME}"),' CMakeLists.txt
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 
 	doicon -s 32 "${DISTDIR}/${PN}-icon.png"
 	domenu "${FILESDIR}/xygrib.desktop"
