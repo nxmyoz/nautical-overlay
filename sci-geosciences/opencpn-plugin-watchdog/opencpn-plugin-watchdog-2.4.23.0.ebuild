@@ -13,7 +13,7 @@ else
 	inherit git-r3 cmake wxwidgets
 	EGIT_REPO_URI="https://github.com/rgleason/${MY_PN}.git"
 	EGIT_COMMIT="2c4bf428615941c92d61e53f7a159dfd1c8c96e2"
-	KEYWORDS=""
+	KEYWORDS="~amd64 ~x86"
 fi
 
 DESCRIPTION="Watchdog Plugin for OpenCPN"
