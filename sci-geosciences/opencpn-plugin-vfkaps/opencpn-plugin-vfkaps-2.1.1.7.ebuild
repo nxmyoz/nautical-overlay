@@ -10,10 +10,9 @@ if [[ ${PV} == "9999" ]] ; then
 	inherit git-r3 cmake wxwidgets
 	KEYWORDS=""
 else
-	SRC_URI="
-		https://github.com/Rasbats/${MY_PN}/archive/V${PV}.tar.gz -> ${P}.tar.gz
-	"
-	inherit cmake wxwidgets
+	EGIT_COMMIT="2f8c611f6c5dca45f8fa45c66d048132748907ef"
+	EGIT_REPO_URI="https://github.com/Rasbats/${MY_PN}.git"
+	inherit git-r3 cmake wxwidgets
 	KEYWORDS="~amd64 ~x86"
 	S="${WORKDIR}/${MY_PN}-${PV}"
 fi
