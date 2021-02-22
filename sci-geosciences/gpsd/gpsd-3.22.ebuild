@@ -81,7 +81,7 @@ PATCHES=(
 src_prepare() {
 	# Make sure our list matches the source.
 	local src_protocols=$(echo $(
-		sed -n '/# GPS protocols/,/# Time service/{s:#.*::;s:[(",]::g;p}' "${S}"/SConstruct | awk '{print $1}' | LC_ALL=C sort
+		sed -n '/# GPS protocols/,/# Time service/{s:#.*::;s:[(",]::g;p}' "${S}"/SConscript | awk '{print $1}' | LC_ALL=C sort
 	) )
 	if [[ ${src_protocols} != ${GPSD_PROTOCOLS[*]} ]] ; then
 		eerror "Detected protocols: ${src_protocols}"
@@ -92,7 +92,7 @@ src_prepare() {
 	# Avoid useless -L paths to the install dir
 	sed -i \
 		-e 's:\<STAGING_PREFIX\>:SYSROOT:g' \
-		SConstruct || die
+		SConscript || die
 
 	# Fix systemd binary paths
 	sed -i -e 's/local\///' 'systemd/gpsd.service' || die
@@ -112,14 +112,14 @@ python_prepare_all() {
 	python_setup
 
 	# Extract python info out of SConstruct so we can use saner distribute
-	pyvar() { sed -n "/^ *$1 *=/s:.*= *::p" SConstruct ; }
-	local pyprogs=$(sed -n '/^ *python_progs = \[/,/\]/{s:^ *::p}' SConstruct)
+	pyvar() { sed -n "/^ *$1 *=/s:.*= *::p" SConscript ; }
+	local pyprogs=$(sed -n '/^ *python_progs = \[/,/\]/{s:^ *::p}' SConscript)
 	local pybins=$("${PYTHON}" -c "${pyprogs}; print(python_progs)" || die "Unable to extract core Python tools")
 	# Handle conditional tools manually. #666734
 	use X && pybins+="+ ['xgps', 'xgpsspeed']"
 	use gpsd_protocols_ublox && pybins+="+ ['ubxtool']"
 	use gpsd_protocols_greis && pybins+="+ ['zerk']"
-	local pysrcs=$(sed -n '/^ *packet_ffi_extension = \[/,/\]/{s:^ *::p}' SConstruct)
+	local pysrcs=$(sed -n '/^ *packet_ffi_extension = \[/,/\]/{s:^ *::p}' SConscript)
 	local packet=$("${PYTHON}" -c "${pysrcs}; print(packet_ffi_extension)" || die "Unable to extract packet types")
 	# Post 3.19 the clienthelpers were merged into gps.packet
 	sed \
