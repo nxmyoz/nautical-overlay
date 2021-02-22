@@ -8,7 +8,7 @@ MY_PN="FindIt_pi"
 if [[ ${PV} == "9999" ]] ; then
 	EGIT_REPO_URI="https://github.com/rgleason/${MY_PN}.git"
 	inherit git-r3 cmake wxwidgets
-	KEYWORDS=""
+	KEYWORDS="~amd64"
 else
 	EGIT_COMMIT="51d438140299d371b349619cc057ad0a3a3c8363"
 	EGIT_REPO_URI="https://github.com/rgleason/${MY_PN}.git"
