@@ -33,7 +33,7 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}"
 
-CMAKE_IN_SOURCE_BUILD
+CMAKE_IN_SOURCE_BUILD="true"
 
 src_prepare() {
 	setup-wxwidgets
