@@ -1,4 +1,4 @@
-# Copyright 2020 Gentoo Authors
+# Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -7,10 +7,10 @@ WX_GTK_VER="3.0-gtk3"
 MY_PN="oesenc_pi"
 if [[ ${PV} == "9999" ]] ; then
 	EGIT_REPO_URI="https://github.com/bdbcat/${MY_PN}.git"
-	inherit git-r3 cmake-utils wxwidgets udev
+	inherit git-r3 cmake wxwidgets udev
 	KEYWORDS=""
 else
-	inherit git-r3 cmake-utils wxwidgets udev
+	inherit git-r3 cmake wxwidgets udev
 	EGIT_REPO_URI="https://github.com/bdbcat/${MY_PN}.git"
 	EGIT_COMMIT="71dbf2749cbcdca8213b066015b462bb9dc67068"
 	KEYWORDS="~amd64 ~x86"
@@ -27,7 +27,7 @@ RDEPEND="
 	x11-libs/wxGTK:${WX_GTK_VER}
 	>=sci-geosciences/opencpn-5.0.0
 	sys-devel/gettext
-	dev-libs/libusb-compat
+	virtual/libusb:*
 "
 DEPEND="${RDEPEND}"
 
@@ -35,10 +35,10 @@ src_prepare() {
 	default
 	eapply -p1 -l "${FILESDIR}"/lib-4.2.0.patch
 	setup-wxwidgets
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 	udev_dorules buildlinux/oeserverd/98-sglock.rules
 }
