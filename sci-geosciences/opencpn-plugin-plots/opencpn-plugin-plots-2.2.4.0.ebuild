@@ -37,7 +37,7 @@ src_prepare() {
 	cmake_src_prepare
 }
 
-src_configure() {
-	CMAKE_BUILD_TYPE="Release"
-	cmake_src_configure
-}
+#src_configure() {
+#	CMAKE_BUILD_TYPE="Release"
+#	cmake_src_configure
+#}
