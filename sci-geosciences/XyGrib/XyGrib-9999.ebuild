@@ -60,8 +60,14 @@ src_unpack() {
 }
 
 src_configure() {
-	sed -i 's,set(PREFIX_BIN ${PROJECT_NAME}),set(PREFIX_BIN ""),' CMakeLists.txt
-	sed -i 's,set(PREFIX_PKGDATA ${PROJECT_NAME}),set(PREFIX_PKGDATA "share/${PROJECT_NAME}"),' CMakeLists.txt
+	local sedcmds=(
+		-e 's,set(PREFIX_BIN ${PROJECT_NAME}),set(PREFIX_BIN ""),'
+		-e 's,set(PREFIX_PKGDATA ${PROJECT_NAME}),set(PREFIX_PKGDATA "share/${PROJECT_NAME}"),'
+		-e 's,openjpeg-2.3,openjpeg-2.4'
+	)
+
+	sed -i "${sedcmds[@]}" CMakeLists.txt || die
+
 	cmake_src_configure
 }
 
