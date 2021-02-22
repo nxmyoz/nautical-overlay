@@ -14,7 +14,7 @@ else
 	EGIT_REPO_URI="https://github.com/rgleason/${MY_PN}.git"
 	inherit git-r3 cmake wxwidgets
 	KEYWORDS="~amd64 ~x86"
-	S="${WORKDIR}/${PN}-${PV}-ov50"
+	S="${WORKDIR}/${PN}-${PV}"
 fi
 
 DESCRIPTION="Polar Diagram Plugin for OpenCPN"
