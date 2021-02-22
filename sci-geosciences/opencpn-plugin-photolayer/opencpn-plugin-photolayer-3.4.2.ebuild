@@ -33,13 +33,15 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}"
 
+CMAKE_IN_SOURCE_BUILD
+
 src_prepare() {
 	setup-wxwidgets
 	cmake_src_prepare
 }
 
 src_configure() {
-	sed -i 's,-DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/app/files,-DCMAKE_INSTALL_PREFIX=${S}/image/usr,' cmake/Targets.cmake
+	#sed -i 's,-DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/app/files,-DCMAKE_INSTALL_PREFIX=${S}/image/usr,' cmake/Targets.cmake
 
 	local mycmakeargs=(
 		-DUSE_SYSTEM_GEOTIFF:BOOL="ON"
