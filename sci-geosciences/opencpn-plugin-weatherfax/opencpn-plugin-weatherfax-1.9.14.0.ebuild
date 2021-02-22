@@ -13,9 +13,8 @@ else
 	EGIT_COMMIT="d5cf038e4c2a6e6f5091ea6ad131b5cc8462a639"
 	EGIT_CLONE_TYPE="single+tags"
 	EGIT_REPO_URI="https://github.com/rgleason/${MY_PN}.git"
-	inherit cmake wxwidgets
+	inherit git-r3 cmake wxwidgets
 	KEYWORDS="~amd64 ~x86"
-	S="${WORKDIR}/${PN}-${PV}"
 fi
 
 DESCRIPTION="Weatherfax Plugin for OpenCPN"
