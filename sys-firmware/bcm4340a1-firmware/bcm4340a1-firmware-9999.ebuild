@@ -1,5 +1,5 @@
 # Copyright (c) 2017 sakaki <sakaki@deciban.com>
-# Copyright (c) 2020 nxmyoz <nxmyoz@gmail.com>
+# Copyright (c) 2021 nxmyoz <nxmyoz@gmail.com>
 # License: GPL v3+
 # NO WARRANTY
 
