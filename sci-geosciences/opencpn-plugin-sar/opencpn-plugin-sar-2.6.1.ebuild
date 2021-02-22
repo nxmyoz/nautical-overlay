@@ -10,11 +10,14 @@ if [[ ${PV} == "9999" ]] ; then
 	inherit git-r3 cmake wxwidgets
 	KEYWORDS=""
 else
-	EGIT_COMMIT="9fee9b740a1e83ab0a78a2b46464b9f776436d9d"
-	EGIT_REPO_URI="https://github.com/rgleason/${MY_PN}.git"
-	inherit git-r3 cmake wxwidgets
+	#EGIT_COMMIT="9fee9b740a1e83ab0a78a2b46464b9f776436d9d"
+	#EGIT_REPO_URI="https://github.com/rgleason/${MY_PN}.git"
+	SRC_URI="
+		https://github.com/rgleason/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
+	"
+	inherit cmake wxwidgets
 	KEYWORDS="~amd64 ~x86"
-	S="${WORKDIR}/${PN}-${PV}"
+	S="${WORKDIR}/${MY_PN}-${PV}"
 fi
 
 DESCRIPTION="SAR Plugin for OpenCPN"
