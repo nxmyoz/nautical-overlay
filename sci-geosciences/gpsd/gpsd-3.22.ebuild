@@ -95,8 +95,9 @@ src_prepare() {
 		SConscript || die
 
 	# Fix systemd binary paths
-	sed -i -e 's/local\///' 'systemd/gpsd.service' || die
-	sed -i -e 's/local\///' 'systemd/gpsdctl@.service.in' || die
+	# 3.22: no need to fix
+	#sed -i -e 's/local\///' 'systemd/gpsd.service.in' || die
+	#sed -i -e 's/local\///' 'systemd/gpsdctl@.service.in' || die
 
 	default
 
