@@ -11,7 +11,7 @@ if [[ ${PV} == "9999" ]] ; then
 	KEYWORDS=""
 else
 	SRC_URI="
-		https://github.com/Rasbats/${MY_PN}/archive/${PV}.tar.gz -> ${P}.tar.gz
+		https://github.com/Rasbats/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
 	"
 	inherit cmake wxwidgets
 	KEYWORDS="~amd64 ~x86"
