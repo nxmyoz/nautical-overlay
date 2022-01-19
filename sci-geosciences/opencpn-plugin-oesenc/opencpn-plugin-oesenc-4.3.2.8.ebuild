@@ -37,6 +37,15 @@ src_prepare() {
 	cmake_src_prepare
 }
 
+src_configure() {
+	local mycmakeargs=(
+		--target tarball
+	)
+
+	cmake_src_configure
+}
+
+
 src_install() {
 	cmake_src_install
 	udev_dorules buildlinux/oeserverd/98-sglock.rules
