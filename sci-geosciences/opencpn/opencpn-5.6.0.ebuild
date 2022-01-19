@@ -55,7 +55,7 @@ MY_PN="OpenCPN"
 if [[ "${PV}" == 9999 ]] || [[ ${PV} = *_beta* ]] || [[ ${PV} = *_rc* ]]; then
 	S="${WORKDIR}/${P}"
 else
-	S="${WORKDIR}/${MY_PN}-${PV}"
+	S="${WORKDIR}/${MY_PN}-Release_${PV}"
 fi
 
 src_prepare() {
