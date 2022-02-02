@@ -36,6 +36,8 @@ PATCHES=(
 	"${FILESDIR}/locations.patch"
 )
 
+S="${WORKDIR}/${PN}-${MY_VERSION}"
+
 src_unpack() {
 	unpack ${A}
 
