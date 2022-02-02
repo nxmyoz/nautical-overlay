@@ -34,6 +34,7 @@ BDPEND=""
 
 PATCHES=(
 	"${FILESDIR}/locations.patch"
+	"${FILESDIR}/openjpeg-2.4.patch"
 )
 
 S="${WORKDIR}/${PN}-${MY_VERSION}"
