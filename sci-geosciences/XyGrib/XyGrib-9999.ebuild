@@ -11,8 +11,10 @@ HOMEPAGE="https://opengribs.org"
 if [[ "${PV}" == "9999" ]]; then
 	EGIT_REPO_URI="https://github.com/opengribs/XyGrib.git"
 	inherit git-r3 cmake desktop eutils
+	KEYWORDS=""
 else
 	SRC_URI="https://github.com/opengribs/XyGrib/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+	KEYWORDS="~amd64 ~x86"
 fi
 
 SRC_URI+="
@@ -24,7 +26,7 @@ SRC_URI+="
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 IUSE="+maps"
 
 DEPEND="app-arch/bzip2

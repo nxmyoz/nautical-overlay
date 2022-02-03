@@ -25,6 +25,7 @@ DEPEND="app-arch/bzip2
 	dev-qt/qtnetwork:5
 	dev-qt/qtsvg:5
 	media-libs/libpng:*
+	media-libs/openjpeg:*
 	sci-libs/libnova
 	sci-libs/proj
 	sys-libs/zlib
