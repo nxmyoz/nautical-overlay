@@ -37,14 +37,9 @@ src_prepare() {
 	cmake_src_prepare
 }
 
-src_configure() {
-	local mycmakeargs=(
-		--target tarball
-	)
-
-	cmake_src_configure
+src_compile() {
+	cmake_build tarball
 }
-
 
 src_install() {
 	cmake_src_install
