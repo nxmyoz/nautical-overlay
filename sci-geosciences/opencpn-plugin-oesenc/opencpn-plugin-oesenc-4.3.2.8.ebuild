@@ -42,6 +42,6 @@ src_compile() {
 }
 
 src_install() {
-	cmake_src_install
-	udev_dorules libs/oeserverd/linux64/98-sglock.rules
+	die
+	#udev_dorules libs/oeserverd/linux64/98-sglock.rules
 }
