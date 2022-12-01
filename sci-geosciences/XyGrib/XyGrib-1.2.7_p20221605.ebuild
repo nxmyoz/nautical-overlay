@@ -5,34 +5,27 @@ EAPI=7
 
 inherit cmake desktop eutils
 
+MY_VERSION="88c425ca2d7f4ba5d7ab75bfa25e177bee02d310"
+
 DESCRIPTION="XyGrib is a Grib file reader and visualizes meteorological data."
 HOMEPAGE="https://opengribs.org"
-
-if [[ "${PV}" == "9999" ]]; then
-	EGIT_REPO_URI="https://github.com/opengribs/XyGrib.git"
-	inherit git-r3 cmake desktop eutils
-	KEYWORDS=""
-else
-	SRC_URI="https://github.com/opengribs/XyGrib/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="~amd64 ~x86"
-fi
-
-SRC_URI+="
-		https://github.com/opengribs/XyGrib/raw/master/debian/xygrib.png -> ${PN}-icon.png
-		maps?   (
-			https://github.com/opengribs/XyGrib/releases/download/v1.1.1/XyGrib___High_Resolution_Maps.tar.gz -> ${PN}-High_Resolution_Maps-1.1.1.tar.gz
-			https://github.com/opengribs/XyGrib/releases/download/v1.1.1/XyGrib___cities_files.tar.gz -> ${PN}-cities-1.1.1.tar.gz
-		)"
+SRC_URI="https://github.com/opengribs/XyGrib/archive/${MY_VERSION}.tar.gz -> ${P}.tar.gz
+	https://github.com/opengribs/XyGrib/raw/master/debian/xygrib.png -> ${PN}-icon.png
+	maps?   (
+		https://github.com/opengribs/XyGrib/releases/download/v1.1.1/XyGrib___High_Resolution_Maps.tar.gz -> ${PN}-High_Resolution_Maps-1.1.1.tar.gz
+		https://github.com/opengribs/XyGrib/releases/download/v1.1.1/XyGrib___cities_files.tar.gz -> ${PN}-cities-1.1.1.tar.gz
+	)"
 
 LICENSE="GPL-3"
 SLOT="0"
-#KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="+maps"
 
 DEPEND="app-arch/bzip2
 	dev-qt/qtnetwork:5
 	dev-qt/qtsvg:5
 	media-libs/libpng:*
+	media-libs/openjpeg:*
 	sci-libs/libnova
 	sci-libs/proj
 	sys-libs/zlib
@@ -42,15 +35,12 @@ BDPEND=""
 
 PATCHES=(
 	"${FILESDIR}/locations.patch"
-	#"${FILESDIR}/${PN}-gcc10.patch"
+	"${FILESDIR}/openjpeg-2.4.patch"
 )
 
-src_unpack() {
-	if [[ ${PV} == "9999" ]]; then
-		git-r3_fetch
-		git-r3_checkout
-	fi
+S="${WORKDIR}/${PN}-${MY_VERSION}"
 
+src_unpack() {
 	unpack ${A}
 
 	if use maps; then
@@ -65,13 +55,11 @@ src_configure() {
 	sed -i 's,set(PREFIX_BIN ${PROJECT_NAME}),set(PREFIX_BIN ""),' CMakeLists.txt
 	sed -i 's,set(PREFIX_PKGDATA ${PROJECT_NAME}),set(PREFIX_PKGDATA "share/${PROJECT_NAME}"),' CMakeLists.txt
 	sed -i 's,PATH_SUFFIXES openjpeg-2.3,PATH_SUFFIXES openjpeg-2.5 openjpeg-2.4 openjpeg-2.3,' CMakeLists.txt
-
 	cmake_src_configure
 }
 
 src_install() {
 	cmake_src_install
-
 	doicon -s 32 "${DISTDIR}/${PN}-icon.png"
 	domenu "${FILESDIR}/xygrib.desktop"
 
