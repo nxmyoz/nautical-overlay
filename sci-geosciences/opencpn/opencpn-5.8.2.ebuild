@@ -69,7 +69,7 @@ src_prepare() {
 	#	-e 's/-lwx_gtk3u_gl-3.0/-lwx_gtk3u_gl-3.0-gtk3/g'
 	#)
 
-	sed -i "${sedcmds[@]}" CMakeLists.txt || die
+	#sed -i "${sedcmds[@]}" CMakeLists.txt || die
 }
 
 src_configure() {
