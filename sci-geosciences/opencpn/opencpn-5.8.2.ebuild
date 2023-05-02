@@ -44,6 +44,7 @@ RDEPEND="
 	opengl? ( virtual/opengl )
 	media-libs/glew
 	dev-libs/rapidjson
+	dev-cpp/gtest
 	x11-libs/gtk+:3
 	x11-libs/wxGTK:3.2-gtk3[X]
 "
