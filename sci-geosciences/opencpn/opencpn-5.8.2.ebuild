@@ -42,6 +42,7 @@ RDEPEND="
 	net-misc/curl
 	sys-libs/zlib
 	opengl? ( virtual/opengl )
+	media-libs/glew
 	x11-libs/gtk+:3
 	x11-libs/wxGTK:3.2-gtk3[X]
 "
@@ -68,7 +69,7 @@ src_prepare() {
 	#	-e 's/-lwx_gtk3u_gl-3.0/-lwx_gtk3u_gl-3.0-gtk3/g'
 	#)
 
-	#sed -i "${sedcmds[@]}" CMakeLists.txt || die
+	sed -i "${sedcmds[@]}" CMakeLists.txt || die
 }
 
 src_configure() {
