@@ -12,7 +12,7 @@ if [[ ${PV} == "9999" ]] ; then
 else
 	inherit git-r3 cmake wxwidgets udev
 	EGIT_REPO_URI="https://github.com/bdbcat/${MY_PN}.git"
-	EGIT_COMMIT="ecd618a8992d5551c1a927275c002602b70ac797"
+	EGIT_COMMIT="1.0.34.0"
 	KEYWORDS="~amd64 ~x86"
 fi
 
