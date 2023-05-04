@@ -37,7 +37,7 @@ PATCHES=(
 	"${FILESDIR}/locations.patch"
 	"${FILESDIR}/openjpeg-2.5.patch"
 	"${FILESDIR}/proj8-fixup.patch"
-	"${FILESDIR}/qt-deprectaed-api.patch"
+	"${FILESDIR}/qt-deprecated-api.patch"
 )
 
 S="${WORKDIR}/${PN}-${MY_VERSION}"
