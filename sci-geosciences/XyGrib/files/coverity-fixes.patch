@@ -1,0 +1,673 @@
+From 20176e8b94dc0182707bbdc1c17087e70571af7d Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Sun, 1 Jan 2023 11:03:46 +0100
+Subject: [PATCH 01/13] coverity AUTO_CAUSE_COPY errors
+
+---
+ src/DialogSelectMetar.cpp | 4 ++--
+ src/GribReader.cpp        | 6 +++---
+ src/GriddedReader.cpp     | 2 +-
+ src/MainWindow.cpp        | 6 +++---
+ src/Therm.cpp             | 2 +-
+ 5 files changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/src/DialogSelectMetar.cpp b/src/DialogSelectMetar.cpp
+index a4a45527..8add91e8 100644
+--- a/src/DialogSelectMetar.cpp
++++ b/src/DialogSelectMetar.cpp
+@@ -133,9 +133,9 @@ void DialogSelectMetar::make_metar_tree ()
+     QTreeWidgetItem *itemCountry = nullptr;
+     QTreeWidgetItem *itemState = nullptr;
+     QTreeWidgetItem *itemRoot = nullptr;
+-	for (auto a : allAirports)
++	for (auto & a : allAirports)
+ 	{
+-			if (curCountry != a.country) {
++		if (curCountry != a.country) {
+ 			curCountry = a.country;
+ 			itemCountry = new QTreeWidgetItem (treeWidget);
+ 			assert (itemCountry);
+diff --git a/src/GribReader.cpp b/src/GribReader.cpp
+index 7a6f552e..95ff79df 100644
+--- a/src/GribReader.cpp
++++ b/src/GribReader.cpp
+@@ -868,7 +868,7 @@ void GribReader::computeMissingData ()
+ 		   && getNumberOfGribRecords (DataCode(GRB_TEMP, LV_ABOV_GND, 2)) > 0)
+ 		{
+ 			dewpointDataStatus = COMPUTED_DATA;
+-			for (auto date : setAllDates)
++			for (auto const & date : setAllDates)
+ 			{
+                 GribRecord *recTemp = getRecord (DataCode(GRB_TEMP,LV_ABOV_GND,2),date);
+                 GribRecord *recHumid = getRecord (DataCode(GRB_HUMID_REL,LV_ABOV_GND,2), date);
+@@ -904,7 +904,7 @@ void GribReader::computeMissingData ()
+ 		double thmin = 10000;
+ 		double thmax = -10000;
+ 		std::set<Altitude> allAlts = getAllAltitudes (GRB_HUMID_REL);
+-		for (auto altitude : allAlts)
++		for (auto const & altitude : allAlts)
+ 		{	// all altitudes
+ 				//DBGQS(AltitudeStr::toString(altitude));
+ 			for (long date : setAllDates)
+@@ -1303,7 +1303,7 @@ time_t  GribReader::getFirstRefDate ()
+ 	time_t t, t2;
+ 	std::set<DataCode> all = getAllDataCode ();
+ 	t = 0;
+-	for (auto dtc : all) {
++	for (auto const & dtc : all) {
+ 			t2 = getRefDateForData (dtc); 
+ 		if (t==0 || (t2!=0 && t>t2)) {
+ 			t = t2;
+diff --git a/src/GriddedReader.cpp b/src/GriddedReader.cpp
+index 227c6ad8..39503a05 100644
+--- a/src/GriddedReader.cpp
++++ b/src/GriddedReader.cpp
+@@ -73,7 +73,7 @@ std::set<Altitude> GriddedReader::getAllAltitudes (int dataType) const
+ 
+ 	std::set<Altitude> res;
+ 	std::set<DataCode> setdata = getAllDataCode ();
+-	for (auto dtc : setdata) {
++	for (auto const & dtc : setdata) {
+ 		if (dtc.dataType == type)
+ 			res.insert (dtc.getAltitude());
+ 	}
+diff --git a/src/MainWindow.cpp b/src/MainWindow.cpp
+index 6fb8ed18..4ac065f5 100644
+--- a/src/MainWindow.cpp
++++ b/src/MainWindow.cpp
+@@ -1771,8 +1771,8 @@ void MainWindow::slotFile_Info_GRIB ()
+ 	std::set<DataCode> setdata = plotter->getAllDataCode ();
+ 	int  currentype = -1;
+ 	bool firstalt = true;
+-	for (auto dtc : setdata) {
+-			if (   dtc.dataType != GRIB_NOTDEF
++	for (auto const & dtc : setdata) {
++	    if (   dtc.dataType != GRIB_NOTDEF
+ 			&& dtc.dataType != GRB_WIND_VY
+ 			&& dtc.dataType != GRB_CUR_VY
+ 		) {
+@@ -2323,7 +2323,7 @@ void MainWindow::setMenubarAltitudeData (DataCode dtc)
+ 	}
+ 	std::set<Altitude> setalt = reader->getAllAltitudes (dtc.dataType);
+ 	
+-	for (auto alt : setalt) {
++	for (auto const & alt : setalt) {
+ 			checkAltitude (LV_GND_SURF,0, mb->acAlt_GND, alt, dtc);
+ 		checkAltitude (LV_ABOV_GND,1, mb->acAlt_GND_1m, alt, dtc);
+ 		checkAltitude (LV_ABOV_GND,2, mb->acAlt_GND_2m, alt, dtc);
+diff --git a/src/Therm.cpp b/src/Therm.cpp
+index 1644bbc1..b93e0ae3 100644
+--- a/src/Therm.cpp
++++ b/src/Therm.cpp
+@@ -274,7 +274,7 @@ double Sounding::hpaMin ()
+ //------------------------------------------------------
+ SoundingPointWind Sounding::getWindByAlt (double hpa)
+ {
+-	for (auto pw : allSoundsWind) {
++	for (auto const & pw : allSoundsWind) {
+         if (pw.hpa == hpa) {
+ 			return pw;
+ 		}
+
+From a49417260f825efc70c603f5a77951d1679d24f3 Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Sun, 1 Jan 2023 11:07:51 +0100
+Subject: [PATCH 02/13] coverity dead code
+
+---
+ src/MainWindow.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/MainWindow.cpp b/src/MainWindow.cpp
+index 4ac065f5..5fda7e43 100644
+--- a/src/MainWindow.cpp
++++ b/src/MainWindow.cpp
+@@ -1598,13 +1598,13 @@ void MainWindow::slotHelp_Help() {
+     QDesktopServices::openUrl(QUrl(link));
+ 
+     return;
+-
++#if 0
+     QMessageBox::information (this,
+             tr("Help"),
+             tr("Help is available at")
+                +" https://github.com/opengribs/XyGrib/wiki/XyGrib-User-Manual"
+                );
+-
++#endif
+ }
+ //-------------------------------------------------
+ void MainWindow::slotHelp_APropos()
+
+From e2d9dc230a59eda6dcfbb169d26a53c890216d93 Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Sun, 1 Jan 2023 17:57:06 +0100
+Subject: [PATCH 03/13] coverity Uninitialized scalar variable
+
+---
+ src/g2clib-1.6.0/g2_getfld.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/g2clib-1.6.0/g2_getfld.c b/src/g2clib-1.6.0/g2_getfld.c
+index ec97773e..3e3aa01a 100644
+--- a/src/g2clib-1.6.0/g2_getfld.c
++++ b/src/g2clib-1.6.0/g2_getfld.c
+@@ -264,6 +264,7 @@ g2int g2_getfld(unsigned char *cgrib,g2int ifldnum,g2int unpack,g2int expand,
+       lgfld->coord_list=0;
+       lgfld->bmap=0;
+       lgfld->fld=0;
++      lgfld->ngrdpts=0;
+ //
+ //  Check for valid request number
+ //  
+
+From e20b2444cb71090a7874a966c6205e04d7f4ef61 Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Sun, 1 Jan 2023 17:59:37 +0100
+Subject: [PATCH 04/13] valgrind 'Conditional jump or move depends on
+ uninitialised value(s)'
+
+---
+ src/MapDrawer.cpp | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/src/MapDrawer.cpp b/src/MapDrawer.cpp
+index cb1f22fd..1daf3048 100644
+--- a/src/MapDrawer.cpp
++++ b/src/MapDrawer.cpp
+@@ -38,7 +38,9 @@ MapDrawer::MapDrawer(std::shared_ptr<GshhsReader> gshhsReader)
+     gisReader = std::make_shared<GisReader>();
+ 
+ 	this->gshhsReader = gshhsReader;
+-	
++
++	showWaveArrowsType = GRB_TYPE_NOT_DEFINED;
++
+ 	initGraphicsParameters();
+ 	updateGraphicsParameters();
+ }
+
+From dd9f5850284821b8fbed2f583e237edee4404a4e Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Sun, 1 Jan 2023 19:20:57 +0100
+Subject: [PATCH 05/13] coverity Uninitialized scalar field
+
+---
+ src/FileLoaderGRIB.cpp | 1 +
+ src/GribAnimator.cpp   | 3 ++-
+ src/MapDrawer.h        | 6 +++---
+ src/map/GisReader.h    | 2 +-
+ 4 files changed, 7 insertions(+), 5 deletions(-)
+
+diff --git a/src/FileLoaderGRIB.cpp b/src/FileLoaderGRIB.cpp
+index f6738153..95a27806 100644
+--- a/src/FileLoaderGRIB.cpp
++++ b/src/FileLoaderGRIB.cpp
+@@ -39,6 +39,7 @@ FileLoaderGRIB::FileLoaderGRIB (QNetworkAccessManager *manager, QWidget *parent)
+     reply_step1 = nullptr;
+     reply_step2 = nullptr;
+     scriptpath = "/";
++    fileSize=0;
+ }
+ //-------------------------------------------------------------------------------
+ FileLoaderGRIB::~FileLoaderGRIB () 
+diff --git a/src/GribAnimator.cpp b/src/GribAnimator.cpp
+index 0b7281f5..53118f13 100644
+--- a/src/GribAnimator.cpp
++++ b/src/GribAnimator.cpp
+@@ -46,7 +46,8 @@ AnimCommand::AnimCommand(int nbImages, int speed, bool autoLoop, QWidget *parent
+ {
+ 	this->nbImages = nbImages;
+ 	this->speed = speed;
+-    
++
++    currentImage = 0;
+     acExit = new QAction(this);
+     acExit->setToolTip (tr("Close the window"));
+ 	acExit->setIcon(QIcon(Util::pathImg("exit.png")));
+diff --git a/src/MapDrawer.h b/src/MapDrawer.h
+index 847d85e8..26d9be07 100644
+--- a/src/MapDrawer.h
++++ b/src/MapDrawer.h
+@@ -128,15 +128,15 @@ friend class Terrain;	// TODO (or not) getters setters
+ 		Altitude linesThetaEAltitude;
+ 		
+ 		bool  showWindArrows;
+-		bool  hasWindForArrows;
++		bool  hasWindForArrows{false};
+ 		Altitude windArrowsAltitude;
+ 		bool  showGribGrid;
+ 		bool  showBarbules;
+ 
+ 		bool  showCurrentArrows;
+-		bool  hasCurrentForArrows;
++		bool  hasCurrentForArrows{false};
+ 		int   showWaveArrowsType;
+-		bool  hasWaveForArrows;
++		bool  hasWaveForArrows{false};
+ 		
+ 		Altitude currentArrowsAltitude;
+ 		
+diff --git a/src/map/GisReader.h b/src/map/GisReader.h
+index 5108dda4..744a97c6 100644
+--- a/src/map/GisReader.h
++++ b/src/map/GisReader.h
+@@ -82,7 +82,7 @@ class GisCity : public GisPoint
+         void  drawCityName (QPainter *pnt, QRect *rectName);
+ 
+ 	private:
+-	    int     x0, y0;   // for drawing
++	    int     x0{0}, y0{0};   // for drawing
+ };
+ 
+ //==========================================================
+
+From db9792a5e7c1d30fa1fc2a7aaad1fac8c313f68f Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Sun, 1 Jan 2023 20:22:06 +0100
+Subject: [PATCH 06/13] coverity Unchecked return value from library
+
+---
+ src/GribReader.cpp           |  6 ++++--
+ src/map/GshhsRangsReader.cpp | 11 ++++++++---
+ 2 files changed, 12 insertions(+), 5 deletions(-)
+
+diff --git a/src/GribReader.cpp b/src/GribReader.cpp
+index 95ff79df..b0441877 100644
+--- a/src/GribReader.cpp
++++ b/src/GribReader.cpp
+@@ -367,7 +367,8 @@ int GribReader::seekgb_zu (
+ 	nread=mseek;
+ 	ipos=iseek;
+ 	while (*lgrib==0 && nread==mseek) {
+-		zu_seek (lugb, ipos, SEEK_SET);
++		if (zu_seek (lugb, ipos, SEEK_SET))
++			break;
+ 		nread = zu_read (lugb, cbuf, mseek);
+ 		lim = nread-8;
+ 		//Util::dumpchars(cbuf,0,16);
+@@ -386,7 +387,8 @@ int GribReader::seekgb_zu (
+ 				else {
+ 					lengrib = (g2int)(cbuf[k+12]<<24)+(cbuf[k+13]<<16)+(cbuf[k+14]<<8)+(cbuf[k+15]);
+ 				}
+-				zu_seek (lugb, ipos+k+lengrib-4, SEEK_SET);
++				if (zu_seek (lugb, ipos+k+lengrib-4, SEEK_SET))
++					break;
+ 				k4 = zu_read (lugb, &end, 4);
+ 				if (k4 == 4 && end == 926365495) {      // "7777" found
+ 					//DBG("FOUND GRIB2 FIELD lengrib=%ld", lengrib);
+diff --git a/src/map/GshhsRangsReader.cpp b/src/map/GshhsRangsReader.cpp
+index 25eac767..ae55e7cb 100644
+--- a/src/map/GshhsRangsReader.cpp
++++ b/src/map/GshhsRangsReader.cpp
+@@ -34,9 +34,12 @@ GshhsRangsCell::GshhsRangsCell(FILE *fcat_, FILE *fcel_, FILE *frim_, int x0_, i
+     // adresse de la cellule lue dans le fichier .cat
+     int offset = 4*((89 - y0cell) * 360 + x0cell);
+     
+-    fseek(fcat, offset, SEEK_SET);
++    if (fseek(fcat, offset, SEEK_SET))
++    	return;
++
+     int adrcel = readInt4(fcat)-1;
+-    fseek(fcel, adrcel, SEEK_SET);
++    if (fseek(fcel, adrcel, SEEK_SET))
++    	return;
+ 	//if ((x0cell==x0debug && y0cell==y0debug)) printf("\n===== START CELL =========\n");
+ 
+     readPolygonList();
+@@ -129,7 +132,9 @@ void GshhsRangsCell::readSegmentRim(
+     int i, x, y;
+     GshhsRangsPoint * newPoint;
+     
+-    fseek(frim, RimAddress, SEEK_SET);
++    if (fseek(frim, RimAddress, SEEK_SET))
++    	return;
++
+     for (i=0; i<RimLength; i++)
+     {
+         nbpoints ++;
+
+From f76fd3e262c3f28798964498347bcf266f0e07c0 Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Sun, 1 Jan 2023 21:15:03 +0100
+Subject: [PATCH 07/13] coverity Untrusted allocation size
+
+---
+ src/GribReader.cpp | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/src/GribReader.cpp b/src/GribReader.cpp
+index b0441877..6ad2438a 100644
+--- a/src/GribReader.cpp
++++ b/src/GribReader.cpp
+@@ -533,8 +533,10 @@ void GribReader::readGribFileContent (int nbrecs)
+ 		if (id%4 == 1)
+ 			emit valueChanged ((int)(100.0*id/nbrecs));
+ 
+-		if (lgrib == 0)
++		if (lgrib <= 0)
+ 			break;    // end loop at EOF or problem
++		if (lgrib > 100*1024*1024)
++			break;
+ 		iseek = lskip + lgrib;
+ 		if (zu_seek (file, lskip, SEEK_SET) )
+ 			break;
+
+From 9685ae2113d32fbcfcdf7b215307da7569def38c Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Mon, 2 Jan 2023 10:27:43 +0100
+Subject: [PATCH 08/13] valgrind SKewT 'Conditional jump or move depends on
+ uninitialised value(s)'
+
+---
+ src/Therm.cpp | 8 +++++++-
+ src/Therm.h   | 1 -
+ 2 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/src/Therm.cpp b/src/Therm.cpp
+index b93e0ae3..18d12c26 100644
+--- a/src/Therm.cpp
++++ b/src/Therm.cpp
+@@ -233,7 +233,13 @@ double Therm::dryAdiabaticPressure (double hpa0, double t0, double tempC)
+ Sounding::Sounding ()
+ {
+ 	levelsAreValid = false;
+-	levelsAreValid = false;
++	CAPE = 0;
++	CIN = 0;
++	LI = GRIB_NOTDEF;
++	SI = GRIB_NOTDEF;
++	SWEAT = GRIB_NOTDEF;
++	KI = 0.;
++	TT = 0.;
+ }
+ //------------------------------------------------------
+ void Sounding::addSoundingPointC (double hpa, double tempC, double dewpC)
+diff --git a/src/Therm.h b/src/Therm.h
+index b0dbcc51..8be5dd7e 100644
+--- a/src/Therm.h
++++ b/src/Therm.h
+@@ -154,7 +154,6 @@ class Sounding
+ 		QList <SoundingPointWind> allSoundsWind;
+ 			
+ 		bool   levelsAreValid;
+-		ConvBase clvl_base;
+ 		
+ 		TPoint LCL, CCL, LFC, EL;
+ 		
+
+From 832629f590947070a8a6e2f01610d580e7588819 Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Mon, 2 Jan 2023 10:45:30 +0100
+Subject: [PATCH 09/13] coverity zu_rewind return value
+
+---
+ src/GribReader.cpp  | 9 ++++++---
+ src/util/zuFile.cpp | 4 ++--
+ src/util/zuFile.h   | 2 +-
+ 3 files changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/src/GribReader.cpp b/src/GribReader.cpp
+index 6ad2438a..6e704da7 100644
+--- a/src/GribReader.cpp
++++ b/src/GribReader.cpp
+@@ -1266,7 +1266,10 @@ int GribReader::countGribRecords (ZUFILE *f)
+ 	const int sizebuf = 300000;
+ 	int nblus;
+ 	char buf[sizebuf];
+-	zu_rewind (f);
++
++	if (zu_rewind (f))
++		return nb;
++
+ 	while (continueDownload && (nblus=zu_read(f,buf,sizebuf))>0) {
+ 		for (i=0; i<nblus; i++) {
+ 			c = buf[i];
+@@ -1285,9 +1288,9 @@ int GribReader::countGribRecords (ZUFILE *f)
+ 			}
+ 		}
+ 	}
+-	if (! continueDownload)
++	if (! continueDownload || zu_rewind (f))
+ 		nb = 0;
+-	zu_rewind (f);
++
+ 	return nb;
+ }
+ 
+diff --git a/src/util/zuFile.cpp b/src/util/zuFile.cpp
+index b49ba877..9524813d 100644
+--- a/src/util/zuFile.cpp
++++ b/src/util/zuFile.cpp
+@@ -274,9 +274,9 @@ int  zu_bzSeekForward(ZUFILE *f, unsigned long nbytes_)
+ }
+ 
+ //-----------------------------------------------------------------
+-void   zu_rewind(ZUFILE *f)
++int   zu_rewind(ZUFILE *f)
+ {
+-    zu_seek(f, 0, SEEK_SET);
++    return zu_seek(f, 0, SEEK_SET);
+ }
+ 
+ //-----------------------------------------------------------------
+diff --git a/src/util/zuFile.h b/src/util/zuFile.h
+index 7f4b1367..4492241d 100644
+--- a/src/util/zuFile.h
++++ b/src/util/zuFile.h
+@@ -66,7 +66,7 @@ long   zu_tell (ZUFILE *f);
+ 
+ int    zu_seek (ZUFILE *f, long offset, int whence);        // TODO: whence=SEEK_END
+ 
+-void   zu_rewind (ZUFILE *f);
++int    zu_rewind (ZUFILE *f);
+ 
+ long   zu_filesize (ZUFILE *f);
+ long   zu_filesize_name (const char *filename);
+
+From c0ef5a066913603f4f3d5237e518d690ab4ab0e6 Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Mon, 2 Jan 2023 11:51:59 +0100
+Subject: [PATCH 10/13] coverity Uninitialized pointer field
+
+---
+ src/GribReader.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/GribReader.cpp b/src/GribReader.cpp
+index 6e704da7..6b39df7c 100644
+--- a/src/GribReader.cpp
++++ b/src/GribReader.cpp
+@@ -34,6 +34,7 @@ GribReader::GribReader()
+ 	xmax = -1e300;
+ 	ymin =  1e300;
+ 	ymax = -1e300;
++	file = nullptr;
+ }
+ //-------------------------------------------------------------------------------
+ void GribReader::openFile (const QString &fname, int nbrecs)
+
+From f57c99e41de0c148fed37d282a0bf0fc0ee0d4c9 Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Mon, 2 Jan 2023 11:55:19 +0100
+Subject: [PATCH 11/13] coverity Untrusted value
+
+---
+ src/map/GshhsRangsReader.cpp |  3 ++-
+ src/map/GshhsReader.cpp      | 14 +++++++++++---
+ src/map/GshhsReader.h        |  4 ++++
+ 3 files changed, 17 insertions(+), 4 deletions(-)
+
+diff --git a/src/map/GshhsRangsReader.cpp b/src/map/GshhsRangsReader.cpp
+index ae55e7cb..87b8b246 100644
+--- a/src/map/GshhsRangsReader.cpp
++++ b/src/map/GshhsRangsReader.cpp
+@@ -117,7 +117,8 @@ int GshhsRangsCell::readSegmentLoop()
+             RimAddress = readInt4(fcel) - 1;
+             RimLength = readInt4(fcel);
+             //if ((x0cell==x0debug && y0cell==y0debug)) printf("CEL  RimAddress=%d  RimLength=%d\n", RimAddress, RimLength);
+-            readSegmentRim(RimAddress, RimLength, newPolygon);
++            if (RimLength > 0 && RimLength < 1*1000*1000)
++            	readSegmentRim(RimAddress, RimLength, newPolygon);
+         }
+     }
+ 
+diff --git a/src/map/GshhsReader.cpp b/src/map/GshhsReader.cpp
+index 9857fc4c..371ef2d2 100644
+--- a/src/map/GshhsReader.cpp
++++ b/src/map/GshhsReader.cpp
+@@ -40,8 +40,12 @@ GshhsPolygon::GshhsPolygon(ZUFILE *file_)
+     {
+ 	    antarctic = (west==0 && east==360);
+ 		double x, y=-90;
+-        
+-        for (int i=0; i<n; i++) {
++
++        if (n < 0 || n > 10*1000*1000) {
++            ok = false;
++            return;
++        }
++        for (int i=0; ok && i<n; i++) {
+             x = GshhsPolygon::readInt4() * 1e-6;
+             if (greenwich && x > 270)
+                 x -= 360;
+@@ -79,7 +83,11 @@ GshhsPolygon_WDB::GshhsPolygon_WDB(ZUFILE *file_)
+     greenwich = false;
+     antarctic = false;
+     if (ok) {
+-        for (int i=0; i<n; i++) {
++        if (n < 0 || n > 10*1000*1000) {
++            ok = false;
++            return;
++        }
++        for (int i=0; ok && i<n; i++) {
+             double x, y;
+             x = GshhsPolygon_WDB::readInt4() * 1e-6;
+             if (greenwich && x > 270)
+diff --git a/src/map/GshhsReader.h b/src/map/GshhsReader.h
+index f46f81c8..d5a9fdf8 100644
+--- a/src/map/GshhsReader.h
++++ b/src/map/GshhsReader.h
+@@ -172,6 +172,7 @@ inline int GshhsPolygon::readInt4() {
+     unsigned char tab[4];
+     if (zu_read(file, tab, 4) != 4) {
+         ok = false;
++        return 0;
+     }
+     return ((int)tab[3]<<24)+((int)tab[2]<<16)+((int)tab[1]<<8)+((int)tab[0]);
+ }
+@@ -181,6 +182,7 @@ inline int GshhsPolygon_WDB::readInt4() {    // pas le même indien
+     unsigned char tab[4];
+     if (zu_read(file, tab, 4) != 4) {
+         ok = false;
++        return 0;
+     }
+     return ((int)tab[0]<<24)+((int)tab[1]<<16)+((int)tab[2]<<8)+((int)tab[3]);
+ }
+@@ -190,6 +192,7 @@ inline int GshhsPolygon::readInt2() {
+     unsigned char tab[2];
+     if (zu_read(file, tab, 2) != 2) {
+         ok = false;
++        return 0;
+     }
+     return ((int)tab[1]<<8)+((int)tab[0]);
+ }
+@@ -198,6 +201,7 @@ inline int GshhsPolygon_WDB::readInt2() {
+     unsigned char tab[2];
+     if (zu_read(file, tab, 2) != 2) {
+         ok = false;
++        return 0;
+     }
+     return ((int)tab[0]<<8)+((int)tab[1]);
+ }
+
+From c6a6ab5828a223964d4d6bd6d68e701516cb40c6 Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Tue, 3 Jan 2023 19:39:02 +0100
+Subject: [PATCH 12/13] coverity Uninitialized pointer field and useless call
+
+---
+ src/DataColors.cpp      | 2 ++
+ src/DialogBoxColumn.cpp | 6 ++++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/src/DataColors.cpp b/src/DataColors.cpp
+index 572440b2..28bf698f 100644
+--- a/src/DataColors.cpp
++++ b/src/DataColors.cpp
+@@ -46,11 +46,13 @@ DataColors::DataColors ()
+ 	colors_WaveHeight.readFile (Util::pathColors()+"colors_waveheight_m.txt", 1, 0);
+ 	colors_WhiteCap.readFile (Util::pathColors()+"colors_whitecap_prb.txt", 1, 0);
+ 	colors_ThetaE.readFile (Util::pathColors()+"colors_thetae_celcius.txt", 1, 273.15);
++#if 0
+ 	//test
+ 	double v;
+ 	
+ 	v= 170;
+ 	colors_Temp.getColor (v, true);
++#endif
+ }
+ //--------------------------------------------------------------------------
+ QColor DataColors::getContrastedColor (const QColor &base)
+diff --git a/src/DialogBoxColumn.cpp b/src/DialogBoxColumn.cpp
+index 9e90b2fc..20839bcc 100644
+--- a/src/DialogBoxColumn.cpp
++++ b/src/DialogBoxColumn.cpp
+@@ -83,16 +83,18 @@ DialogBoxColumn::DialogBoxColumn (QWidget *parent,
+     btOK     = new QPushButton (tr("Ok"), this);
+ 	if (nbButtons > 1)
+ 		btCancel = new QPushButton (tr("Cancel"), this);
++	else
++		btCancel = nullptr;
+ 	hlay->addStretch (0);
+     hlay->addWidget (btOK);
+-	if (nbButtons > 1)
++	if (btCancel != nullptr)
+ 		hlay->addWidget (btCancel);
+ 	hlay->addStretch (0);
+     layout->addWidget (ftmp, Qt::AlignCenter);
+ 
+     //-----------------------------------------------------------------------
+     connect(btOK, SIGNAL(clicked()), this, SLOT(slotBtOK()));
+-	if (nbButtons > 1)
++	if (btCancel != nullptr)
+ 		connect(btCancel, SIGNAL(clicked()), this, SLOT(slotBtCancel()));
+ }
+ 
+
+From 0510016d947ed62eceacd5b5a02cc87d855e5ae9 Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Wed, 4 Jan 2023 00:17:47 +0100
+Subject: [PATCH 13/13] coverity Uninitialized pointer field
+
+---
+ src/GriddedReader.h   | 2 +-
+ src/map/GshhsReader.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/GriddedReader.h b/src/GriddedReader.h
+index 67b80434..0a7d599e 100644
+--- a/src/GriddedReader.h
++++ b/src/GriddedReader.h
+@@ -35,7 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ class GriddedReader : public DataReaderAbstract
+ {
+ 	public:
+-		GriddedReader () {}
++		GriddedReader () = default;
+ 		virtual ~GriddedReader () {}
+ 
+ 		bool  isOk ()   {return ok;}
+diff --git a/src/map/GshhsReader.h b/src/map/GshhsReader.h
+index d5a9fdf8..b6301396 100644
+--- a/src/map/GshhsReader.h
++++ b/src/map/GshhsReader.h
+@@ -61,7 +61,7 @@ class GshhsPoint {
+ class GshhsPolygon
+ {
+     public:
+-        GshhsPolygon() {}
++        GshhsPolygon() = default;
+         GshhsPolygon(ZUFILE *file);
+         virtual ~GshhsPolygon();
+         
