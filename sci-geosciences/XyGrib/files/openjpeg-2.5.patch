@@ -1,0 +1,46 @@
+From 4c30132b548473b255a63c30c8d766b5f1be5479 Mon Sep 17 00:00:00 2001
+From: alcir <alciregi@posteo.net>
+Date: Sun, 7 Aug 2022 22:39:01 +0200
+Subject: [PATCH 1/2] Add openjpeg-2.5 to PATH_SUFFIXES
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 358a87a2..29b5a734 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -116,7 +116,7 @@ find_path(OPENJPEG_INCLUDE_DIR
+      /opt/local/include # DarwinPorts
+      /opt/csw/include # Blastwave
+      /opt/include
+-     PATH_SUFFIXES openjpeg-2.3 openjpeg-2.2 openjpeg-2.1
++     PATH_SUFFIXES openjpeg-2.5 openjpeg-2.3 openjpeg-2.2 openjpeg-2.1
+      REQUIRED
+  )
+ include_directories(${OPENJPEG_INCLUDE_DIR})
+
+From 2bdba7f7609b5cce82c3d8ae079f78342a7d4a7b Mon Sep 17 00:00:00 2001
+From: alcir <alciregi@posteo.net>
+Date: Mon, 8 Aug 2022 15:56:09 +0200
+Subject: [PATCH 2/2] Add openjpeg-2.4 to PATH_SUFFIXES
+
+Add openjpeg-2.4 to PATH_SUFFIXES
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 29b5a734..0bfd8f0d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -116,7 +116,7 @@ find_path(OPENJPEG_INCLUDE_DIR
+      /opt/local/include # DarwinPorts
+      /opt/csw/include # Blastwave
+      /opt/include
+-     PATH_SUFFIXES openjpeg-2.5 openjpeg-2.3 openjpeg-2.2 openjpeg-2.1
++     PATH_SUFFIXES openjpeg-2.5 openjpeg-2.4 openjpeg-2.3 openjpeg-2.2 openjpeg-2.1
+      REQUIRED
+  )
+ include_directories(${OPENJPEG_INCLUDE_DIR})

@@ -1,0 +1,953 @@
+From a849079dc9faa3f6681d487cc640a99818e7be45 Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Tue, 25 Jan 2022 08:48:18 +0100
+Subject: [PATCH 1/9] Replace deprecated sprintf
+
+---
+ src/BoardPanel.cpp       | 23 ++++++-------
+ src/DialogUnits.cpp      |  2 +-
+ src/IsoLine.cpp          |  2 +-
+ src/LonLatGrid.cpp       |  2 +-
+ src/MeteoTableWidget.cpp |  8 ++---
+ src/util/Util.cpp        | 72 ++++++++++++++++++++--------------------
+ 6 files changed, 54 insertions(+), 55 deletions(-)
+
+diff --git a/src/BoardPanel.cpp b/src/BoardPanel.cpp
+index 64f563d8..3572238c 100644
+--- a/src/BoardPanel.cpp
++++ b/src/BoardPanel.cpp
+@@ -42,7 +42,6 @@ void BoardPanel::clearPosition ()
+ void BoardPanel::showDataPointInfo (
+ 						const DataPointInfo &pf, const Altitude &windAlt)
+ {
+-    QString s;
+ 	if (pf.isOk())
+ 		showPosition (pf.x, pf.y);
+ 	else
+@@ -59,8 +58,8 @@ void BoardPanel::showDataPointInfo (
+ 		lbWindBf.setText("");
+ 		float v, dir;
+ 		if (pf.getWindValues (windAlt, &v, &dir)) {
+-			lbWindDir.setText (s.sprintf("%.0f ", dir)+tr("°"));
+-			lbWindBf.setText  (s.sprintf("%2d ", Util::msToBeaufort(v))+tr("Bf"));
++			lbWindDir.setText (QString::asprintf("%.0f ", dir)+tr("°"));
++			lbWindBf.setText  (QString::asprintf("%2d ", Util::msToBeaufort(v))+tr("Bf"));
+ 			lbWindSpeed.setText (Util::formatSpeed_Wind(v) );
+ 		}
+ 		else {
+@@ -73,7 +72,7 @@ void BoardPanel::showDataPointInfo (
+ 	if (cellCurrent->isVisible()) {
+ 		float v, dir;
+ 		if (pf.getCurrentValues (&v, &dir)) {
+-			lbCurrentDir.setText (s.sprintf("%.0f ", dir)+tr("°"));
++			lbCurrentDir.setText (QString::asprintf("%.0f ", dir)+tr("°"));
+ 			lbCurrentSpeed.setText (Util::formatSpeed_Current(v) );
+ 		}
+ 		else {
+@@ -190,7 +189,7 @@ void BoardPanel::showDataPointInfo (
+ 			for (int i=0; i<GEOPOTsize; i++)
+ 			{
+ 				int P = GEOPOThgt(i);	// 925 850 700 600 500 400 300 200
+-				shpa.sprintf("%3d", P);
++				shpa = QString::asprintf("%3d", P);
+ 				if (GribDataIsDef(pf.hGeopot[i])) {
+ 					sgeopot = QString("%1")
+ 							.arg(Util::formatGeopotAltitude (pf.hGeopot[i],true), 9);
+@@ -224,7 +223,7 @@ void BoardPanel::showDataPointInfo (
+ 
+ 				if (i>0 && GribDataIsDef(pf.hThetae[i]) && GribDataIsDef(pf.hThetae[i-1])) {
+ 					QString delta;
+-					delta.sprintf(" (%+.1f)", pf.hThetae[i]-pf.hThetae[i-1]);
++					delta = QString::asprintf(" (%+.1f)", pf.hThetae[i]-pf.hThetae[i-1]);
+ 					sv[i] += delta;
+ 				}
+ 			}
+@@ -279,19 +278,19 @@ QString BoardPanel::formatWave (const QString &title, float ht, float dir, float
+ 	
+ 	QString s;
+ 	if (GribDataIsDef(ht))
+-		s.sprintf(" %5.2fm", ht);
++		s = QString::asprintf(" %5.2fm", ht);
+ 	else
+-		s.sprintf("       ");
++		s = QString::asprintf("       ");
+ 	r += s;
+ 	if (GribDataIsDef(dir))
+-		s.sprintf(" %+4.0f°", dir);
++		s = QString::asprintf(" %+4.0f°", dir);
+ 	else
+-		s.sprintf("      ");
++		s = QString::asprintf("      ");
+ 	r += s;
+ 	if (GribDataIsDef(per))
+-		s.sprintf(" %3.0fs", per);
++		s = QString::asprintf(" %3.0fs", per);
+ 	else
+-		s.sprintf("     ");
++		s = QString::asprintf("     ");
+ 	r += s;
+ 
+ 	return r;
+diff --git a/src/DialogUnits.cpp b/src/DialogUnits.cpp
+index cdb3acca..aee02b50 100644
+--- a/src/DialogUnits.cpp
++++ b/src/DialogUnits.cpp
+@@ -243,7 +243,7 @@ QFrame *DialogUnits::createFrameGui(QWidget *parent)
+ 	{	// UTC-12 UTC-11 ... UTC+1 UTC+2 UTC+3 ... UTC+14
+ 		QString stz;
+ 		if (i != 0)
+-			stz.sprintf("UTC%+d", i);
++			stz = QString::asprintf("UTC%+d", i);
+ 		else
+ 			stz = "UTC";
+     	cbTimeZone->addItem( tr("Fixed time ")+stz, stz);
+diff --git a/src/IsoLine.cpp b/src/IsoLine.cpp
+index 3ccd5651..4d8e069d 100644
+--- a/src/IsoLine.cpp
++++ b/src/IsoLine.cpp
+@@ -84,7 +84,7 @@ void IsoLine::drawIsoLineLabels(QPainter &pnt, std::vector <QRect> &overlap,
+     int nb = first;
+     QString label;
+ 
+-    label = label.sprintf("%d", qRound(value*coef+offset));
++    label = QString::asprintf("%d", qRound(value*coef+offset));
+ 
+     QPen penText(couleur);
+     QFont fontText = Font::getFont(FONT_IsolineLabel);
+diff --git a/src/LonLatGrid.cpp b/src/LonLatGrid.cpp
+index beb45431..2756b62b 100644
+--- a/src/LonLatGrid.cpp
++++ b/src/LonLatGrid.cpp
+@@ -144,7 +144,7 @@ void LonLatGrid::drawLabel(QPainter &pnt,
+     QString label;
+ 	QColor couleur(10,10,10);
+ 
+-    label = label.sprintf("%g", value);
++    label = QString::asprintf("%g", value);
+ 
+     QPen penText(couleur);
+     QFont fontText = Font::getFont(FONT_LonLatGridLabel);
+diff --git a/src/MeteoTableWidget.cpp b/src/MeteoTableWidget.cpp
+index 93936786..5a680e7a 100644
+--- a/src/MeteoTableWidget.cpp
++++ b/src/MeteoTableWidget.cpp
+@@ -551,11 +551,11 @@ void MeteoTableWidget::addLine_Wind (const Altitude &alt, int lig)
+ 		if (pf->getWindValues (alt, &v, &dir)) {
+ 			if (GribDataIsDef(dir)) {
+ 				QString tmp;
+-				tmp.sprintf("%.0f", dir);
++				tmp = QString::asprintf("%.0f", dir);
+ 				txt += tmp + tr(" °") + "\n";
+ 				txt += Util::formatSpeed_Wind(v);
+ 				if ( Util::getSetting("MTABLE_showWindBeauforts", true).toBool() ) {
+-					tmp.sprintf("%2d", Util::msToBeaufort(v));
++					tmp = QString::asprintf("%2d", Util::msToBeaufort(v));
+ 					txt += "\n";
+ 					txt += tmp + tr(" Bf");
+ 				}
+@@ -585,7 +585,7 @@ void MeteoTableWidget::addLine_Current (const Altitude &alt, int lig)
+ 		if (pf->getCurrentValues (&v, &dir)) {
+ 			if (GribDataIsDef(dir)) {
+ 				QString tmp;
+-				tmp.sprintf("%.0f", dir);
++				tmp = QString::asprintf("%.0f", dir);
+ 				txt += tmp + tr(" °") + "\n";
+ 				txt += Util::formatSpeed_Current(v);
+ 				bgColor = QColor(plotter->getCurrentColor(v, true));
+@@ -836,7 +836,7 @@ void MeteoTableWidget::addLine_Rain(int lig)
+ 		txt = "";
+ 		if (pinfo->hasRain()) {
+ 			double v = pinfo->rain;
+-			txt.sprintf("%.2f ", v);
++			txt = QString::asprintf("%.2f ", v);
+ 			txt += tr("mm/h");
+ 			bgColor = QColor(plotter->getRainColor(v, true));
+ 		}
+diff --git a/src/util/Util.cpp b/src/util/Util.cpp
+index 918b7a53..c58d4f19 100644
+--- a/src/util/Util.cpp
++++ b/src/util/Util.cpp
+@@ -196,14 +196,14 @@ QString Util::formatTemperature (float tempKelvin, bool withUnit)
+     QString unit = Util::getSetting("unitsTemp", QVariant(tr("°C"))).toString();
+     QString r;
+     if (unit == tr("°K")) {
+-        r.sprintf("%.1f", tempKelvin);
++        r = QString::asprintf("%.1f", tempKelvin);
+     }
+     else if (unit == tr("°F")) {
+-        r.sprintf("%.1f", 1.8f*(tempKelvin-273.15f)+32.0f);
++        r = QString::asprintf("%.1f", 1.8f*(tempKelvin-273.15f)+32.0f);
+     }
+     else  {   // if (unit == tr("°K"))
+         unit = tr("°C");
+-        r.sprintf("%.1f", tempKelvin-273.15f);
++        r = QString::asprintf("%.1f", tempKelvin-273.15f);
+     }
+ 	return (withUnit) ? r+""+unit : r;
+ }
+@@ -213,14 +213,14 @@ QString Util::formatTemperature_short(float tempKelvin, bool withUnit)
+     QString unit = Util::getSetting("unitsTemp", tr("°C")).toString();
+     QString r;
+     if (unit == tr("°K")) {
+-        r.sprintf("%d", qRound(tempKelvin) );
++        r = QString::asprintf("%d", qRound(tempKelvin) );
+     }
+     else if (unit == tr("°F")) {
+-        r.sprintf("%d", qRound(1.8f*(tempKelvin-273.15f)+32.0f) );
++        r = QString::asprintf("%d", qRound(1.8f*(tempKelvin-273.15f)+32.0f) );
+     }
+     else  {   // if (unit == tr("°K"))
+         unit = tr("°C");
+-        r.sprintf("%d", qRound(tempKelvin-273.15f) );
++        r = QString::asprintf("%d", qRound(tempKelvin-273.15f) );
+     }
+ 	return (withUnit) ? r+""+unit : r;
+ }
+@@ -229,19 +229,19 @@ QString Util::formatSpeed (float meterspersecond, bool withUnit, QString unit)
+ {
+     QString r;
+     if (unit == "m/s") {
+-        r.sprintf("%.1f ", meterspersecond);
++        r = QString::asprintf("%.1f ", meterspersecond);
+         unit = tr("m/s");
+     }
+     else if (unit == "m/min") {
+-        r.sprintf("%d ", qRound(meterspersecond*60.f));
++        r = QString::asprintf("%d ", qRound(meterspersecond*60.f));
+         unit = tr("m/min");
+     }
+     else if (unit == "km/h") {
+-        r.sprintf("%.1f ", meterspersecond*3.6);
++        r = QString::asprintf("%.1f ", meterspersecond*3.6);
+         unit = tr("km/h");
+     }
+     else  {   // if (unit == tr("kts"))
+-        r.sprintf("%.1f ", meterspersecond*3.6/1.852);
++        r = QString::asprintf("%.1f ", meterspersecond*3.6/1.852);
+         unit = tr("kts");
+     }
+ 	return (withUnit) ? r+" "+unit : r;
+@@ -263,7 +263,7 @@ QString Util::formatDirection (float angle, bool withUnit)
+ {
+     QString unite = tr("°");
+     QString r;
+-    r.sprintf("%d", qRound(angle +0.5f));
++    r = QString::asprintf("%d", qRound(angle +0.5f));
+ 	return (withUnit) ? r+unite : r;
+ }
+ //----------------------------------------------------------------
+@@ -281,11 +281,11 @@ QString Util::formatDistance (float mille, bool withUnit)
+         d = mille;
+     }
+     if (d<10)
+-        r.sprintf("%5.2f", d);
++        r = QString::asprintf("%5.2f", d);
+     else if (d<100)
+-        r.sprintf("%5.1f", d);
++        r = QString::asprintf("%5.1f", d);
+ 	else
+-		r.sprintf("%5.0f", d);
++		r = QString::asprintf("%5.0f", d);
+ 	return (withUnit) ? r+" "+unit : r;
+ }
+ //----------------------------------------------------------------
+@@ -446,7 +446,7 @@ QString Util::formatIsotherm0HGT (float meter, bool withUnit)
+ 	double  coef  = Util::getDataCoef (DataCode(GRB_GEOPOT_HGT,LV_ISOTHERM0,0));
+     int d = (int) (meter*coef +0.5);
+     QString r;
+-	r.sprintf("%d", d);
++	r = QString::asprintf("%d", d);
+ 	return (withUnit) ? r+" "+unite : r;
+ }
+ //----------------------------------------------------------------
+@@ -456,7 +456,7 @@ QString Util::formatGeopotAltitude (float meter, bool withUnit)
+ 	double  coef  = Util::getDataCoef (DataCode(GRB_GEOPOT_HGT,LV_ISOBARIC,0));
+     int d = (int) (meter*coef +0.5);
+     QString r;
+-	r.sprintf("%d", d);
++	r = QString::asprintf("%d", d);
+ 	return (withUnit) ? r+" "+unite : r;
+ }
+ //----------------------------------------------------------------
+@@ -466,9 +466,9 @@ QString Util::formatRain (float mmh, bool withUnit)
+     QString unite = Util::getDataUnit (DataCode(GRB_PRECIP_TOT,LV_GND_SURF,0));
+     QString r;
+ 	if (mmh<10)
+-		r.sprintf("%.2f", mmh);
++		r = QString::asprintf("%.2f", mmh);
+ 	else
+-		r.sprintf("%.1f", mmh);
++		r = QString::asprintf("%.1f", mmh);
+ 	return (withUnit) ? r+" "+unite : r;
+ }
+ //----------------------------------------------------------------
+@@ -478,9 +478,9 @@ QString Util::formatPressure (float pasc, bool withUnit, int precision)
+     QString r;
+ 	if (GribDataIsDef(pasc)) {
+ 		if (precision > 0)
+-            r.sprintf("%.1f", pasc/100.0f);
++            r = QString::asprintf("%.1f", pasc/100.0f);
+ 		else
+-            r.sprintf("%.0f", pasc/100.0f);
++            r = QString::asprintf("%.0f", pasc/100.0f);
+ 	}
+ 	return (withUnit) ? r+" "+unite : r;
+ }
+@@ -489,7 +489,7 @@ QString Util::formatCAPEsfc (float jkg, bool withUnit)
+ {
+     QString unite = Util::getDataUnit (DataCode(GRB_CAPE,LV_GND_SURF,0));
+     QString r;
+-    r.sprintf("%d", qRound(jkg));
++    r = QString::asprintf("%d", qRound(jkg));
+     return (withUnit) ? r+" "+unite : r;
+ }
+ //---------- added by david ---------------------------------
+@@ -497,7 +497,7 @@ QString Util::formatReflect(float dbz, bool withUnit)
+ {
+     QString unite = Util::getDataUnit (DataCode(GRB_COMP_REFL,LV_ATMOS_ALL,0));
+     QString r;
+-    r.sprintf("%d", qRound(dbz));
++    r = QString::asprintf("%d", qRound(dbz));
+     return (withUnit) ? r+" "+unite : r;
+ }
+ //----------------------------------------------------------------
+@@ -515,9 +515,9 @@ QString Util::formatWaveHeight (float meter, bool withUnit)
+         d= meter/0.3048f;
+     }
+ 	if (d < 10)
+-		r.sprintf("%.1f", d);
++		r = QString::asprintf("%.1f", d);
+ 	else
+-		r.sprintf("%.0f", d);
++		r = QString::asprintf("%.0f", d);
+ 	return (withUnit) ? r+" "+unite : r;
+ }
+ //----------------------------------------------------------------
+@@ -525,7 +525,7 @@ QString Util::formatWavePeriod (float second, bool withUnit)
+ {
+     QString unit = Util::getSetting("waveHeightPeriod", tr("s")).toString();
+     QString r;
+-	r.sprintf("%.0f", second);
++	r = QString::asprintf("%.0f", second);
+ 	return (withUnit) ? r+" "+unit : r;
+ }
+ //----------------------------------------------------------------
+@@ -548,14 +548,14 @@ QString Util::formatSnowDepth (float meter, bool withUnit)
+         unite = "cm";
+         d= meter*100.0f;
+         if (d < 10)
+-			r.sprintf("%.1f", d);
++			r = QString::asprintf("%.1f", d);
+ 		else
+-			r.sprintf("%.0f", d);
++			r = QString::asprintf("%.0f", d);
+     }
+     else {
+         unite = "ft";
+         d= meter/0.3048f;
+-		r.sprintf("%.2f", d);
++		r = QString::asprintf("%.2f", d);
+     }
+ 	return (withUnit) ? r+" "+unite : r;
+ }
+@@ -573,9 +573,9 @@ QString Util::formatDegres (float x, bool inf100)     // 123.4 -> 123°24.00'
+         float min = (fabs(x) - deg)*60.0f;
+         char sign = (x<0) ? '-' : ' ';
+         if (inf100)
+-        	r.sprintf("%c%02d%s%05.2f'", sign,deg,cdeg, min);
++		r = QString::asprintf("%c%02d%s%05.2f'", sign,deg,cdeg, min);
+ 		else
+-        	r.sprintf("%c%03d%s%05.2f'", sign,deg,cdeg, min);
++		r = QString::asprintf("%c%03d%s%05.2f'", sign,deg,cdeg, min);
+     }
+     else if (unit == tr("dd°mm'ss\""))
+     {
+@@ -586,16 +586,16 @@ QString Util::formatDegres (float x, bool inf100)     // 123.4 -> 123°24.00'
+         sec = sec % 60;                  // reste en secondes
+         char sign = (x<0) ? '-' : ' ';
+         if (inf100)
+-	        r.sprintf("%c%02d%s%02d'%02d\"", sign,deg,cdeg, min,sec);
++	        r = QString::asprintf("%c%02d%s%02d'%02d\"", sign,deg,cdeg, min,sec);
+ 		else
+-	        r.sprintf("%c%03d%s%02d'%02d\"", sign,deg,cdeg, min,sec);
++	        r = QString::asprintf("%c%03d%s%02d'%02d\"", sign,deg,cdeg, min,sec);
+     }
+     else // if (unit == tr("dd,dd°"))
+     {
+         if (inf100)
+-    	    r.sprintf("%05.2f%s",x,cdeg);
++	    r = QString::asprintf("%05.2f%s",x,cdeg);
+ 		else
+-    	    r.sprintf("%06.2f%s",x,cdeg);
++	    r = QString::asprintf("%06.2f%s",x,cdeg);
+     }
+     return r;
+ }
+@@ -669,9 +669,9 @@ QString Util::formatPercentValue(float prb, bool withUnit)
+     QString r;
+ 	float v = inRange (0.0f, prb, 100.0f);
+ 	if (v < 10)
+-		r.sprintf("%.1f", v);
++		r = QString::asprintf("%.1f", v);
+ 	else
+-		r.sprintf("%.0f", v);
++		r = QString::asprintf("%.0f", v);
+ 	return withUnit ? r+" "+unite : r;
+ }
+ 
+
+From 4fbe726971837b91986d295778f1c9f824f9deeb Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Tue, 25 Jan 2022 19:13:08 +0100
+Subject: [PATCH 2/9] Replace some deprecated qSort
+
+---
+ src/MeteoTableWidget.cpp        | 2 +-
+ src/MeteotableOptionsDialog.cpp | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/MeteoTableWidget.cpp b/src/MeteoTableWidget.cpp
+index 5a680e7a..cd727b38 100644
+--- a/src/MeteoTableWidget.cpp
++++ b/src/MeteoTableWidget.cpp
+@@ -464,7 +464,7 @@ void MeteoTableWidget::createListVisibleGribData ()
+ 					DataCode(GRB_PRESSURE_MSL,LV_MSL,0).toInt32(), pos++) );
+ 	}
+ 	// Sort visible data by position
+-	qSort (listVisibleData.begin(), listVisibleData.end(), lessThanMTGribData);
++	std::sort (listVisibleData.begin(), listVisibleData.end(), lessThanMTGribData);
+ }
+ //-----------------------------------------------------------------
+ void MeteoTableWidget::addLine_Isotherm0Height(int lig)
+diff --git a/src/MeteotableOptionsDialog.cpp b/src/MeteotableOptionsDialog.cpp
+index 3c0c7fe3..6feb1091 100644
+--- a/src/MeteotableOptionsDialog.cpp
++++ b/src/MeteotableOptionsDialog.cpp
+@@ -150,7 +150,7 @@ void DialogMeteotableOptions::slotChangeVisibleItems()
+ 		}
+ 	}
+ 	// update positions after movings (numerate from 0)
+-	qSort (listAllOptionItems.begin(), listAllOptionItems.end(), 
++	std::sort (listAllOptionItems.begin(), listAllOptionItems.end(),
+ 								MeteotableOptionItem::lessThan_byPos);
+ 	int posVis = 0;
+ 	int posNotVis = 0;
+@@ -218,10 +218,10 @@ void DialogMeteotableOptions::updateListWidgetsItems ()
+ 	}
+ 	
+ 	// sort visible data by position
+-	qSort (listVisibleItems.begin(), listVisibleItems.end(), 
++	std::sort (listVisibleItems.begin(), listVisibleItems.end(),
+ 								MeteotableOptionItem::lessThan_byPos);
+ 	// sort hidden data by name
+-	qSort (listHiddenItems.begin(), listHiddenItems.end(), 
++	std::sort (listHiddenItems.begin(), listHiddenItems.end(),
+ 								MeteotableOptionItem::lessThan_byName);
+ 	// add ordered items in widget lists
+ 	listVisibleData->clear();
+
+From 2e1c678f1b342e0f9a697ad8043657a76d6af6e3 Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Tue, 25 Jan 2022 20:10:01 +0100
+Subject: [PATCH 3/9] Replace deprecated QTime with QElapsedTimer
+
+---
+ src/DialogLoadGRIB.h     | 2 +-
+ src/DialogServerStatus.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/DialogLoadGRIB.h b/src/DialogLoadGRIB.h
+index b3dc187b..db9ad89d 100644
+--- a/src/DialogLoadGRIB.h
++++ b/src/DialogLoadGRIB.h
+@@ -71,7 +71,7 @@ class DialogLoadGRIB : public DialogBoxBase
+ 		QString  savedFileName;
+ 		
+         bool     loadInProgress;
+-        QTime    timeLoad;
++        QElapsedTimer timeLoad;
+         QCursor  oldcursor;
+         
+         QDoubleSpinBox *sbNorth;
+diff --git a/src/DialogServerStatus.h b/src/DialogServerStatus.h
+index 40288604..4171d558 100644
+--- a/src/DialogServerStatus.h
++++ b/src/DialogServerStatus.h
+@@ -59,7 +59,7 @@ class DialogServerStatus : public  DialogBoxBase
+ 		QNetworkReply *reply_step1;
+ 		bool downloadError;
+         
+-        QTime   timeLoad;
++        QElapsedTimer timeLoad;
+         QLabel *lbResponseStatus;
+ 
+         std::vector<QLabel* > ar_lbRunDate;
+
+From 28ab99904e0df41677ffe93f1e8e65da4e8e528c Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Sat, 31 Dec 2022 12:34:30 +0100
+Subject: [PATCH 4/9] Replace deprecated width with horizontalAdvance
+
+---
+ src/BoardPanel.cpp     | 52 +++++++++++++++++++++---------------------
+ src/GriddedPlotter.cpp | 34 +++++++++++++--------------
+ src/MapDrawer.cpp      |  8 +++----
+ src/SkewT.cpp          | 12 +++++-----
+ 4 files changed, 53 insertions(+), 53 deletions(-)
+
+diff --git a/src/BoardPanel.cpp b/src/BoardPanel.cpp
+index 3572238c..5ead6b92 100644
+--- a/src/BoardPanel.cpp
++++ b/src/BoardPanel.cpp
+@@ -383,68 +383,68 @@ void BoardPanel::updateLabelsSizes()
+     QFontMetrics fmt(qApp->font());
+     int style = QFrame::Panel | QFrame::Sunken;
+ 
+-    lbLon.setMinimumWidth( fmt.width("X888X88X00XX-") );
++    lbLon.setMinimumWidth( fmt.horizontalAdvance("X888X88X00XX-") );
+     lbLon.setFrameStyle(style);
+-    lbLat.setMinimumWidth( fmt.width("X888X88X00XX-") );
++    lbLat.setMinimumWidth( fmt.horizontalAdvance("X888X88X00XX-") );
+     lbLat.setFrameStyle(style);
+ 
+-    lbWindDir.setMinimumWidth( fmt.width("888XX-.") );
++    lbWindDir.setMinimumWidth( fmt.horizontalAdvance("888XX-.") );
+     lbWindDir.setFrameStyle(style);
+-    lbWindBf.setMinimumWidth( fmt.width("8888Bf-") );
++    lbWindBf.setMinimumWidth( fmt.horizontalAdvance("8888Bf-") );
+     lbWindBf.setFrameStyle(style);
+ 	
+-    lbWindSpeed.setMinimumWidth( fmt.width("888XXXXXkm/h-") );
++    lbWindSpeed.setMinimumWidth( fmt.horizontalAdvance("888XXXXXkm/h-") );
+     lbWindSpeed.setFrameStyle(style);
+ 	
+     lbGUSTsfc.setFrameStyle(style);
+-    lbGUSTsfc.setMinimumWidth( fmt.width("888XXXXXkm/h-") );
++    lbGUSTsfc.setMinimumWidth( fmt.horizontalAdvance("888XXXXXkm/h-") );
+ 	
+-    lbCurrentDir.setMinimumWidth( fmt.width("888XX-.") );
++    lbCurrentDir.setMinimumWidth( fmt.horizontalAdvance("888XX-.") );
+     lbCurrentDir.setFrameStyle(style);
+-    lbCurrentSpeed.setMinimumWidth( fmt.width("888XXXXXX-.") );
++    lbCurrentSpeed.setMinimumWidth( fmt.horizontalAdvance("888XXXXXX-.") );
+     lbCurrentSpeed.setFrameStyle(style);
+ 
+     QString strlong = "888888888888";
+-    lbPres.setMinimumWidth( fmt.width(strlong) );
++    lbPres.setMinimumWidth( fmt.horizontalAdvance(strlong) );
+     lbPres.setFrameStyle(style);
+-    lbRain.setMinimumWidth( fmt.width(strlong) );
++    lbRain.setMinimumWidth( fmt.horizontalAdvance(strlong) );
+     lbRain.setFrameStyle(style);
+-    lbTemp.setMinimumWidth( fmt.width(strlong) );
++    lbTemp.setMinimumWidth( fmt.horizontalAdvance(strlong) );
+     lbTemp.setFrameStyle(style);
+-    lbTempMin.setMinimumWidth( fmt.width(strlong) );
++    lbTempMin.setMinimumWidth( fmt.horizontalAdvance(strlong) );
+     lbTempMin.setFrameStyle(style);
+-    lbTempMax.setMinimumWidth( fmt.width(strlong) );
++    lbTempMax.setMinimumWidth( fmt.horizontalAdvance(strlong) );
+     lbTempMax.setFrameStyle(style);
+-    lbCloud.setMinimumWidth( fmt.width(strlong) );
++    lbCloud.setMinimumWidth( fmt.horizontalAdvance(strlong) );
+     lbCloud.setFrameStyle(style);
+-    lbHumid.setMinimumWidth( fmt.width(strlong) );
++    lbHumid.setMinimumWidth( fmt.horizontalAdvance(strlong) );
+     lbHumid.setFrameStyle(style);
+-    lbDewPoint.setMinimumWidth( fmt.width(strlong) );
++    lbDewPoint.setMinimumWidth( fmt.horizontalAdvance(strlong) );
+     lbDewPoint.setFrameStyle(style);
+-    lbWaterTemp.setMinimumWidth( fmt.width(strlong) );
++    lbWaterTemp.setMinimumWidth( fmt.horizontalAdvance(strlong) );
+     lbWaterTemp.setFrameStyle(style);
+-    lbIsotherm0HGT.setMinimumWidth( fmt.width(strlong) );
++    lbIsotherm0HGT.setMinimumWidth( fmt.horizontalAdvance(strlong) );
+     lbIsotherm0HGT.setFrameStyle(style);
+     lbSnowDepth.setFrameStyle(style);
+-    lbSnowDepth.setMinimumWidth( fmt.width(strlong) );
++    lbSnowDepth.setMinimumWidth( fmt.horizontalAdvance(strlong) );
+     lbSnowCateg.setFrameStyle(style);
+-    lbSnowCateg.setMinimumWidth( fmt.width(strlong) );
++    lbSnowCateg.setMinimumWidth( fmt.horizontalAdvance(strlong) );
+ 
+     //added by david
+     lbReflect.setFrameStyle(style);
+-    lbReflect.setMinimumWidth( fmt.width(strlong) );
++    lbReflect.setMinimumWidth( fmt.horizontalAdvance(strlong) );
+ 
+     strlong = "888888";
+     lbCAPEsfc.setFrameStyle(style);
+-    lbCAPEsfc.setMinimumWidth( fmt.width(strlong) );
++    lbCAPEsfc.setMinimumWidth( fmt.horizontalAdvance(strlong) );
+     lbCINsfc.setFrameStyle(style);
+-    lbCINsfc.setMinimumWidth( fmt.width(strlong) );
++    lbCINsfc.setMinimumWidth( fmt.horizontalAdvance(strlong) );
+ 
+ 
+ 	
+ 	// Altitude : hPa Geopot Temp Theta-e
+ //    strlong = " 850 hPa ";
+-//	lbWindTitle.setMinimumWidth( fmt.width(strlong) );
++//	lbWindTitle.setMinimumWidth( fmt.horizontalAdvance(strlong) );
+ 	
+ 	QFont fontAlt = Font::getFont(FONT_AltitudeLabel);
+ 	QFont fontAltTitle = Font::getFont(FONT_AltitudeLabelTitle);
+@@ -469,10 +469,10 @@ void BoardPanel::updateLabelsSizes()
+     QFontMetrics fmtAltTitle (fontAltTitle);
+     
+ 	strlong = "hPa  altitude   temp     θe";
+-	lbAltTitle.setMinimumWidth (fmtAltTitle.width(strlong));
++	lbAltTitle.setMinimumWidth (fmtAltTitle.horizontalAdvance(strlong));
+ 	
+     strlong = "999 99999 gpft -99.9°C 100% 99.9°C (-99.9)";
+-	int wmin = fmtAlt.width(strlong);
++	int wmin = fmtAlt.horizontalAdvance(strlong);
+ 	lb925.setMinimumWidth (wmin);
+ 	lb850.setMinimumWidth (wmin);
+ 	lb700.setMinimumWidth (wmin);
+diff --git a/src/GriddedPlotter.cpp b/src/GriddedPlotter.cpp
+index 8ab5d4e9..5d402462 100644
+--- a/src/GriddedPlotter.cpp
++++ b/src/GriddedPlotter.cpp
+@@ -748,7 +748,7 @@ void GriddedPlotter::draw_DATA_Labels (
+             v = rec->getInterpolatedValue (lon, lat, mustInterpolateValues);
+             if (GribDataIsDef(v)) {
+                 QString strtemp = formatLabelFunction (v,false);
+-                pnt.drawText(i-fmet.width("XXX")/2, j+fmet.ascent()/2, strtemp);
++                pnt.drawText(i-fmet.horizontalAdvance("XXX")/2, j+fmet.ascent()/2, strtemp);
+             }
+         }
+     } 
+@@ -891,54 +891,54 @@ void GriddedPlotter::draw_DATA_MinMax (
+     // now display the maxima and minima for each quarter
+     if (q1savLv < 9999999.9) {
+         proj->map2screen(q1savLx, q1savLy, &pi, &pj);
+-        pnt.drawText(pi-fmet.width('L')/2, pj+fmet.ascent()/2, minSymbol);;
++        pnt.drawText(pi-fmet.horizontalAdvance('L')/2, pj+fmet.ascent()/2, minSymbol);;
+         proj->map2screen(q1savLx-360.0,q1savLy, &pi, &pj);
+-        pnt.drawText(pi-fmet.width('L')/2, pj+fmet.ascent()/2, minSymbol);;
++        pnt.drawText(pi-fmet.horizontalAdvance('L')/2, pj+fmet.ascent()/2, minSymbol);;
+     }
+     if (q1savHv > 0.0) {
+         proj->map2screen(q1savHx, q1savHy, &pi, &pj);
+-        pnt.drawText(pi-fmet.width('H')/2, pj+fmet.ascent()/2, maxSymbol);
++        pnt.drawText(pi-fmet.horizontalAdvance('H')/2, pj+fmet.ascent()/2, maxSymbol);
+         proj->map2screen(q1savHx-360.0,q1savHy, &pi, &pj);
+-        pnt.drawText(pi-fmet.width('H')/2, pj+fmet.ascent()/2, maxSymbol);
++        pnt.drawText(pi-fmet.horizontalAdvance('H')/2, pj+fmet.ascent()/2, maxSymbol);
+     }
+     // next quarter
+     if (q2savLv < 9999999.9) {
+         proj->map2screen(q2savLx, q2savLy, &pi, &pj);
+-        pnt.drawText(pi-fmet.width('L')/2, pj+fmet.ascent()/2, minSymbol);;
++        pnt.drawText(pi-fmet.horizontalAdvance('L')/2, pj+fmet.ascent()/2, minSymbol);;
+         proj->map2screen(q2savLx-360.0,q2savLy, &pi, &pj);
+-        pnt.drawText(pi-fmet.width('L')/2, pj+fmet.ascent()/2, minSymbol);;
++        pnt.drawText(pi-fmet.horizontalAdvance('L')/2, pj+fmet.ascent()/2, minSymbol);;
+     }
+     if (q2savHv > 0.0) {
+         proj->map2screen(q2savHx, q2savHy, &pi, &pj);
+-        pnt.drawText(pi-fmet.width('H')/2, pj+fmet.ascent()/2, maxSymbol);
++        pnt.drawText(pi-fmet.horizontalAdvance('H')/2, pj+fmet.ascent()/2, maxSymbol);
+         proj->map2screen(q2savHx-360.0,q2savHy, &pi, &pj);
+-        pnt.drawText(pi-fmet.width('H')/2, pj+fmet.ascent()/2, maxSymbol);
++        pnt.drawText(pi-fmet.horizontalAdvance('H')/2, pj+fmet.ascent()/2, maxSymbol);
+     }
+     // next quarter
+     if (q3savLv < 9999999.9) {
+         proj->map2screen(q3savLx, q3savLy, &pi, &pj);
+-        pnt.drawText(pi-fmet.width('L')/2, pj+fmet.ascent()/2, minSymbol);;
++        pnt.drawText(pi-fmet.horizontalAdvance('L')/2, pj+fmet.ascent()/2, minSymbol);;
+         proj->map2screen(q3savLx-360.0,q3savLy, &pi, &pj);
+-        pnt.drawText(pi-fmet.width('L')/2, pj+fmet.ascent()/2, minSymbol);;
++        pnt.drawText(pi-fmet.horizontalAdvance('L')/2, pj+fmet.ascent()/2, minSymbol);;
+     }
+     if (q3savHv > 0.0) {
+         proj->map2screen(q3savHx, q3savHy, &pi, &pj);
+-        pnt.drawText(pi-fmet.width('H')/2, pj+fmet.ascent()/2, maxSymbol);
++        pnt.drawText(pi-fmet.horizontalAdvance('H')/2, pj+fmet.ascent()/2, maxSymbol);
+         proj->map2screen(q3savHx-360.0,q3savHy, &pi, &pj);
+-        pnt.drawText(pi-fmet.width('H')/2, pj+fmet.ascent()/2, maxSymbol);
++        pnt.drawText(pi-fmet.horizontalAdvance('H')/2, pj+fmet.ascent()/2, maxSymbol);
+     }
+     // last quarter
+     if (q4savLv < 9999999.9) {
+         proj->map2screen(q4savLx, q4savLy, &pi, &pj);
+-        pnt.drawText(pi-fmet.width('L')/2, pj+fmet.ascent()/2, minSymbol);;
++        pnt.drawText(pi-fmet.horizontalAdvance('L')/2, pj+fmet.ascent()/2, minSymbol);;
+         proj->map2screen(q4savLx-360.0,q4savLy, &pi, &pj);
+-        pnt.drawText(pi-fmet.width('L')/2, pj+fmet.ascent()/2, minSymbol);;
++        pnt.drawText(pi-fmet.horizontalAdvance('L')/2, pj+fmet.ascent()/2, minSymbol);;
+     }
+     if (q4savHv > 0.0) {
+         proj->map2screen(q4savHx, q4savHy, &pi, &pj);
+-        pnt.drawText(pi-fmet.width('H')/2, pj+fmet.ascent()/2, maxSymbol);
++        pnt.drawText(pi-fmet.horizontalAdvance('H')/2, pj+fmet.ascent()/2, maxSymbol);
+         proj->map2screen(q4savHx-360.0,q4savHy, &pi, &pj);
+-        pnt.drawText(pi-fmet.width('H')/2, pj+fmet.ascent()/2, maxSymbol);
++        pnt.drawText(pi-fmet.horizontalAdvance('H')/2, pj+fmet.ascent()/2, maxSymbol);
+     }
+ 
+  }
+diff --git a/src/MapDrawer.cpp b/src/MapDrawer.cpp
+index cb1f22fd..a644f701 100644
+--- a/src/MapDrawer.cpp
++++ b/src/MapDrawer.cpp
+@@ -737,11 +737,11 @@ void MapDrawer::draw_Cartouche_Gridded
+ 		//---------------------------------------------------------
+         QString  tval2 = Util::formatDateTimeLong(plotter->getCurrentDate());
+ 		n +=  datalist.size();
+-		w1 = fmbig.width(tval2)+5;
++		w1 = fmbig.horizontalAdvance(tval2)+5;
+ 		w2 = 0;
+ 		// get largest string data
+ 		for (int i = 0; i < datalist.size(); i++) {
+-        	int t = fmsmall.width (datalist.at(i))+5;
++        	int t = fmsmall.horizontalAdvance (datalist.at(i))+5;
+ 			if (t>w2)
+ 				w2 = t;
+ 		}
+@@ -781,7 +781,7 @@ void MapDrawer::draw_Cartouche_Gridded
+ 			pnt.setFont (fontdate);
+ 			w = 0;  // get largest string data
+ 			for (int i = 0; i < datalist.size(); i++) {
+-				int t = fmdate.width (datalist.at(i))+5;
++				int t = fmdate.horizontalAdvance (datalist.at(i))+5;
+ 				if (t>w)
+ 					w = t;
+ 			}
+@@ -803,7 +803,7 @@ void MapDrawer::draw_Cartouche_Gridded
+ 		//--------------------------------------------------
+         QString sign = tr("XyGrib");
+         pnt.setFont(fontsign);
+-		w = fmsign.width(sign)+5;
++		w = fmsign.horizontalAdvance(sign)+5;
+ 		dy = fontsign.pointSize()+1;
+         h = dy+2;
+         x = QApplication::isRightToLeft() ? 0 : proj->getW() - w;
+diff --git a/src/SkewT.cpp b/src/SkewT.cpp
+index 24cd2dbb..0ef70b9c 100644
+--- a/src/SkewT.cpp
++++ b/src/SkewT.cpp
+@@ -442,7 +442,7 @@ void  SkewT::draw_temperatureScale (QPainter &pnt, bool withLabels)
+ 			pnt.drawLine (i0, j0, i0, j0+4);
+ 			if (withLabels) {
+ 				QString txt = QString("%1").arg(temp);
+-				pnt.drawText (i0-fmet.width(txt)/2, j0+fh, txt);
++				pnt.drawText (i0-fmet.horizontalAdvance(txt)/2, j0+fh, txt);
+ 			}
+ 		}
+ 		else {  // line starts outside of X axis
+@@ -456,14 +456,14 @@ void  SkewT::draw_temperatureScale (QPainter &pnt, bool withLabels)
+ 				pnt.drawLine (i, j, i-4, j);
+ 				if (withLabels) {
+ 					QString txt = QString("%1").arg(temp);
+-					pnt.drawText (DX1-fmet.width(txt)-5, j+fh/3, txt);
++					pnt.drawText (DX1-fmet.horizontalAdvance(txt)-5, j+fh/3, txt);
+ 				}
+ 			}
+ 		}
+ 	}
+ 	if (withLabels) {
+ 		QString txt = "°C";
+-		pnt.drawText (DX1-fmet.width(txt)-5, H-DY2+fh, txt);
++		pnt.drawText (DX1-fmet.horizontalAdvance(txt)-5, H-DY2+fh, txt);
+ 	}
+ }
+ //------------------------------------------------------
+@@ -499,7 +499,7 @@ void  SkewT::draw_pressureScale (QPainter &pnt, bool withLabels)
+ 		}
+ 	}
+ 	if (withLabels)
+-		pnt.drawText (i1-fmet.width("hPa")-6, DY1-6, "hPa");
++		pnt.drawText (i1-fmet.horizontalAdvance("hPa")-6, DY1-6, "hPa");
+ 	// intermediate lines
+ 	pen.setWidthF (0.4);
+ 	pnt.setPen (pen);
+@@ -851,7 +851,7 @@ void  SkewT::draw_linesCAPE (QPainter &pnt)
+ void  SkewT::draw_comments (QPainter &pnt)
+ {
+ 	QFontMetrics fmet (pnt.font());
+-	double fw = fmet.width ("W");
++	double fw = fmet.horizontalAdvance ("W");
+ 	double fh = fmet.lineSpacing ();
+ 	pnt.save ();
+ 	QColor commentsColor = QColor (70,70,70);
+@@ -960,7 +960,7 @@ void  SkewT::draw_comments (QPainter &pnt)
+ 	QString dat = tr("Date: ")+curdate;
+ 	pnt.drawText (W/2, 2*fh, dat);
+ 	//-------------------------------------------------------
+-    pnt.drawText (W-fmet.width("XyGrib")-5, H-5, "XyGrib");
++    pnt.drawText (W-fmet.horizontalAdvance("XyGrib")-5, H-5, "XyGrib");
+ 	//-------------------------------------------------------
+ 	QFont font = pnt.font();
+ 	font.setFamily ("times");
+
+From ce9df3a0e4e7ff6e69a78a2ac1fe86bbd0519e27 Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Sat, 31 Dec 2022 15:00:26 +0100
+Subject: [PATCH 5/9] Replace deprecated startDetached and execute calling
+
+---
+ src/MainWindow.cpp | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/MainWindow.cpp b/src/MainWindow.cpp
+index 6fb8ed18..4b96f8cb 100644
+--- a/src/MainWindow.cpp
++++ b/src/MainWindow.cpp
+@@ -51,7 +51,7 @@ void ThreadNewInstance::run ()
+ 	if (!args.empty()) {
+ 		const QString& appname = args.at(0);
+         //DBGQS (appname);
+-        QProcess::execute ("\"" + appname + "\" -sw");
++        QProcess::execute (appname, {"-sw"});
+ 		exit ();
+ 	}
+ }
+@@ -2590,7 +2590,7 @@ void MainWindow::slotRunMaintenanceTool()
+     res = QMessageBox::question(this,tr("Exit XyGrib?"),question, QMessageBox::Yes, QMessageBox::No);
+ 
+     if (res == QMessageBox::Yes){  // user wishes to exit
+-        result = process.startDetached(maintenanceToolLocation);
++        result = process.startDetached(maintenanceToolLocation, {});
+         if (!result){
+             QMessageBox::warning(this,tr("Failure"), tr("Unable to find the XyGrib Maintenance Tool. Please start it from the desktop facilities"));
+         } else {
+@@ -2598,7 +2598,7 @@ void MainWindow::slotRunMaintenanceTool()
+         }
+ 
+     } else { // user does not wish to exit
+-        result = process.startDetached(maintenanceToolLocation);
++        result = process.startDetached(maintenanceToolLocation, {});
+         if (!result){
+             QMessageBox::warning(this,tr("Failure"), tr("Unable to find the XyGrib Maintenance Tool. Please start it from the desktop facilities"));
+         }
+
+From de87989e2befeea32430e1099d440c2ce3abcf1f Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Sun, 1 Jan 2023 11:27:29 +0100
+Subject: [PATCH 6/9] Replace deprecated 32 bits fromTime_t with
+ fromSecsSinceEpoch
+
+---
+ src/Grib2Record.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/Grib2Record.cpp b/src/Grib2Record.cpp
+index 5a60cd5e..11297160 100644
+--- a/src/Grib2Record.cpp
++++ b/src/Grib2Record.cpp
+@@ -109,7 +109,7 @@ Grib2Record::Grib2Record (gribfield  *gfld, int id, int idCenter, time_t refDate
+ 	this->idCenter = idCenter;
+ 	this->refDate = refDate;
+ 	this->idGrid = gfld->griddef;
+-	sprintf(strRefDate, "%s", qPrintable(QDateTime::fromTime_t(refDate,Qt::UTC).toString("yyyy-MM-dd HH:mm")));
++	sprintf(strRefDate, "%s", qPrintable(QDateTime::fromSecsSinceEpoch(refDate,Qt::UTC).toString("yyyy-MM-dd HH:mm")));
+ 	ok = true;
+ 	waveData = false;  // TODO
+ 	verticalOrientationIsAmbiguous = false;
+@@ -429,7 +429,7 @@ void Grib2Record::analyseProductDefinitionTemplate (gribfield  *gfld)
+ 			return;
+ 		}
+ 	}
+-	sprintf(strCurDate, "%s", qPrintable(QDateTime::fromTime_t(curDate,Qt::UTC).toString("yyyy-MM-dd HH:mm")));
++	sprintf(strCurDate, "%s", qPrintable(QDateTime::fromSecsSinceEpoch(curDate,Qt::UTC).toString("yyyy-MM-dd HH:mm")));
+ 	//-------------------------
+ 	// Altitude
+ 	//-------------------------
+
+From ee7eb1ba20f87b2e76749189d9f2db34e54d179d Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Sun, 1 Jan 2023 11:40:24 +0100
+Subject: [PATCH 7/9] Replace deprecated 32 bits setTime_t with
+ setSecsSinceEpoch
+
+---
+ src/util/Util.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/util/Util.cpp b/src/util/Util.cpp
+index c58d4f19..7a068386 100644
+--- a/src/util/Util.cpp
++++ b/src/util/Util.cpp
+@@ -717,7 +717,7 @@ QString Util::formatDateLong (time_t t, bool localTime)
+ 	if (localTime)
+ 		dt = applyTimeZone(t);
+ 	else
+-		dt.setTime_t(t);
++		dt.setSecsSinceEpoch(t);
+ 	return formatDayName(dt.date())+" "+formatDateShort(t);
+ }
+ //---------------------------------------------------------------------
+@@ -750,7 +750,7 @@ QString Util::formatTime (time_t t)
+ QDateTime Util::applyTimeZone (time_t t, QString *suffix)
+ {
+     QDateTime dt;
+-    dt.setTime_t(t);
++    dt.setSecsSinceEpoch(t);
+     //dt.setTimeSpec(Qt::UTC);
+ 	dt = dt.toUTC();
+ 	
+
+From 0426cabee9a4bc8c5e1be6f0d5588e10327dabf9 Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Sun, 1 Jan 2023 12:34:26 +0100
+Subject: [PATCH 8/9] Replace deprecated setFirstItemColumnSpanned
+
+---
+ src/DialogSelectMetar.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/DialogSelectMetar.cpp b/src/DialogSelectMetar.cpp
+index a4a45527..8aef0aed 100644
+--- a/src/DialogSelectMetar.cpp
++++ b/src/DialogSelectMetar.cpp
+@@ -141,7 +141,7 @@ void DialogSelectMetar::make_metar_tree ()
+ 			assert (itemCountry);
+ 			itemRoot = itemCountry;
+ 			curState = "";
+-			treeWidget->setFirstItemColumnSpanned (itemCountry, true);
++			itemCountry->setFirstColumnSpanned(true);
+ 			name = factory.mapCountries [curCountry];
+ 			if (name == "")
+ 				DBGQS ("Country name not found : "+curCountry);
+@@ -156,7 +156,7 @@ void DialogSelectMetar::make_metar_tree ()
+ 				itemState = new QTreeWidgetItem (itemCountry);
+ 				assert (itemState);
+ 				itemRoot = itemState;
+-				treeWidget->setFirstItemColumnSpanned (itemState, true);
++				itemState->setFirstColumnSpanned(true);
+ 				name = factory.mapStates [QPair<QString,QString>(curCountry,curState)];
+ 				if (name == "")
+ 					DBGQS ("State name not found : "+curState);
+
+From 1aa840d3febecda5e8dbd24e9534b5e2fe51b897 Mon Sep 17 00:00:00 2001
+From: didier <didier@users.sourceforge.net>
+Date: Mon, 2 Jan 2023 10:26:36 +0100
+Subject: [PATCH 9/9] Replace deprecated  printer.pageRect
+
+---
+ src/SkewTWindow.cpp | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/SkewTWindow.cpp b/src/SkewTWindow.cpp
+index 62ddd81d..39822fbe 100644
+--- a/src/SkewTWindow.cpp
++++ b/src/SkewTWindow.cpp
+@@ -209,11 +209,11 @@ void SkewTWindow::actionsCommonSlot ()
+ 		{
+ 			QPainter painter;
+ 			painter.begin(&printer);
+-			double xscale = printer.pageRect().width()/double(skewt->width());
+-			double yscale = printer.pageRect().height()/double(skewt->height());
++			QRect r = printer.pageLayout().paintRectPixels(printer.resolution());
++			double xscale = r.width()/double(skewt->width());
++			double yscale = r.height()/double(skewt->height());
+ 			double scale = qMin(xscale, yscale);
+-			painter.translate(printer.paperRect().x() + printer.pageRect().width()/2,
+-								printer.paperRect().y() + printer.pageRect().height()/2);
++			painter.translate(r.x() +r.width()/2,r.y() +r.height()/2);
+ 			painter.scale(scale, scale);
+ 			painter.translate(-skewt->width()/2, -skewt->height()/2);
+ 			skewt->setPrinterRendering (true);
