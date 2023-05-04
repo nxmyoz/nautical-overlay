@@ -10,12 +10,11 @@ if [[ ${PV} == "9999" ]] ; then
 	inherit git-r3 cmake wxwidgets
 	KEYWORDS=""
 else
-	SRC_URI="
-		https://github.com/Rasbats/${MY_PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
-	"
-	inherit cmake wxwidgets
+	GIT_COMMIT="f9f486cf55f2a30ead31494d8ca740b9e6b0a6cd"
+	EGIT_REPO_URI="https://github.com/Rasbats/${MY_PN}.git"
+	inherit git-r3 cmake wxwidgets
 	KEYWORDS="~amd64 ~x86"
-	S="${WORKDIR}/${MY_PN}-${PV}"
+	S="${WORKDIR}/${PN}-${PV}"
 fi
 
 DESCRIPTION="Calculator Plugin for OpenCPN"
