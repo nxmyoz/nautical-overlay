@@ -1,16 +1,16 @@
 # Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-WX_GTK_VER="3.0-gtk3"
+WX_GTK_VER="3.2-gtk3"
 MY_PN="AISradar_pi"
 if [[ ${PV} == "9999" ]] ; then
 	EGIT_REPO_URI="https://github.com/rgleason/${MY_PN}.git"
 	inherit git-r3 cmake wxwidgets
 	KEYWORDS=""
 else
-	GIT_COMMIT="5bdce7d0b18b7629b0f4a1335c60da3f8897e168"
+	GIT_COMMIT="8996908aa7d1f0b971eff297f03e289ac5c1ce30"
 	EGIT_REPO_URI="https://github.com/rgleason/${MY_PN}.git"
 	inherit git-r3 cmake wxwidgets
 	KEYWORDS="~amd64 ~x86"
