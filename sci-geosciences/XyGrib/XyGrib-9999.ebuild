@@ -1,17 +1,17 @@
 # Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-inherit cmake desktop eutils
+inherit cmake desktop
 
 DESCRIPTION="XyGrib is a Grib file reader and visualizes meteorological data."
 HOMEPAGE="https://opengribs.org"
 
 if [[ "${PV}" == "9999" ]]; then
 	EGIT_REPO_URI="https://github.com/opengribs/XyGrib.git"
-	inherit git-r3 cmake desktop eutils
-	KEYWORDS=""
+	inherit git-r3
+	#KEYWORDS=""
 else
 	SRC_URI="https://github.com/opengribs/XyGrib/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64 ~x86"
@@ -42,7 +42,6 @@ BDPEND=""
 
 PATCHES=(
 	"${FILESDIR}/locations.patch"
-	#"${FILESDIR}/${PN}-gcc10.patch"
 )
 
 src_unpack() {

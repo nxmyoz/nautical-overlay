@@ -1,9 +1,9 @@
 # Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-inherit cmake desktop eutils
+inherit cmake desktop
 
 MY_VERSION="88c425ca2d7f4ba5d7ab75bfa25e177bee02d310"
 
