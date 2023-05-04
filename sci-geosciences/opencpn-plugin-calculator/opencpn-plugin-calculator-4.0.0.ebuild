@@ -1,9 +1,9 @@
 # Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-WX_GTK_VER="3.0-gtk3"
+WX_GTK_VER="3.2-gtk3"
 MY_PN="calculator_pi"
 if [[ ${PV} == "9999" ]] ; then
 	EGIT_REPO_URI="https://github.com/Rasbats/${MY_PN}.git"
@@ -11,7 +11,7 @@ if [[ ${PV} == "9999" ]] ; then
 	KEYWORDS=""
 else
 	SRC_URI="
-		https://github.com/Rasbats/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz
+		https://github.com/Rasbats/${MY_PN}/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
 	"
 	inherit cmake wxwidgets
 	KEYWORDS="~amd64 ~x86"
