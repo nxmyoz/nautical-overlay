@@ -38,7 +38,7 @@ src_prepare() {
 }
 
 src_compile() {
-	#cmake_build tarball
+	cmake_build
 	emake tarball
 
 }
