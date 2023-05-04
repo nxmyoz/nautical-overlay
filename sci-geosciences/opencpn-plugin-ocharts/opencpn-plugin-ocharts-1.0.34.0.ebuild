@@ -27,6 +27,7 @@ RDEPEND="
 	x11-libs/wxGTK:${WX_GTK_VER}
 	>=sci-geosciences/opencpn-5.0.0
 	sys-devel/gettext
+	dev-libs/tinyxml
 	virtual/libusb:*
 "
 DEPEND="${RDEPEND}"
