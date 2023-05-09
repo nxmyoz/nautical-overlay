@@ -1,9 +1,9 @@
 # Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-inherit toolchain-funcs user
+inherit toolchain-funcs
 
 DESCRIPTION="A simple AIS tuner and generic dual-frequency FM demodulator"
 HOMEPAGE="https://github.com/dgiardini/rtl-ais"
