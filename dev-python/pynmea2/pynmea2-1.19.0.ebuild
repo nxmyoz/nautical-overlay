@@ -5,11 +5,11 @@ EAPI=8
 
 PYTHON_COMPAT=( python3_{9..11} )
 
-inherit distutils-r1 git-r3
+inherit distutils-r1 git-r3 pypi
 
 DESCRIPTION="Python library for the NMEA 0183 protcol"
 HOMEPAGE="https://github.com/Knio/pynmea2"
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
+SRC_URI="$(pypi_sdist_url pynmea2)"
 
 #EGIT_REPO_URI="https://github.com/Knio/pynmea2.git"
 

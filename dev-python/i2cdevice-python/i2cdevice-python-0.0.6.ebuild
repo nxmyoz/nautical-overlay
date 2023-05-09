@@ -1,16 +1,16 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-PYTHON_COMPAT=( python3_{7..9} )
+PYTHON_COMPAT=( python3_{9..11} )
 
-inherit distutils-r1
+inherit distutils-r1 pypi
 
 MY_PN="i2cdevice"
 DESCRIPTION="Domain-specific language for describing smbus/i2c register maps "
 HOMEPAGE="https://pypi.org/project/i2cdevice-python/"
-SRC_URI="mirror://pypi/i/${MY_PN}/${MY_PN}-${PV}.tar.gz"
+SRC_URI="$(pypi_sdist_url i2cdevice)"
 
 LICENSE="MIT"
 SLOT="0"
