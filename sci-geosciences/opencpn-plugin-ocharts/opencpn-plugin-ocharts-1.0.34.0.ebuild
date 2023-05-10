@@ -16,8 +16,8 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-DESCRIPTION="oeSENC Charts Plugin for OpenCPN"
-HOMEPAGE="https://github.com/bdbcat/oesenc_pi"
+DESCRIPTION="O-Charts Plugin for OpenCPN"
+HOMEPAGE="https://github.com/bdbcat/o-charts_pi"
 
 LICENSE="GPL-2+"
 SLOT="0"
@@ -38,10 +38,13 @@ src_prepare() {
 	cmake_src_prepare
 }
 
+src_configure() {
+	CMAKE_BUILD_TYPE="Release"
+	cmake_src_configure
+}
+
 src_compile() {
 	cmake_build
-	#emake tarball
-
 }
 
 src_install() {
