@@ -38,15 +38,11 @@ src_prepare() {
 	cmake_src_prepare
 }
 
-#src_configure() {
-#	cmake_src_configure
-#}
+src_compile() {
+	cmake_src_compile
 
-#src_compile() {
-#	cmake_build
-#}
-#
-#src_install() {
-#	die
-#	#udev_dorules libs/oeserverd/linux64/98-sglock.rules
-#}
+}
+
+src_install() {
+	dolib.so libsgllnx64-2.29.02.so
+}
