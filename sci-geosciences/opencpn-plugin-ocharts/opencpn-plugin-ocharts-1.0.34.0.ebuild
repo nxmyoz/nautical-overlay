@@ -40,9 +40,8 @@ src_prepare() {
 
 src_compile() {
 	cmake_src_compile
-
 }
 
 src_install() {
-	dolib.so libsgllnx64-2.29.02.so
+	echo "here is my install"
 }
