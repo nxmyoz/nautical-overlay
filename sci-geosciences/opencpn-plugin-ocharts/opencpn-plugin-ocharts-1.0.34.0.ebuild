@@ -38,16 +38,15 @@ src_prepare() {
 	cmake_src_prepare
 }
 
-src_configure() {
-	CMAKE_BUILD_TYPE="Release"
-	cmake_src_configure
-}
+#src_configure() {
+#	cmake_src_configure
+#}
 
-src_compile() {
-	cmake_build
-}
-
-src_install() {
-	die
-	#udev_dorules libs/oeserverd/linux64/98-sglock.rules
-}
+#src_compile() {
+#	cmake_build
+#}
+#
+#src_install() {
+#	die
+#	#udev_dorules libs/oeserverd/linux64/98-sglock.rules
+#}
