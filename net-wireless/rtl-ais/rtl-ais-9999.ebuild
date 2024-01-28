@@ -38,6 +38,6 @@ src_install() {
 	newinitd "${FILESDIR}/rtl_ais.initd" rtl_ais
 	newconfd "${FILESDIR}/rtl_ais.confd" rtl_ais
 
-	dodoc README
+	dodoc README.md
 	dobin rtl_ais
 }
