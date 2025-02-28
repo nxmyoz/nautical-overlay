@@ -10,10 +10,11 @@ if [[ ${PV} == "9999" ]] ; then
 	inherit git-r3 cmake wxwidgets
 	KEYWORDS=""
 else
-	inherit cmake wxwidgets
+	GIT_COMMIT="12f6839f79544e1ea06143c7aaac924215847fa2"
+	EGIT_REPO_URI="https://github.com/rgleason/${MY_PN}.git"
+	inherit git-r3 cmake wxwidgets
 	KEYWORDS="~amd64 ~x86"
-	SRC_URI="https://github.com/rgleason/AISradar_pi/archive/refs/tags/v1.4.20.0.tar.gz -> ${P}.tar.gz"
-	S="${WORKDIR}/${MY_PN}-${PV}"
+	S="${WORKDIR}/${PN}-${PV}"
 fi
 
 DESCRIPTION="AIS Radar View Plugin for OpenCPN"
