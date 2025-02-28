@@ -35,3 +35,9 @@ src_prepare() {
 	setup-wxwidgets
 	cmake_src_prepare
 }
+
+src_install() {
+	into $(get_libdir)/opencpn
+	dolib.so app/files/lib/opencpn/libcalculator_pi.so
+}
+
