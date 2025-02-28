@@ -1,9 +1,9 @@
 # Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-WX_GTK_VER="3.0-gtk3"
+WX_GTK_VER="3.2-gtk3"
 inherit cmake wxwidgets
 
 if [[ "${PV}" == 9999 ]] || [[ ${PV} = *_beta* ]] || [[ ${PV} = *_rc* ]]; then
@@ -19,7 +19,8 @@ if [[ "${PV}" == 9999 ]] || [[ ${PV} = *_beta* ]] || [[ ${PV} = *_rc* ]]; then
 	fi
 
 else
-	SRC_URI="https://github.com/OpenCPN/OpenCPN/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+	SRC_URI="https://github.com/OpenCPN/OpenCPN/archive/refs/tags/Release_${PV}.tar.gz -> ${P}.tar.gz"
+	#SRC_URI="https://github.com/OpenCPN/OpenCPN/archive/Release_${PV}.tar.gz -> ${P}.tar.gz"
 fi
 
 DESCRIPTION="a free, open source software for marine navigation"
@@ -41,8 +42,11 @@ RDEPEND="
 	net-misc/curl
 	sys-libs/zlib
 	opengl? ( virtual/opengl )
+	media-libs/glew
+	dev-libs/rapidjson
+	dev-cpp/gtest
 	x11-libs/gtk+:3
-	x11-libs/wxGTK:3.0-gtk3[X]
+	x11-libs/wxGTK:3.2-gtk3[X]
 "
 
 DEPEND="
@@ -55,19 +59,19 @@ MY_PN="OpenCPN"
 if [[ "${PV}" == 9999 ]] || [[ ${PV} = *_beta* ]] || [[ ${PV} = *_rc* ]]; then
 	S="${WORKDIR}/${P}"
 else
-	S="${WORKDIR}/${MY_PN}-${PV}"
+	S="${WORKDIR}/${MY_PN}-Release_${PV}"
 fi
 
 src_prepare() {
 	setup-wxwidgets
 	cmake_src_prepare
 
-	local sedcmds=(
-		-e 's/-lwx_gtk3u_aui-3.0/-lwx_gtk3u_aui-3.0-gtk3/g'
-		-e 's/-lwx_gtk3u_gl-3.0/-lwx_gtk3u_gl-3.0-gtk3/g'
-	)
+	#local sedcmds=(
+	#	-e 's/-lwx_gtk3u_aui-3.0/-lwx_gtk3u_aui-3.0-gtk3/g'
+	#	-e 's/-lwx_gtk3u_gl-3.0/-lwx_gtk3u_gl-3.0-gtk3/g'
+	#)
 
-	sed -i "${sedcmds[@]}" CMakeLists.txt || die
+	#sed -i "${sedcmds[@]}" CMakeLists.txt || die
 }
 
 src_configure() {
