@@ -10,6 +10,7 @@ if [[ ${PV} == "9999" ]] ; then
 	inherit git-r3 cmake wxwidgets
 	KEYWORDS=""
 else
+	inherit cmake wxwidgets
 	KEYWORDS="~amd64 ~x86"
 	SRC_URI="https://github.com/rgleason/AISradar_pi/archive/refs/tags/v1.4.20.0.tar.gz -> ${P}.tar.gz"
 	S="${WORKDIR}/${MY_PN}-${PV}"
