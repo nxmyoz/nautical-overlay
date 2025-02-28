@@ -12,7 +12,7 @@ if [[ ${PV} == "9999" ]] ; then
 else
 	KEYWORDS="~amd64 ~x86"
 	SRC_URI="https://github.com/rgleason/AISradar_pi/archive/refs/tags/v1.4.20.0.tar.gz -> ${P}.tar.gz"
-	S="${WORKDIR}/${PN}-${PV}"
+	S="${WORKDIR}/${MY_PN}-${PV}"
 fi
 
 DESCRIPTION="AIS Radar View Plugin for OpenCPN"
