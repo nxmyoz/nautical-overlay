@@ -33,7 +33,7 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}"
 
-S="${WORKDIR}/o-charts_pi-${PV}"
+#S="${WORKDIR}/o-charts_pi-${PV}"
 
 src_prepare() {
 	default
