@@ -88,8 +88,8 @@ src_configure() {
 		-DOCPN_ENABLE_PORTAUDIO="$(usex portaudio)"
 		-DOCPN_ENABLE_SNDFILE="$(usex sndfile)"
 		-DOCPN_USE_CRASHREPORT="$(usex crashreport)"
-		-DShapelib_INCLUDE_DIR="/usr/include/libshp"
-		-DShapelib_LIBRARY="/usr/lib64/libshp.so"
+		-DSHAPELIB_INCLUDE_DIR="/usr/include/libshp"
+		-DSHAPELIB_LIBRARY="/usr/lib64/libshp.so"
 	)
 
 	cmake_src_configure
