@@ -1,9 +1,9 @@
 # Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-WX_GTK_VER="3.0-gtk3"
+WX_GTK_VER="3.2-gtk3"
 inherit cmake wxwidgets
 
 if [[ "${PV}" == 9999 ]] || [[ ${PV} = *_beta* ]] || [[ ${PV} = *_rc* ]]; then
