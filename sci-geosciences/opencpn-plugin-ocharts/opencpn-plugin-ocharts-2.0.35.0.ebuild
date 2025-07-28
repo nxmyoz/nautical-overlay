@@ -10,8 +10,10 @@ if [[ ${PV} == "9999" ]] ; then
 	inherit git-r3 cmake wxwidgets udev
 	KEYWORDS=""
 else
-	inherit cmake wxwidgets udev
-	SRC_URI="https://github.com/bdbcat/o-charts_pi/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
+	inherit git-r3 cmake wxwidgets udev
+	EGIT_REPO_URI="https://github.com/bdbcat/o-charts_pi.git"
+	EGIT_COMMIT="${PV}"
+	EGIT_SUBMODULES=()
 	KEYWORDS="~amd64 ~x86"
 fi
 
