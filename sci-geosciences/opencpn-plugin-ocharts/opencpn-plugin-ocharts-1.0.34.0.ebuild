@@ -38,10 +38,10 @@ src_prepare() {
 	cmake_src_prepare
 }
 
-src_compile() {
-	cmake_src_compile
-}
+#src_compile() {
+#	cmake_src_compile
+#}
 
-src_install() {
-	echo "here is my install"
-}
+#src_install() {
+#	echo "here is my install"
+#}
