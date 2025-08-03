@@ -1,4 +1,4 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -20,7 +20,6 @@ if [[ "${PV}" == 9999 ]] || [[ ${PV} = *_beta* ]] || [[ ${PV} = *_rc* ]]; then
 
 else
 	SRC_URI="https://github.com/OpenCPN/OpenCPN/archive/refs/tags/Release_${PV}.tar.gz -> ${P}.tar.gz"
-	#SRC_URI="https://github.com/OpenCPN/OpenCPN/archive/Release_${PV}.tar.gz -> ${P}.tar.gz"
 fi
 
 DESCRIPTION="a free, open source software for marine navigation"
@@ -29,7 +28,7 @@ HOMEPAGE="https://opencpn.org/"
 LICENSE="GPL-2+"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="+lzma +opengl gles-shim +garminhost +gshhs +tcdata +docs +force-gtk3 +portaudio sndfile +crashreport"
+IUSE="+lzma +opengl gles-shim +garminhost +gshhs +tcdata +docs +portaudio sndfile +crashreport"
 
 REQUIRED_USE="^^ ( portaudio sndfile )"
 
@@ -47,6 +46,7 @@ RDEPEND="
 	dev-cpp/gtest
 	x11-libs/gtk+:3
 	x11-libs/wxGTK:3.2-gtk3[X]
+	sci-libs/shapelib
 "
 
 DEPEND="
@@ -65,13 +65,6 @@ fi
 src_prepare() {
 	setup-wxwidgets
 	cmake_src_prepare
-
-	#local sedcmds=(
-	#	-e 's/-lwx_gtk3u_aui-3.0/-lwx_gtk3u_aui-3.0-gtk3/g'
-	#	-e 's/-lwx_gtk3u_gl-3.0/-lwx_gtk3u_gl-3.0-gtk3/g'
-	#)
-
-	#sed -i "${sedcmds[@]}" CMakeLists.txt || die
 }
 
 src_configure() {
@@ -80,13 +73,14 @@ src_configure() {
 		-DOCPN_BUNDLE_GSHHS="$(usex gshhs)"
 		-DOCPN_BUNDLE_TCDATA="$(usex tcdata)"
 		-DOCPN_BUNDLE_DOCS="$(usex docs)"
-		-DOCPN_FORCE_GTK3="$(usex force-gtk3)"
 		-DOCPN_USE_GL="$(usex opengl)"
 		-DOCPN_USE_GLES_SHIM="$(usex gles-shim)"
 		-DOCPN_USE_LZMA="$(usex lzma)"
 		-DOCPN_ENABLE_PORTAUDIO="$(usex portaudio)"
 		-DOCPN_ENABLE_SNDFILE="$(usex sndfile)"
 		-DOCPN_USE_CRASHREPORT="$(usex crashreport)"
+		-DSHAPELIB_INCLUDE_DIR="/usr/include/libshp"
+		-DSHAPELIB_LIBRARY="/usr/lib64/libshp.so"
 	)
 
 	cmake_src_configure

@@ -81,7 +81,7 @@ src_configure() {
 		-DOCPN_BUNDLE_GSHHS="$(usex gshhs)"
 		-DOCPN_BUNDLE_TCDATA="$(usex tcdata)"
 		-DOCPN_BUNDLE_DOCS="$(usex docs)"
-		-DOCPN_FORCE_GTK3="$(usex force-gtk3)"
+		#-DOCPN_FORCE_GTK3="$(usex force-gtk3)"
 		-DOCPN_USE_GL="$(usex opengl)"
 		-DOCPN_USE_GLES_SHIM="$(usex gles-shim)"
 		-DOCPN_USE_LZMA="$(usex lzma)"
