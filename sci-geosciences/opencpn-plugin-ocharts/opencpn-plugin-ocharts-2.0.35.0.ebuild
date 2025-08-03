@@ -51,8 +51,8 @@ src_configure() {
 }
 
 src_compile() {
-	cmake_src_compile
-	emake tarball
+	#cmake_src_compile
+	cmake_build tarball
 }
 
 src_install() {
