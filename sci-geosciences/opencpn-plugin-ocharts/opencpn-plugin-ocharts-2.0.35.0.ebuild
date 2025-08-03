@@ -42,17 +42,16 @@ src_prepare() {
 }
 
 src_configure() {
-	#local mycmakeargs=(
-	#	-DOCPN_USE_GARMINHOST="$(usex garminhost)"
-	#	-DSHAPELIB_LIBRARY="/usr/lib64/libshp.so"
-	#)
+	local mycmakeargs=(
+		-DOCPN_BUILD_USE_GLEW="OFF"
+	)
 
 	cmake_src_configure
 }
 
 src_compile() {
 	#cmake_src_compile
-	cmake_build tarball
+	#cmake_build tarball
 }
 
 src_install() {
